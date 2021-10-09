@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">GastroGrabs</string>
+    <string name="button_addGrab">Add Grab</string>
+    <string name="hint_grabTitle">Grab</string>
 </resources>
