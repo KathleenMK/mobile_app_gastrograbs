@@ -2,4 +2,6 @@
     <string name="app_name">GastroGrabs</string>
     <string name="button_addGrab">Add</string>
     <string name="hint_grabTitle">Grab title</string>
+    <string name="hint_grabDescription">Grab description</string>
+    <string name="hint_grabCategory">Grab category</string>
 </resources>
