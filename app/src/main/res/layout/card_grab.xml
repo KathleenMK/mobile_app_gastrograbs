@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="6dp"
+    android:elevation="24dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/grabTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:textSize="23sp"
+            android:textStyle="bold"
+            tools:text="A Title" />
+
+        <TextView
+            android:id="@+id/grabDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/grabTitle"
+            tools:text="Description"
+            android:maxLines="2"/>
+
+        <TextView
+            android:id="@+id/grabCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/grabDescription"
+            android:textStyle="italic|bold"
+            android:layout_alignParentRight="true"
+            tools:text="Category" />
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

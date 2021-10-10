@@ -1,5 +1,11 @@
 <resources>
-    <string name="app_name">GastroGrabs</string>
+    <string name="app_name">Gastro Grabs</string>
     <string name="button_addGrab">Add</string>
     <string name="hint_grabTitle">Grab title</string>
+    <string name="hint_grabDescription">Grab description</string>
+    <string name="hint_grabCategory">Grab category</string>
+    <string name="menu_addGrab">Add</string>
+    <string name="menu_cancelGrab">Cancel</string>
+    <string name="enter_grab_title">Please include a Grab title</string>
+    <string name="save_grab">Update Grab</string>
 </resources>
