@@ -1,19 +1,26 @@
 package org.wit.gastrograbs.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.ViewGroup
+//import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
+//import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+//import androidx.recyclerview.widget.LinearLayoutManager
+//import androidx.recyclerview.widget.RecyclerView
 import org.wit.gastrograbs.R
+import org.wit.gastrograbs.adapters.GrabAdapter
+import org.wit.gastrograbs.adapters.GrabListener
 import org.wit.gastrograbs.databinding.ActivityGrabCollectionBinding
-import org.wit.gastrograbs.databinding.CardGrabBinding
+//import org.wit.gastrograbs.databinding.CardGrabBinding
 import org.wit.gastrograbs.main.MainApp
 import org.wit.gastrograbs.models.GrabModel
 
-class GrabCollectionActivity : AppCompatActivity() {
+//import org.wit.gastrograbs.models.GrabModel
+
+class GrabCollectionActivity : AppCompatActivity(), GrabListener {
 
     lateinit var app: MainApp
     private lateinit var binding: ActivityGrabCollectionBinding
@@ -27,34 +34,36 @@ class GrabCollectionActivity : AppCompatActivity() {
 
         val layoutManager = GridLayoutManager(this, 2)
         binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = GrabAdapter(app.grabs)
+        binding.recyclerView.adapter = GrabAdapter(app.grabs.findAll(),this)
+
+        binding.toolbar.title = title
+        setSupportActionBar(binding.toolbar)
     }
-}
 
-    class GrabAdapter constructor(private var grabs: List<GrabModel>) :
-        RecyclerView.Adapter<GrabAdapter.MainHolder>() {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
-            val binding = CardGrabBinding
-                .inflate(LayoutInflater.from(parent.context), parent, false)
-            return MainHolder(binding)
-        }
-
-        override fun onBindViewHolder(holder: MainHolder, position: Int) {
-            val grab = grabs[holder.adapterPosition]
-            holder.bind(grab)
-        }
-
-        override fun getItemCount(): Int = grabs.size
-
-        class MainHolder(private val binding: CardGrabBinding) :
-            RecyclerView.ViewHolder(binding.root) {
-
-            fun bind(grab: GrabModel) {
-                binding.grabTitle.text = grab.title
-                binding.grabDescription.text = grab.description
-                binding.grabCategory.text = grab.category
+       override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.item_add -> {
+                val launcherIntent = Intent(this, GrabActivity::class.java)
+                startActivityForResult(launcherIntent,0)
             }
         }
+        return super.onOptionsItemSelected(item)
     }
+
+    override fun onGrabClick(grab: GrabModel) {
+        val launcherIntent = Intent(this, GrabActivity::class.java)
+        launcherIntent.putExtra("grab_edit",grab)
+        startActivityForResult(launcherIntent,0)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        binding.recyclerView.adapter?.notifyDataSetChanged()
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+}
 
