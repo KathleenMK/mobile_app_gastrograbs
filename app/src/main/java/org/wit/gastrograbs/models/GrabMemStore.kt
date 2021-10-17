@@ -28,6 +28,7 @@ class GrabMemStore: GrabStore {
             foundGrab.title = grab.title
             foundGrab.description = grab.description
             foundGrab.category = grab.category
+            foundGrab.image = grab.image
             logAll()
         }
     }
