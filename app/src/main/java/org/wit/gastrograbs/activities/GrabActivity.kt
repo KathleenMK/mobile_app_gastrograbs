@@ -28,7 +28,6 @@ class GrabActivity : AppCompatActivity() {
     lateinit var app : MainApp
 
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
-    val IMAGE_REQUEST = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
