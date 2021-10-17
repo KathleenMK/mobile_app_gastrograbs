@@ -1,13 +1,19 @@
 package org.wit.gastrograbs.activities
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.snackbar.Snackbar
+import com.squareup.picasso.Picasso
 import org.wit.gastrograbs.R
 //import org.wit.gastrograbs.R
 import org.wit.gastrograbs.databinding.ActivityGrabBinding
+import org.wit.gastrograbs.helpers.showImagePicker
 import org.wit.gastrograbs.main.MainApp
 import org.wit.gastrograbs.models.GrabModel
 //import timber.log.Timber
@@ -20,20 +26,18 @@ class GrabActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGrabBinding
     var grab = GrabModel()  //creating grab as a class member
     lateinit var app : MainApp
-    var edit = false
+
+    private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
+    val IMAGE_REQUEST = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        var edit = false
         binding = ActivityGrabBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.toolbarAdd.title = title
         setSupportActionBar(binding.toolbarAdd)
-
-
-
-        //setContentView(R.layout.activity_grab)
-//        Timber.plant(Timber.DebugTree())
 
         app = application as MainApp
         i("Grab Activity started..")
@@ -45,6 +49,12 @@ class GrabActivity : AppCompatActivity() {
             binding.grabDescription.setText(grab.description)
             binding.grabCategory.setText(grab.category)
             binding.btnAdd.setText(R.string.save_grab)
+            Picasso.get()
+                .load(grab.image)
+                .into(binding.grabImage)
+            if (grab.image != Uri.EMPTY) {
+                binding.chooseImage.setText(R.string.change_grab_image)
+            }
         }
 
         binding.btnAdd.setOnClickListener() {
@@ -65,6 +75,10 @@ class GrabActivity : AppCompatActivity() {
             finish()
         }
 
+        binding.chooseImage.setOnClickListener {
+            showImagePicker(imageIntentLauncher)
+                   }
+        registerImagePickerCallback()
      }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -77,5 +91,25 @@ class GrabActivity : AppCompatActivity() {
             R.id.item_cancel -> { finish() }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun registerImagePickerCallback() {
+        imageIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { result ->
+                when(result.resultCode){
+                    RESULT_OK -> {
+                        if (result.data != null) {
+                            i("Got Result ${result.data!!.data}")
+                            grab.image = result.data!!.data!!
+                            Picasso.get()
+                                .load(grab.image)
+                                .into(binding.grabImage)
+                            binding.chooseImage.setText(R.string.change_grab_image)
+                        } // end of if
+                    }
+                    RESULT_CANCELED -> { } else -> { }
+                }
+            }
     }
 }
