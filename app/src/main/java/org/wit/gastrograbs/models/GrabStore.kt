@@ -4,4 +4,5 @@ interface GrabStore {
     fun findAll(): List<GrabModel>
     fun create(grab: GrabModel)
     fun update(grab: GrabModel)
+    fun delete(grab: GrabModel)
 }

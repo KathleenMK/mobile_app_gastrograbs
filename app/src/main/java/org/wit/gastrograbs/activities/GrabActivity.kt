@@ -48,6 +48,8 @@ class GrabActivity : AppCompatActivity() {
             binding.grabDescription.setText(grab.description)
             binding.grabCategory.setText(grab.category)
             binding.btnAdd.setText(R.string.save_grab)
+            binding.toolbarAdd.title = grab.title
+
             Picasso.get()
                 .load(grab.image)
                 .into(binding.grabImage)

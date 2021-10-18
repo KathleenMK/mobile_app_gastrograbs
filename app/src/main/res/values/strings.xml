@@ -13,4 +13,5 @@
     <string name="select_grab_image">Select Grab image</string>
     <string name="change_grab_image">Change image</string>
     <string name="button_comment">Comment</string>
+    <string name="menu_deleteGrab">Delete</string>
 </resources>

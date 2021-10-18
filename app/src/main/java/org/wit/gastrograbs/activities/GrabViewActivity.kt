@@ -50,7 +50,7 @@ class GrabViewActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_grab, menu)
+        menuInflater.inflate(R.menu.menu_view, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -62,6 +62,10 @@ class GrabViewActivity : AppCompatActivity() {
             R.id.item_edit -> {val launcherIntent = Intent(this, GrabActivity::class.java)
             launcherIntent.putExtra("grab_edit",grab)
                     startActivityForResult(launcherIntent,0)}
+
+            R.id.item_delete -> { app.grabs.delete(grab)
+                                    setResult(RESULT_OK)
+                                    finish()}
         }
         return super.onOptionsItemSelected(item)
     }

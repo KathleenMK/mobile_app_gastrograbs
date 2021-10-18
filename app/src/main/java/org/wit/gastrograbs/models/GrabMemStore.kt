@@ -33,6 +33,10 @@ class GrabMemStore: GrabStore {
         }
     }
 
+    override fun delete(grab: GrabModel) {
+        grabs.remove(grab)
+    }
+
     fun logAll(){
         grabs.forEach{i("${it}")}
     }
