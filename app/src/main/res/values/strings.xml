@@ -14,4 +14,6 @@
     <string name="change_grab_image">Change image</string>
     <string name="button_comment">Comment</string>
     <string name="menu_deleteGrab">Delete</string>
+    <string name="button_addLocation">Add Location</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>

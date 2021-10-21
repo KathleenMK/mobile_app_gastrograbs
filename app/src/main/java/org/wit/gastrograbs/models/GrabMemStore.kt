@@ -29,6 +29,9 @@ class GrabMemStore: GrabStore {
             foundGrab.description = grab.description
             foundGrab.category = grab.category
             foundGrab.image = grab.image
+            foundGrab.lat = grab.lat
+            foundGrab.lng = grab.lng
+            foundGrab.zoom = grab.zoom
             logAll()
         }
     }
