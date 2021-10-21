@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.result.ActivityResultLauncher
 import com.squareup.picasso.Picasso
 import org.wit.gastrograbs.R
 import org.wit.gastrograbs.databinding.ActivityGrabViewBinding
@@ -17,12 +18,14 @@ import timber.log.Timber.i
 class GrabViewActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityGrabViewBinding
+    private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
     var grab = GrabModel()  //creating grab as a class member
     lateinit var app : MainApp
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         i("in onCreate view")
+
         i(grab.title)
         binding = ActivityGrabViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -31,7 +34,7 @@ class GrabViewActivity : AppCompatActivity() {
 
         app = application as MainApp
 
-        if (intent.hasExtra("grab_view")) {
+        //if (intent.hasExtra("grab_view")) {
             //edit = true
             grab = intent.extras?.getParcelable("grab_view")!!
 
@@ -46,7 +49,7 @@ class GrabViewActivity : AppCompatActivity() {
                 .load(grab.image)
                 .into(binding.grabImage)
 
-        }
+       // }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -61,7 +64,7 @@ class GrabViewActivity : AppCompatActivity() {
 
             R.id.item_edit -> {val launcherIntent = Intent(this, GrabActivity::class.java)
             launcherIntent.putExtra("grab_edit",grab)
-                    startActivityForResult(launcherIntent,0)}
+                refreshIntentLauncher.launch(launcherIntent)}
 
             R.id.item_delete -> { app.grabs.delete(grab)
                                     setResult(RESULT_OK)
