@@ -16,6 +16,7 @@ import org.wit.gastrograbs.databinding.ActivityGrabBinding
 import org.wit.gastrograbs.helpers.showImagePicker
 import org.wit.gastrograbs.main.MainApp
 import org.wit.gastrograbs.models.GrabModel
+import org.wit.gastrograbs.models.Location
 //import timber.log.Timber
 import timber.log.Timber.i
 
@@ -26,8 +27,8 @@ class GrabActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGrabBinding
     var grab = GrabModel()  //creating grab as a class member
     lateinit var app : MainApp
-
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
+    private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +40,7 @@ class GrabActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbarAdd)
 
         app = application as MainApp
+
         i("Grab Activity started..")
 
         if (intent.hasExtra("grab_edit")) {
@@ -71,15 +73,30 @@ class GrabActivity : AppCompatActivity() {
                 } else {
                     app.grabs.create(grab.copy())
                 }
+                setResult(RESULT_OK)
+                finish()
             }
-            setResult(RESULT_OK)
-            finish()
+
         }
 
         binding.chooseImage.setOnClickListener {
             showImagePicker(imageIntentLauncher)
                    }
+
+        binding.addLocation.setOnClickListener {
+            var location = Location(52.15859, -7.14440, 16f)
+            if (grab.zoom != 0f){
+                location.lat = grab.lat
+                location.lng = grab.lng
+                location.zoom = grab.zoom
+            }
+            val launcherIntent = Intent(this, MapsActivity::class.java)
+                .putExtra("location", location)
+            mapIntentLauncher.launch(launcherIntent)
+        }
+
         registerImagePickerCallback()
+        registerMapCallback()
      }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -94,11 +111,31 @@ class GrabActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    private fun registerMapCallback() {
+        mapIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { result ->
+                when (result.resultCode) {
+                    RESULT_OK -> {
+                        if (result.data != null) {
+                            i("Got Location ${result.data.toString()}")
+                            val location = result.data!!.extras?.getParcelable<Location>("location")!!
+                            i("Location == $location")
+                            grab.lat = location.lat
+                            grab.lng = location.lng
+                            grab.zoom = location.zoom
+                        } // end of if
+                    }
+                    RESULT_CANCELED -> { } else -> { }
+                }
+            }
+    }
+
     private fun registerImagePickerCallback() {
         imageIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
             { result ->
-                when(result.resultCode){
+                when (result.resultCode) {
                     RESULT_OK -> {
                         if (result.data != null) {
                             i("Got Result ${result.data!!.data}")
@@ -113,4 +150,6 @@ class GrabActivity : AppCompatActivity() {
                 }
             }
     }
+
+
 }

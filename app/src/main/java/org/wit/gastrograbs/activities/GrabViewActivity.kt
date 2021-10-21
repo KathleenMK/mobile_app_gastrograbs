@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import com.squareup.picasso.Picasso
 import org.wit.gastrograbs.R
 import org.wit.gastrograbs.databinding.ActivityGrabViewBinding
@@ -34,7 +35,7 @@ class GrabViewActivity : AppCompatActivity() {
 
         app = application as MainApp
 
-        //if (intent.hasExtra("grab_view")) {
+        if (intent.hasExtra("grab_view")) {
             //edit = true
             grab = intent.extras?.getParcelable("grab_view")!!
 
@@ -49,12 +50,20 @@ class GrabViewActivity : AppCompatActivity() {
                 .load(grab.image)
                 .into(binding.grabImage)
 
-       // }
+       }
+
+        registerRefreshCallback()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_view, menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun registerRefreshCallback() {
+        refreshIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            {  }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
