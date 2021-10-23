@@ -37,11 +37,11 @@ class GrabCollectionActivity : AppCompatActivity(), GrabListener {
 
         val layoutManager = GridLayoutManager(this, 2)
         binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = GrabAdapter(app.grabs.findAll(),this)
+        //binding.recyclerView.adapter = GrabAdapter(app.grabs.findAll(),this)
 
         binding.toolbar.title = title
         setSupportActionBar(binding.toolbar)
-
+        loadGrabs()
         registerRefreshCallback()
     }
 
@@ -69,7 +69,17 @@ class GrabCollectionActivity : AppCompatActivity(), GrabListener {
     private fun registerRefreshCallback() {
         refreshIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-            { binding.recyclerView.adapter?.notifyDataSetChanged() }
+            { //binding.recyclerView.adapter?.notifyDataSetChanged()
+            loadGrabs() }
+    }
+
+    private fun loadGrabs(){
+        showGrabs(app.grabs.findAll())
+    }
+
+    fun showGrabs(grabs: List<GrabModel>){
+        binding.recyclerView.adapter = GrabAdapter(grabs, this)
+        binding.recyclerView.adapter?.notifyDataSetChanged()
     }
 
 
