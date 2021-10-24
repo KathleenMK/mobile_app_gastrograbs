@@ -3,7 +3,7 @@
     <string name="button_addGrab">Add</string>
     <string name="hint_grabTitle">Grab title</string>
     <string name="hint_grabDescription">Grab description</string>
-    <string name="hint_grabCategory">Grab category</string>
+    <string name="hint_grabCategory">Grab Category</string>
     <string name="menu_addGrab">Add</string>
     <string name="menu_editGrab">Edit</string>
     <string name="menu_cancelGrab">Cancel</string>
@@ -16,4 +16,18 @@
     <string name="menu_deleteGrab">Delete</string>
     <string name="button_addLocation">Add Location</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="title_add">Add a new Grab</string>
+    <string name="title_update">Update this Grab</string>
+    <string-array name="category_array">
+            <item>Select Grab Category</item>
+            <item>Sweet</item>
+            <item>Savoury</item>
+            <item>Wine</item>
+            <item>Kids</item>
+            <item>Christmas</item>
+            <item>Cocktails</item>
+            <item>Treat</item>
+            <item>Everyday</item>
+    </string-array>
+
 </resources>

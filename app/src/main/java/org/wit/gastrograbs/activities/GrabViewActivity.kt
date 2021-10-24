@@ -1,8 +1,6 @@
 package org.wit.gastrograbs.activities
 
-import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -25,33 +23,16 @@ class GrabViewActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        i("in onCreate view")
+        i("in onCreate view for + ${grab.title}")
 
-        i(grab.title)
         binding = ActivityGrabViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-
         app = application as MainApp
 
-        if (intent.hasExtra("grab_view")) {
-            //edit = true
-            grab = intent.extras?.getParcelable("grab_view")!!
+        grab = intent.extras?.getParcelable("grab_view")!!
 
-            binding.toolbarAdd.title = grab.title
-            setSupportActionBar(binding.toolbarAdd)
-
-            //binding.grabTitle.setText(grab.title)
-            binding.grabDescription.setText(grab.description)
-            binding.grabCategory.setText(grab.category)
-            //binding.btnAdd.setText(R.string.save_grab)
-            Picasso.get()
-                .load(grab.image)
-                .into(binding.grabImage)
-
-       }
-
+        showGrab()
         registerRefreshCallback()
     }
 
@@ -63,7 +44,21 @@ class GrabViewActivity : AppCompatActivity() {
     private fun registerRefreshCallback() {
         refreshIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-            {  }
+            {   showGrab()
+          }
+    }
+
+    private fun showGrab(){ // find updated grab from json after update
+        var foundGrab = app.grabs.findOne(grab.id)
+        if (foundGrab != null) {
+            binding.toolbarAdd.title = foundGrab.title
+            setSupportActionBar(binding.toolbarAdd)
+            binding.grabDescription.setText(foundGrab.description)
+            binding.grabCategory.setText(foundGrab.category)
+            Picasso.get()
+                .load(foundGrab.image)
+                .into(binding.grabImage)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

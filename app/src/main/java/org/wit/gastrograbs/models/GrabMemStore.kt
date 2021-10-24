@@ -16,6 +16,10 @@ class GrabMemStore: GrabStore {
         return grabs
     }
 
+    override fun findOne(id: Long): GrabModel? {
+        TODO("Not yet implemented")
+    }
+
     override fun create(grab: GrabModel) {
         grab.id = getId()
         grabs.add(grab)

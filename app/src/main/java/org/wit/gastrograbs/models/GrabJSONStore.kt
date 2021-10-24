@@ -34,7 +34,12 @@ class GrabJSONStore(private val context: Context) : GrabStore {
         return grabs
     }
 
-    override fun create(grab: GrabModel) {
+    override fun findOne(id: Long): GrabModel? {
+        return grabs.find { p -> p.id == id }
+        //serialize()
+    }
+
+   override fun create(grab: GrabModel) {
         grab.id = generateRandomId()
         grabs.add(grab)
         serialize()
