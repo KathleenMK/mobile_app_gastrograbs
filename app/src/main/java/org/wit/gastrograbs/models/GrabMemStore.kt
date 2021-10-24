@@ -16,6 +16,10 @@ class GrabMemStore: GrabStore {
         return grabs
     }
 
+    override fun findOne(id: Long): GrabModel? {
+        TODO("Not yet implemented")
+    }
+
     override fun create(grab: GrabModel) {
         grab.id = getId()
         grabs.add(grab)
@@ -28,8 +32,16 @@ class GrabMemStore: GrabStore {
             foundGrab.title = grab.title
             foundGrab.description = grab.description
             foundGrab.category = grab.category
+            foundGrab.image = grab.image
+            foundGrab.lat = grab.lat
+            foundGrab.lng = grab.lng
+            foundGrab.zoom = grab.zoom
             logAll()
         }
+    }
+
+    override fun delete(grab: GrabModel) {
+        grabs.remove(grab)
     }
 
     fun logAll(){

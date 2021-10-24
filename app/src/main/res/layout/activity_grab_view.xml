@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.wit.gastrograbs.activities.GrabActivity">
+    tools:context=".activities.GrabViewActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -40,26 +39,11 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <EditText
-                    android:id="@+id/grabTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_margin="8dp"
-                    android:hint="@string/hint_grabTitle"
-                    android:inputType="text"
-                    android:maxLength="25"
-                    android:maxLines="1"
-                    android:padding="8dp"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="14sp" />
-
-                <EditText
+                <TextView
                     android:id="@+id/grabDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:hint="@string/hint_grabDescription"
-                    android:inputType="text"
                     android:maxLength="100"
                     android:maxLines="1"
                     android:padding="8dp"
@@ -71,45 +55,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:hint="@string/hint_grabCategory"
                     android:maxLength="25"
                     android:maxLines="1"
                     android:padding="8dp"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="14sp" />
 
-                <Spinner
-                    android:id="@+id/category_spinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="14sp" />
-
-                <Button
-                    android:id="@+id/addLocation"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:background="@color/colorAccent"
-                    android:paddingBottom="8dp"
-                    android:paddingTop="8dp"
-                    android:stateListAnimator="@null"
-                    android:text="@string/button_addLocation"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="16sp"/>
-
-                <Button
-                    android:id="@+id/chooseImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:background="@color/colorAccent"
-                    android:paddingBottom="8dp"
-                    android:paddingTop="8dp"
-                    android:text="@string/button_addImage"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="16sp"/>
 
                 <ImageView
                     android:id="@+id/grabImage"
@@ -118,7 +69,7 @@
                     app:srcCompat="@android:drawable/ic_menu_gallery"/>
 
                 <Button
-                    android:id="@+id/btnAdd"
+                    android:id="@+id/btnCommentAdd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
@@ -126,11 +77,13 @@
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:stateListAnimator="@null"
-                    android:text="@string/button_addGrab"
+                    android:text="@string/button_comment"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:visibility="gone"/>
             </LinearLayout>
         </ScrollView>
 
     </RelativeLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

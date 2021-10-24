@@ -36,6 +36,7 @@
             android:layout_below="@id/grabDescription"
             android:textStyle="italic|bold"
             android:layout_alignParentRight="true"
+            android:outlineSpotShadowColor="@color/colorPrimaryDark"
             tools:text="Category" />
 
     </RelativeLayout>

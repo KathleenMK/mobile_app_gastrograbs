@@ -6,6 +6,8 @@ import android.os.Bundle
 //import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 //import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 //import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,6 +26,7 @@ class GrabCollectionActivity : AppCompatActivity(), GrabListener {
 
     lateinit var app: MainApp
     private lateinit var binding: ActivityGrabCollectionBinding
+    private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,10 +37,10 @@ class GrabCollectionActivity : AppCompatActivity(), GrabListener {
 
         val layoutManager = GridLayoutManager(this, 2)
         binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = GrabAdapter(app.grabs.findAll(),this)
-
         binding.toolbar.title = title
         setSupportActionBar(binding.toolbar)
+        loadGrabs()
+        registerRefreshCallback()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -49,21 +52,33 @@ class GrabCollectionActivity : AppCompatActivity(), GrabListener {
         when (item.itemId) {
             R.id.item_add -> {
                 val launcherIntent = Intent(this, GrabActivity::class.java)
-                startActivityForResult(launcherIntent,0)
+                refreshIntentLauncher.launch(launcherIntent)
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
     override fun onGrabClick(grab: GrabModel) {
-        val launcherIntent = Intent(this, GrabActivity::class.java)
-        launcherIntent.putExtra("grab_edit",grab)
-        startActivityForResult(launcherIntent,0)
+        val launcherIntent = Intent(this, GrabViewActivity::class.java)
+        launcherIntent.putExtra("grab_view",grab)
+        refreshIntentLauncher.launch(launcherIntent)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        binding.recyclerView.adapter?.notifyDataSetChanged()
-        super.onActivityResult(requestCode, resultCode, data)
+    private fun registerRefreshCallback() {
+        refreshIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { loadGrabs() }
     }
+
+    private fun loadGrabs(){
+        showGrabs(app.grabs.findAll())
+    }
+
+    fun showGrabs(grabs: List<GrabModel>){
+        binding.recyclerView.adapter = GrabAdapter(grabs, this)
+        binding.recyclerView.adapter?.notifyDataSetChanged()
+    }
+
+
 }
 
