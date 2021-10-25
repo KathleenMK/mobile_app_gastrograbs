@@ -7,8 +7,10 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.squareup.picasso.Picasso
 import org.wit.gastrograbs.R
+import org.wit.gastrograbs.adapters.CommentAdapter
 import org.wit.gastrograbs.databinding.ActivityGrabViewBinding
 import org.wit.gastrograbs.main.MainApp
 import org.wit.gastrograbs.models.GrabModel
@@ -34,6 +36,10 @@ class GrabViewActivity : AppCompatActivity() {
 
         showGrab()
         registerRefreshCallback()
+
+        val layoutManager = LinearLayoutManager(this)
+        binding.recyclerViewComment.layoutManager = layoutManager
+        binding.recyclerViewComment.adapter = CommentAdapter(grab.comments)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -78,7 +84,5 @@ class GrabViewActivity : AppCompatActivity() {
     }
 
 
-
-    
 
 }
