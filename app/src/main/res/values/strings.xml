@@ -12,12 +12,15 @@
     <string name="button_addImage"> Add an Image</string>
     <string name="select_grab_image">Select Grab image</string>
     <string name="change_grab_image">Change image</string>
-    <string name="button_comment">Comment</string>
+    <string name="button_comment">Add</string>
     <string name="menu_deleteGrab">Delete</string>
     <string name="button_addLocation">Add Location</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="title_add">Add a new Grab</string>
     <string name="title_update">Update this Grab</string>
+    <string name="hint_comment">Add a New Comment</string>
+    <string name="empty_comment">Empty Comment not added</string>
+    <string name="added_comment">Your Comment has been added</string>
     <string-array name="category_array">
             <item>Select Grab Category</item>
             <item>Sweet</item>

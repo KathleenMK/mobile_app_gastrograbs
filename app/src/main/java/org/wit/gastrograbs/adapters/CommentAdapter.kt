@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import org.wit.gastrograbs.databinding.CardCommentBinding
 
-class CommentAdapter constructor(private var comments: ArrayList<String>) :
+class CommentAdapter constructor(private var comments: List<String>) :
     RecyclerView.Adapter<CommentAdapter.MainHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {

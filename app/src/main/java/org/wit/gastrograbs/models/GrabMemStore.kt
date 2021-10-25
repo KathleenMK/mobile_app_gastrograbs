@@ -40,6 +40,10 @@ class GrabMemStore: GrabStore {
         }
     }
 
+    override fun addComment(grab: GrabModel, comment: String) {
+        TODO("Not yet implemented")
+    }
+
     override fun delete(grab: GrabModel) {
         grabs.remove(grab)
     }
