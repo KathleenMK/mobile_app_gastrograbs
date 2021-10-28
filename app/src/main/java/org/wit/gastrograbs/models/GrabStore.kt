@@ -6,5 +6,6 @@ interface GrabStore {
     fun create(grab: GrabModel)
     fun update(grab: GrabModel)
     fun addComment(grab: GrabModel, comment: String)
+    fun removeComment(grab: GrabModel, comment:String)
     fun delete(grab: GrabModel)
 }

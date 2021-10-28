@@ -71,6 +71,15 @@ class GrabJSONStore(private val context: Context) : GrabStore {
         serialize()
     }
 
+    override fun removeComment(grab: GrabModel, comment: String) {
+        val grabsList = findAll() as ArrayList<GrabModel>
+        var foundGrab: GrabModel? = grabsList.find { p -> p.id == grab.id }
+        if (foundGrab != null) {
+            foundGrab.comments.remove(comment)
+        }
+        serialize()
+    }
+
     override fun delete(grab: GrabModel) {
         grabs.remove(grab)
         serialize()

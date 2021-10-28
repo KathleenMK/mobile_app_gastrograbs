@@ -18,7 +18,17 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:textSize="15sp"
+            android:maxLines="1"
             tools:text="A Comment" />
+
+        <TextView
+            android:id="@+id/deleteHint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/comment"
+            android:visibility="gone"
+            tools:text="Description"
+            android:maxLines="1"/>
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

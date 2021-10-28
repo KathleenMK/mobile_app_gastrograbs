@@ -44,6 +44,10 @@ class GrabMemStore: GrabStore {
         TODO("Not yet implemented")
     }
 
+    override fun removeComment(grab: GrabModel, comment: String) {
+        TODO("Not yet implemented")
+    }
+
     override fun delete(grab: GrabModel) {
         grabs.remove(grab)
     }

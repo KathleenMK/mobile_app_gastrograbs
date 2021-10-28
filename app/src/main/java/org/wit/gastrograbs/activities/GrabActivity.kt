@@ -11,21 +11,22 @@ import android.widget.*
 import android.widget.Spinner
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import org.wit.gastrograbs.R
-//import org.wit.gastrograbs.R
+import org.wit.gastrograbs.adapters.CommentDeleteAdapter
+import org.wit.gastrograbs.adapters.CommentListener
 import org.wit.gastrograbs.databinding.ActivityGrabBinding
 import org.wit.gastrograbs.helpers.showImagePicker
 import org.wit.gastrograbs.main.MainApp
 import org.wit.gastrograbs.models.GrabModel
 import org.wit.gastrograbs.models.Location
-//import timber.log.Timber
 import timber.log.Timber.i
 
 
 
-class GrabActivity : AppCompatActivity() {
+class GrabActivity : AppCompatActivity(), CommentListener {
 
     private lateinit var binding: ActivityGrabBinding
     var grab = GrabModel()  //creating grab as a class member
@@ -61,6 +62,12 @@ class GrabActivity : AppCompatActivity() {
             if (grab.image != Uri.EMPTY) {
                 binding.chooseImage.setText(R.string.change_grab_image)
             }
+            val layoutManager = LinearLayoutManager(this)
+            binding.recyclerViewComment.layoutManager = layoutManager
+            binding.recyclerViewComment.adapter = CommentDeleteAdapter(grab.comments.asReversed(),this)
+
+
+
         }
 
         binding.btnAdd.setOnClickListener() {
@@ -173,6 +180,17 @@ class GrabActivity : AppCompatActivity() {
                     RESULT_CANCELED -> { } else -> { }
                 }
             }
+    }
+
+    override fun onCommentClick(comment: String) {
+        i("in new listener")
+        //binding.recyclerViewComment.adapter.    //setBackgroundColor(getColor(R.color.colorPrimaryDark))
+        app.grabs.removeComment(grab,comment)
+        i("${comment} will be deleted")
+        binding.recyclerViewComment.adapter?.notifyDataSetChanged()
+        val layoutManager = LinearLayoutManager(this)
+        binding.recyclerViewComment.layoutManager = layoutManager
+        binding.recyclerViewComment.adapter = CommentDeleteAdapter(grab.comments.asReversed(),this)
     }
 
 
