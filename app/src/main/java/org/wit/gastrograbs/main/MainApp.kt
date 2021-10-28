@@ -1,6 +1,7 @@
 package org.wit.gastrograbs.main
 
 import android.app.Application
+import android.net.Uri
 import org.wit.gastrograbs.models.GrabJSONStore
 import org.wit.gastrograbs.models.GrabMemStore
 import org.wit.gastrograbs.models.GrabModel
@@ -19,7 +20,7 @@ class MainApp : Application() {
         //grabs = GrabMemStore()
         grabs = GrabJSONStore(applicationContext)
         i("GastroGrabs started")
-        //grabs.create(GrabModel(0,"Reeses Overload","Chocolatey deliciousness, peanuts and pretzels","treat"))
+        //grabs.create(GrabModel(0,"Reeses Overload","Chocolatey deliciousness, peanuts and pretzels","treat",Uri.EMPTY,arrayListOf("This is the most beautiful Reeses product around!","In Lidl this week...","Can someone send me some","Gorgeous")))
         //grabs.create(GrabModel(1,"Coffee House Lane Pods","So smooth...","everyday"))
         //grabs.create(GrabModel(2,"Seagull Latte Cruffins","If you like croissants and muffins and flavoured custard...","weekend"))
 

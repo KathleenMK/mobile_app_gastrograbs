@@ -7,8 +7,11 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import org.wit.gastrograbs.R
+import org.wit.gastrograbs.adapters.CommentAdapter
 import org.wit.gastrograbs.databinding.ActivityGrabViewBinding
 import org.wit.gastrograbs.main.MainApp
 import org.wit.gastrograbs.models.GrabModel
@@ -23,7 +26,7 @@ class GrabViewActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        i("in onCreate view for + ${grab.title}")
+
 
         binding = ActivityGrabViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -31,6 +34,22 @@ class GrabViewActivity : AppCompatActivity() {
         app = application as MainApp
 
         grab = intent.extras?.getParcelable("grab_view")!!
+        i("in onCreate view for + ${grab.title}")
+
+        binding.btnAddComment.setOnClickListener{
+           var newComment = binding.newComment.text.toString()
+            if (newComment.isEmpty()) {
+                Snackbar.make(it,R.string.empty_comment, Snackbar.LENGTH_LONG)
+                    .show()
+            } else {
+                app.grabs.addComment(grab,newComment)
+                Snackbar.make(it,R.string.added_comment, Snackbar.LENGTH_LONG)
+                    .show()
+                setResult(RESULT_OK)
+                showGrab()
+                //finish()
+            }
+        }
 
         showGrab()
         registerRefreshCallback()
@@ -58,6 +77,9 @@ class GrabViewActivity : AppCompatActivity() {
             Picasso.get()
                 .load(foundGrab.image)
                 .into(binding.grabImage)
+            val layoutManager = LinearLayoutManager(this)
+            binding.recyclerViewComment.layoutManager = layoutManager
+            binding.recyclerViewComment.adapter = CommentAdapter(grab.comments.asReversed())
         }
     }
 
@@ -78,7 +100,5 @@ class GrabViewActivity : AppCompatActivity() {
     }
 
 
-
-    
 
 }
