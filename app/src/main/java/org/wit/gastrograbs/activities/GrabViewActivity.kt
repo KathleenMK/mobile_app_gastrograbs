@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +16,7 @@ import org.wit.gastrograbs.adapters.CommentAdapter
 import org.wit.gastrograbs.databinding.ActivityGrabViewBinding
 import org.wit.gastrograbs.main.MainApp
 import org.wit.gastrograbs.models.GrabModel
+import org.wit.gastrograbs.models.Location
 import timber.log.Timber.i
 
 class GrabViewActivity : AppCompatActivity() {
@@ -49,6 +51,22 @@ class GrabViewActivity : AppCompatActivity() {
                 showGrab()
                 //finish()
             }
+        }
+
+        if (grab.zoom != 0f){
+            binding.btnViewMap.visibility = View.VISIBLE
+        }
+
+        binding.btnViewMap.setOnClickListener {
+            var location = Location(52.15859, -7.14440, 16f)
+            if (grab.zoom != 0f){
+                location.lat = grab.lat
+                location.lng = grab.lng
+                location.zoom = grab.zoom
+            }
+            val launcherIntent = Intent(this, MapsActivity::class.java)
+                .putExtra("location", location)
+            refreshIntentLauncher.launch(launcherIntent)
         }
 
         showGrab()
@@ -92,9 +110,7 @@ class GrabViewActivity : AppCompatActivity() {
             launcherIntent.putExtra("grab_edit",grab)
                 refreshIntentLauncher.launch(launcherIntent)}
 
-            R.id.item_delete -> { app.grabs.delete(grab)
-                                    setResult(RESULT_OK)
-                                    finish()}
+
         }
         return super.onOptionsItemSelected(item)
     }

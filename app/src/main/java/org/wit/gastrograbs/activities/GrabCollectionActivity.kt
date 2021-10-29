@@ -16,7 +16,7 @@ import org.wit.gastrograbs.R
 import org.wit.gastrograbs.adapters.GrabAdapter
 import org.wit.gastrograbs.adapters.GrabListener
 import org.wit.gastrograbs.databinding.ActivityGrabCollectionBinding
-//import org.wit.gastrograbs.databinding.CardGrabBinding
+import org.wit.gastrograbs.databinding.CardGrabBinding
 import org.wit.gastrograbs.main.MainApp
 import org.wit.gastrograbs.models.GrabModel
 

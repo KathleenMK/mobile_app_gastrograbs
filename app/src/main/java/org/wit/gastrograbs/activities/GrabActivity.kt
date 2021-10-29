@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.*
 import android.widget.Spinner
 import androidx.activity.result.ActivityResultLauncher
@@ -31,6 +32,7 @@ class GrabActivity : AppCompatActivity(), CommentListener {
     private lateinit var binding: ActivityGrabBinding
     var grab = GrabModel()  //creating grab as a class member
     lateinit var app : MainApp
+    private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
 
@@ -52,6 +54,7 @@ class GrabActivity : AppCompatActivity(), CommentListener {
             grab = intent.extras?.getParcelable("grab_edit")!!
             binding.grabTitle.setText(grab.title)
             binding.grabDescription.setText(grab.description)
+            binding.grabCategory.visibility= View.VISIBLE
             binding.grabCategory.setText(grab.category)
             binding.btnAdd.setText(R.string.save_grab)
             binding.toolbarAdd.setTitle(R.string.title_update)
@@ -61,6 +64,9 @@ class GrabActivity : AppCompatActivity(), CommentListener {
                 .into(binding.grabImage)
             if (grab.image != Uri.EMPTY) {
                 binding.chooseImage.setText(R.string.change_grab_image)
+            }
+            if (grab.comments.size > 0) {
+                binding.commentHeader.visibility=View.VISIBLE
             }
             val layoutManager = LinearLayoutManager(this)
             binding.recyclerViewComment.layoutManager = layoutManager
@@ -128,6 +134,7 @@ class GrabActivity : AppCompatActivity(), CommentListener {
 
         registerImagePickerCallback()
         registerMapCallback()
+        registerRefreshCallback()
      }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -138,6 +145,12 @@ class GrabActivity : AppCompatActivity(), CommentListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.item_cancel -> { finish() }
+
+            R.id.item_delete -> { app.grabs.delete(grab)
+            val launcherIntent = Intent(this, GrabCollectionActivity::class.java)
+
+                //launcherIntent.putExtra("grab_edit",grab)
+                refreshIntentLauncher.launch(launcherIntent)}
         }
         return super.onOptionsItemSelected(item)
     }
@@ -191,6 +204,13 @@ class GrabActivity : AppCompatActivity(), CommentListener {
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerViewComment.layoutManager = layoutManager
         binding.recyclerViewComment.adapter = CommentDeleteAdapter(grab.comments.asReversed(),this)
+    }
+
+    private fun registerRefreshCallback() {
+        refreshIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            {
+            }
     }
 
 
