@@ -1,9 +1,21 @@
 package org.wit.gastrograbs.helpers
 
 import android.content.Context
+import android.net.Uri
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
+import org.wit.gastrograbs.models.GrabModel
+import org.wit.gastrograbs.models.UriParser
 import timber.log.Timber.e
 import java.io.*
+import java.lang.reflect.Type
+import java.util.*
 
+
+fun generateRandomId(): Long {
+    return Random().nextLong()
+}
 
 fun write(context: Context, fileName: String, data: String) {
     try {

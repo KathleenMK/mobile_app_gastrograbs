@@ -16,7 +16,7 @@ import org.wit.gastrograbs.R
 import org.wit.gastrograbs.adapters.GrabAdapter
 import org.wit.gastrograbs.adapters.GrabListener
 import org.wit.gastrograbs.databinding.ActivityGrabCollectionBinding
-//import org.wit.gastrograbs.databinding.CardGrabBinding
+import org.wit.gastrograbs.databinding.CardGrabBinding
 import org.wit.gastrograbs.main.MainApp
 import org.wit.gastrograbs.models.GrabModel
 
@@ -37,8 +37,10 @@ class GrabCollectionActivity : AppCompatActivity(), GrabListener {
 
         val layoutManager = GridLayoutManager(this, 2)
         binding.recyclerView.layoutManager = layoutManager
+
         binding.toolbar.title = title
         setSupportActionBar(binding.toolbar)
+
         loadGrabs()
         registerRefreshCallback()
     }
@@ -52,6 +54,10 @@ class GrabCollectionActivity : AppCompatActivity(), GrabListener {
         when (item.itemId) {
             R.id.item_add -> {
                 val launcherIntent = Intent(this, GrabActivity::class.java)
+                refreshIntentLauncher.launch(launcherIntent)
+            }
+            R.id.item_signOut -> {
+                val launcherIntent = Intent(this, LoginActivity::class.java)
                 refreshIntentLauncher.launch(launcherIntent)
             }
         }

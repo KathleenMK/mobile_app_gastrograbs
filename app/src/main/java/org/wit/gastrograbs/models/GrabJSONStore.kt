@@ -13,11 +13,8 @@ const val JSON_FILE = "gastrograbs.json"
 val gsonBuilder: Gson = GsonBuilder().setPrettyPrinting()
     .registerTypeAdapter(Uri::class.java, UriParser())
     .create()
-val listType: Type = object : TypeToken<ArrayList<GrabModel>>() {}.type
 
-fun generateRandomId(): Long {
-    return Random().nextLong()
-}
+val listType: Type = object : TypeToken<ArrayList<GrabModel>>() {}.type
 
 class GrabJSONStore(private val context: Context) : GrabStore {
 
@@ -58,6 +55,24 @@ class GrabJSONStore(private val context: Context) : GrabStore {
             foundGrab.lng = grab.lng
             foundGrab.zoom = grab.zoom
             //logAll()
+        }
+        serialize()
+    }
+
+    override fun addComment(grab: GrabModel, comment: String) {
+        val grabsList = findAll() as ArrayList<GrabModel>
+        var foundGrab: GrabModel? = grabsList.find { p -> p.id == grab.id }
+        if (foundGrab != null) {
+            foundGrab.comments +=  listOf(comment)
+           }
+        serialize()
+    }
+
+    override fun removeComment(grab: GrabModel, comment: String) {
+        val grabsList = findAll() as ArrayList<GrabModel>
+        var foundGrab: GrabModel? = grabsList.find { p -> p.id == grab.id }
+        if (foundGrab != null) {
+            foundGrab.comments.remove(comment)
         }
         serialize()
     }

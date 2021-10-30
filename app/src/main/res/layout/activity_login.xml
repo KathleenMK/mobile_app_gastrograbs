@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.GrabViewActivity">
+    tools:context=".activities.LoginActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbarAdd"
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:titleTextColor="@color/colorPrimary" />
@@ -40,114 +40,90 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/grabDescription"
+                    android:id="@+id/loginHeader"
+                    style="?android:attr/listSeparatorTextViewStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:maxLength="100"
                     android:maxLines="1"
                     android:padding="8dp"
+                    android:text="@string/login_header"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="14sp"
-                    android:visibility="gone"/>
-
-                <TextView
-                    android:id="@+id/grabCategory"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:layout_gravity="right"
-                    android:maxLength="25"
-                    android:maxLines="1"
-                    android:padding="8dp"
-                    android:textStyle="italic|bold"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="16sp"
-                    android:visibility="gone"/>
-
-               <ImageView
-                    android:id="@+id/grabImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginEnd="4dp"
-                    android:contentDescription="@string/change_grab_image"
-                    android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <Button
-                    android:id="@+id/btnViewMap"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:background="@color/colorAccent"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:stateListAnimator="@null"
-                    android:text="@string/button_map"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="10sp"
-                    android:visibility="gone"/>
-
-                <TextView
-                    android:id="@+id/commentHeader"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:maxLength="100"
-                    android:maxLines="1"
-                    android:padding="8dp"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="14sp"
-                    android:text="@string/comments_header"
-                    style="?android:attr/listSeparatorTextViewStyle" />
-
-                <GridLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:columnCount="4">
-
-                <Button
-                    android:id="@+id/btnAddComment"
-                    android:layout_width="30pt"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_column="3"
-                    android:background="@color/colorAccent"
-                    android:paddingTop="3dp"
-                    android:paddingBottom="3dp"
-                    android:stateListAnimator="@null"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="11sp"
-                    android:text="@string/button_comment"/>
-
+                    android:textAlignment="center"/>
 
                 <EditText
-                    android:id="@+id/newComment"
-                    android:layout_width="140pt"
+                    android:id="@+id/editEmail"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:hint="@string/hint_comment"
-                    android:inputType="text"
-                    android:layout_column="1"
+                    android:ems="10"
+                    android:hint="@string/hint_email"
+                    android:inputType="textEmailAddress"
                     android:maxLength="100"
-                    android:maxLines="3"
+                    android:maxLines="1"
                     android:padding="8dp"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="14sp" />
-                </GridLayout>
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerViewComment"
+
+                <EditText
+                    android:id="@+id/editPassword"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scrollbars="vertical"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:ems="10"
+                    android:hint="@string/hint_password"
+                    android:inputType="textPassword"
+                    android:maxLength="100"
+                    android:maxLines="1"
+                    android:padding="8dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="14sp" />
+
+
+                <Button
+                    android:id="@+id/btnLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:background="@color/colorAccent"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:stateListAnimator="@null"
+                    android:text="@string/button_login"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/or"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:maxLength="100"
+                    android:maxLines="1"
+                    android:padding="8dp"
+                    android:text="@string/or"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="14sp"
+                    android:textAlignment="center"/>
+
+                <Button
+                    android:id="@+id/btnSignUp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:background="@color/colorAccent"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:stateListAnimator="@null"
+                    android:text="@string/button_signup"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+
+
             </LinearLayout>
         </ScrollView>
 
     </RelativeLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
