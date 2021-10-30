@@ -131,9 +131,7 @@ class GrabActivity : AppCompatActivity(), CommentListener {
 
             R.id.item_delete -> { app.grabs.delete(grab)
             val launcherIntent = Intent(this, GrabCollectionActivity::class.java)
-
-                //launcherIntent.putExtra("grab_edit",grab)
-                refreshIntentLauncher.launch(launcherIntent)}
+            refreshIntentLauncher.launch(launcherIntent)}
         }
         return super.onOptionsItemSelected(item)
     }

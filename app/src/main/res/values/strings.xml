@@ -26,16 +26,28 @@
     <string name="deleted_comment">Comment has been deleted</string>
     <string name="delete_comment">Click to delete</string>
     <string name="button_map">View Location</string>
+    <string name="login_header">Enter Login Details</string>
+    <string name="comments_header">Comments</string>
+    <string name="button_login">LOGIN</string>
+    <string name="hint_password">password</string>
+    <string name="hint_email">email</string>
+    <string name="enter_login">Email and Password must be entered!</string>
+    <string name="login_fail">Login Details are Invalid</string>
+    <string name="menu_signout">SignOut</string>
+    <string name="signup_fail">Email is already signed up!</string>
+    <string name="button_signup">SIGNUP</string>
+    <string name="signUp_header">Enter Email and Password to Sign Up</string>
+    <string name="or">or</string>
     <string-array name="category_array">
-            <item>Select Grab Category</item>
-            <item>Sweet</item>
-            <item>Savoury</item>
-            <item>Wine</item>
-            <item>Kids</item>
-            <item>Christmas</item>
-            <item>Cocktails</item>
-            <item>Treat</item>
-            <item>Everyday</item>
+        <item>Select Grab Category</item>
+        <item>Sweet</item>
+        <item>Savoury</item>
+        <item>Wine</item>
+        <item>Kids</item>
+        <item>Christmas</item>
+        <item>Cocktails</item>
+        <item>Treat</item>
+        <item>Everyday</item>
     </string-array>
 
 </resources>

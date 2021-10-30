@@ -17,9 +17,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GastroGrabs">
         <activity
+            android:name=".activities.SignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.LoginActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.GrabSplashActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -47,7 +53,7 @@
             android:exported="true" />
         <activity
             android:name=".activities.GrabCollectionActivity"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".activities.GrabActivity"
             android:exported="true"> <!-- is this required -->

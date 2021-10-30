@@ -159,7 +159,7 @@
                     android:padding="8dp"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="14sp"
-                    android:text="Comments"
+                    android:text="@string/comments_header"
                     android:visibility="gone"
                     style="?android:attr/listSeparatorTextViewStyle" />
 

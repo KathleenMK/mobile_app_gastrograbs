@@ -56,6 +56,10 @@ class GrabCollectionActivity : AppCompatActivity(), GrabListener {
                 val launcherIntent = Intent(this, GrabActivity::class.java)
                 refreshIntentLauncher.launch(launcherIntent)
             }
+            R.id.item_signOut -> {
+                val launcherIntent = Intent(this, LoginActivity::class.java)
+                refreshIntentLauncher.launch(launcherIntent)
+            }
         }
         return super.onOptionsItemSelected(item)
     }

@@ -13,11 +13,8 @@ const val JSON_FILE = "gastrograbs.json"
 val gsonBuilder: Gson = GsonBuilder().setPrettyPrinting()
     .registerTypeAdapter(Uri::class.java, UriParser())
     .create()
-val listType: Type = object : TypeToken<ArrayList<GrabModel>>() {}.type
 
-fun generateRandomId(): Long {
-    return Random().nextLong()
-}
+val listType: Type = object : TypeToken<ArrayList<GrabModel>>() {}.type
 
 class GrabJSONStore(private val context: Context) : GrabStore {
 
