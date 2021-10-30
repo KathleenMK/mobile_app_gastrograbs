@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import org.wit.gastrograbs.R
+import org.wit.gastrograbs.adapters.CommentAdapter
 import org.wit.gastrograbs.adapters.CommentDeleteAdapter
 import org.wit.gastrograbs.adapters.CommentListener
 import org.wit.gastrograbs.databinding.ActivityGrabBinding
@@ -35,10 +36,11 @@ class GrabActivity : AppCompatActivity(), CommentListener {
     private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
+    var edit = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var edit = false
+
         binding = ActivityGrabBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -52,27 +54,7 @@ class GrabActivity : AppCompatActivity(), CommentListener {
         if (intent.hasExtra("grab_edit")) {
             edit = true
             grab = intent.extras?.getParcelable("grab_edit")!!
-            binding.grabTitle.setText(grab.title)
-            binding.grabDescription.setText(grab.description)
-            binding.grabCategory.visibility= View.VISIBLE
-            binding.grabCategory.setText(grab.category)
-            binding.btnAdd.setText(R.string.save_grab)
-            binding.toolbarAdd.setTitle(R.string.title_update)
-
-            Picasso.get()
-                .load(grab.image)
-                .into(binding.grabImage)
-            if (grab.image != Uri.EMPTY) {
-                binding.chooseImage.setText(R.string.change_grab_image)
-            }
-            if (grab.comments.size > 0) {
-                binding.commentHeader.visibility=View.VISIBLE
-            }
-            val layoutManager = LinearLayoutManager(this)
-            binding.recyclerViewComment.layoutManager = layoutManager
-            binding.recyclerViewComment.adapter = CommentDeleteAdapter(grab.comments.asReversed(),this)
-
-
+            showGrab()
 
         }
 
@@ -92,12 +74,13 @@ class GrabActivity : AppCompatActivity(), CommentListener {
             } else {
                   if (edit) {
                         app.grabs.update(grab.copy())
+                      //i("these are the grab comments in GrabActivity")
+                      //i(grab.comments.toString())
                     } else {
                         app.grabs.create(grab.copy())
                     }
 
                 setResult(RESULT_OK)
-
                 finish()
              }
 
@@ -183,6 +166,7 @@ class GrabActivity : AppCompatActivity(), CommentListener {
                     RESULT_OK -> {
                         if (result.data != null) {
                             i("Got Result ${result.data!!.data}")
+                            binding.grabImage.visibility=View.VISIBLE
                             grab.image = result.data!!.data!!
                             Picasso.get()
                                 .load(grab.image)
@@ -199,19 +183,56 @@ class GrabActivity : AppCompatActivity(), CommentListener {
         i("in new listener")
         //binding.recyclerViewComment.adapter.    //setBackgroundColor(getColor(R.color.colorPrimaryDark))
         app.grabs.removeComment(grab,comment)
-        i("${comment} will be deleted")
+        //i("${comment} will be deleted")
+        var foundGrab = app.grabs.findOne(grab.id)
+        //i("${foundGrab}")
         binding.recyclerViewComment.adapter?.notifyDataSetChanged()
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerViewComment.layoutManager = layoutManager
         binding.recyclerViewComment.adapter = CommentDeleteAdapter(grab.comments.asReversed(),this)
+        showGrab()
     }
 
     private fun registerRefreshCallback() {
         refreshIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-            {
+            { showGrab()
             }
+    }
+
+    private fun showGrab(){ // find updated grab from json after update
+        var foundGrab = app.grabs.findOne(grab.id)
+        i("show grab is +${foundGrab.toString()}")
+        if (foundGrab != null) {
+            binding.grabTitle.setText(foundGrab.title)
+            binding.grabDescription.setText(foundGrab.description)
+            binding.grabCategory.visibility= View.VISIBLE
+            binding.grabCategory.setText(foundGrab.category)
+            binding.btnAdd.setText(R.string.save_grab)
+            binding.toolbarAdd.setTitle(R.string.title_update)
+
+            Picasso.get()
+                .load(foundGrab.image)
+                .into(binding.grabImage)
+            if (foundGrab.image != Uri.EMPTY) {
+                binding.grabImage.visibility=View.VISIBLE
+                binding.chooseImage.setText(R.string.change_grab_image)
+            }
+            if (foundGrab.comments.size > 0) {
+                binding.commentHeader.visibility=View.VISIBLE
+            }
+            if (grab.zoom != 0f){
+                binding.addLocation.setText(R.string.change_grab_location)
+            }
+            val layoutManager = LinearLayoutManager(this)
+            binding.recyclerViewComment.layoutManager = layoutManager
+            binding.recyclerViewComment.adapter = CommentDeleteAdapter(foundGrab.comments.asReversed(),this)
+
+
+
+        }
     }
 
 
 }
+

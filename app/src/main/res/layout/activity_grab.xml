@@ -90,7 +90,15 @@
                 <ImageView
                     android:id="@+id/grabImage"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="150dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:contentDescription="@string/change_grab_image"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <GridLayout
                     android:layout_width="match_parent"
@@ -126,6 +134,21 @@
                     android:layout_columnSpan="1"/>
                 </GridLayout>
 
+
+
+                <Button
+                    android:id="@+id/btnAdd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:background="@color/colorAccent"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:stateListAnimator="@null"
+                    android:text="@string/button_addGrab"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+
                 <TextView
                     android:id="@+id/commentHeader"
                     android:layout_width="match_parent"
@@ -141,7 +164,6 @@
                     style="?android:attr/listSeparatorTextViewStyle" />
 
 
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerViewComment"
                     android:layout_width="match_parent"
@@ -149,18 +171,6 @@
                     android:scrollbars="vertical"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-                <Button
-                    android:id="@+id/btnAdd"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:background="@color/colorAccent"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    android:stateListAnimator="@null"
-                    android:text="@string/button_addGrab"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="16sp" />
 
             </LinearLayout>
         </ScrollView>

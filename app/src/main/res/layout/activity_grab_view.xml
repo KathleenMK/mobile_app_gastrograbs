@@ -48,25 +48,35 @@
                     android:maxLines="1"
                     android:padding="8dp"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/grabCategory"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
+                    android:layout_gravity="right"
                     android:maxLength="25"
                     android:maxLines="1"
                     android:padding="8dp"
+                    android:textStyle="italic|bold"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="14sp" />
+                    android:textSize="16sp"
+                    android:visibility="gone"/>
 
-
-                <ImageView
+               <ImageView
                     android:id="@+id/grabImage"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@android:drawable/ic_menu_gallery" />
+                    android:layout_height="150dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:contentDescription="@string/change_grab_image"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
                     android:id="@+id/btnViewMap"
@@ -99,6 +109,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:columnCount="4">
+
                 <Button
                     android:id="@+id/btnAddComment"
                     android:layout_width="30pt"
@@ -110,7 +121,7 @@
                     android:paddingBottom="3dp"
                     android:stateListAnimator="@null"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="15sp"
+                    android:textSize="11sp"
                     android:text="@string/button_comment"/>
 
 

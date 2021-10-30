@@ -20,9 +20,12 @@ class MainApp : Application() {
         //grabs = GrabMemStore()
         grabs = GrabJSONStore(applicationContext)
         i("GastroGrabs started")
-        //grabs.create(GrabModel(0,"Reeses Overload","Chocolatey deliciousness, peanuts and pretzels","treat",Uri.EMPTY,arrayListOf("This is the most beautiful Reeses product around!","In Lidl this week...","Can someone send me some","Gorgeous")))
-        //grabs.create(GrabModel(1,"Coffee House Lane Pods","So smooth...","everyday"))
-        //grabs.create(GrabModel(2,"Seagull Latte Cruffins","If you like croissants and muffins and flavoured custard...","weekend"))
-
+        /*
+        grabs.create(GrabModel(0,"Reeses Overload","Chocolatey deliciousness, peanuts and pretzels","treat",Uri.EMPTY,
+            arrayListOf("This is the most beautiful Reeses product around!", "In Lidl this week...", "Can someone send me some", "Gorgeous"),52.16397003708149,-7.162707075476646,16.0f))
+        grabs.create(GrabModel(1,"Coffee House Lane Pods","So smooth...","everyday"))
+        grabs.create(GrabModel(2,"Seagull Cruffins","If you like croissants and muffins and flavoured custard...","weekend",Uri.EMPTY,
+            arrayListOf("Just gorgeous"),52.16130378544212, -7.151395529508591, 16.0f))
+        */
     }
 }

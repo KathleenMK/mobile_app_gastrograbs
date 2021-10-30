@@ -37,8 +37,10 @@ class GrabCollectionActivity : AppCompatActivity(), GrabListener {
 
         val layoutManager = GridLayoutManager(this, 2)
         binding.recyclerView.layoutManager = layoutManager
+
         binding.toolbar.title = title
         setSupportActionBar(binding.toolbar)
+
         loadGrabs()
         registerRefreshCallback()
     }

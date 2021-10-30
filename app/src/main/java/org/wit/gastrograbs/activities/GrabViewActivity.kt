@@ -1,6 +1,7 @@
 package org.wit.gastrograbs.activities
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -35,6 +36,9 @@ class GrabViewActivity : AppCompatActivity() {
 
         app = application as MainApp
 
+        val layoutManager = LinearLayoutManager(this)
+        binding.recyclerViewComment.layoutManager = layoutManager
+
         grab = intent.extras?.getParcelable("grab_view")!!
         i("in onCreate view for + ${grab.title}")
 
@@ -47,14 +51,9 @@ class GrabViewActivity : AppCompatActivity() {
                 app.grabs.addComment(grab,newComment)
                 Snackbar.make(it,R.string.added_comment, Snackbar.LENGTH_LONG)
                     .show()
-                setResult(RESULT_OK)
                 showGrab()
-                //finish()
+                binding.newComment.setText("")
             }
-        }
-
-        if (grab.zoom != 0f){
-            binding.btnViewMap.visibility = View.VISIBLE
         }
 
         binding.btnViewMap.setOnClickListener {
@@ -87,18 +86,30 @@ class GrabViewActivity : AppCompatActivity() {
 
     private fun showGrab(){ // find updated grab from json after update
         var foundGrab = app.grabs.findOne(grab.id)
+        i("show grab is +${foundGrab.toString()}")
         if (foundGrab != null) {
             binding.toolbarAdd.title = foundGrab.title
             setSupportActionBar(binding.toolbarAdd)
-            binding.grabDescription.setText(foundGrab.description)
-            binding.grabCategory.setText(foundGrab.category)
-            Picasso.get()
-                .load(foundGrab.image)
-                .into(binding.grabImage)
-            val layoutManager = LinearLayoutManager(this)
-            binding.recyclerViewComment.layoutManager = layoutManager
-            binding.recyclerViewComment.adapter = CommentAdapter(grab.comments.asReversed())
-        }
+            if(foundGrab.description.length > 0) {
+                binding.grabDescription.visibility=View.VISIBLE
+                binding.grabDescription.setText(foundGrab.description)
+            }
+            if(foundGrab.description.length > 0) {
+                binding.grabCategory.visibility = View.VISIBLE
+                binding.grabCategory.setText(foundGrab.category)
+            }
+            if (foundGrab.image != Uri.EMPTY) {
+                binding.grabImage.visibility = View.VISIBLE
+                Picasso.get()
+                    .load(foundGrab.image)
+                    .into(binding.grabImage)
+            }
+            if (foundGrab.zoom != 0f){
+                binding.btnViewMap.visibility = View.VISIBLE
+            }
+            //i("these are the grab comments in View+${foundGrab.comments.toString()}")
+            binding.recyclerViewComment.adapter = CommentAdapter(foundGrab.comments.asReversed())
+                    }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -109,8 +120,6 @@ class GrabViewActivity : AppCompatActivity() {
             R.id.item_edit -> {val launcherIntent = Intent(this, GrabActivity::class.java)
             launcherIntent.putExtra("grab_edit",grab)
                 refreshIntentLauncher.launch(launcherIntent)}
-
-
         }
         return super.onOptionsItemSelected(item)
     }
