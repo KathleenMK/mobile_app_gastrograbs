@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import org.wit.gastrograbs.R
 import org.wit.gastrograbs.databinding.CardCommentBinding
 
 interface CommentListener {
@@ -33,7 +34,7 @@ class CommentDeleteAdapter constructor(private var comments: List<String>,
 
         fun bind(comment: String, listener: CommentListener) {
             binding.comment.text = comment
-            binding.deleteHint.text = "click to delete"
+            binding.deleteHint.setText(R.string.hint_delete)
             binding.deleteHint.visibility = View.VISIBLE
             binding.root.setOnClickListener { listener.onCommentClick(comment) }
         }

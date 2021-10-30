@@ -20,6 +20,7 @@
     <string name="title_add">Add a new Grab</string>
     <string name="title_update">Make Changes</string>
     <string name="hint_comment">Add a New Comment</string>
+    <string name="hint_delete">Click to Delete</string>
     <string name="empty_comment">Empty Comment not added</string>
     <string name="added_comment">Comment has been added</string>
     <string name="deleted_comment">Comment has been deleted</string>

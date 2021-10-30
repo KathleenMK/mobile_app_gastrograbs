@@ -151,6 +151,7 @@ class GrabActivity : AppCompatActivity(), CommentListener {
                             grab.lat = location.lat
                             grab.lng = location.lng
                             grab.zoom = location.zoom
+                            binding.addLocation.setText(R.string.change_grab_location)
                         }
                     }
                     RESULT_CANCELED -> { } else -> { }
@@ -181,15 +182,7 @@ class GrabActivity : AppCompatActivity(), CommentListener {
 
     override fun onCommentClick(comment: String) {
         i("in new listener")
-        //binding.recyclerViewComment.adapter.    //setBackgroundColor(getColor(R.color.colorPrimaryDark))
         app.grabs.removeComment(grab,comment)
-        //i("${comment} will be deleted")
-        var foundGrab = app.grabs.findOne(grab.id)
-        //i("${foundGrab}")
-        binding.recyclerViewComment.adapter?.notifyDataSetChanged()
-        val layoutManager = LinearLayoutManager(this)
-        binding.recyclerViewComment.layoutManager = layoutManager
-        binding.recyclerViewComment.adapter = CommentDeleteAdapter(grab.comments.asReversed(),this)
         showGrab()
     }
 
@@ -221,7 +214,7 @@ class GrabActivity : AppCompatActivity(), CommentListener {
             if (foundGrab.comments.size > 0) {
                 binding.commentHeader.visibility=View.VISIBLE
             }
-            if (grab.zoom != 0f){
+            if (foundGrab.zoom != 0f){
                 binding.addLocation.setText(R.string.change_grab_location)
             }
             val layoutManager = LinearLayoutManager(this)

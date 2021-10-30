@@ -26,6 +26,8 @@ class MainApp : Application() {
         grabs.create(GrabModel(1,"Coffee House Lane Pods","So smooth...","everyday"))
         grabs.create(GrabModel(2,"Seagull Cruffins","If you like croissants and muffins and flavoured custard...","weekend",Uri.EMPTY,
             arrayListOf("Just gorgeous"),52.16130378544212, -7.151395529508591, 16.0f))
+        grabs.create(GrabModel(3,"Cinnamon buns","Another of Seagull's finest","Sweet",Uri.EMPTY,
+            arrayListOf(),52.16130378544212, -7.151395529508591, 16.0f))
         */
     }
 }
