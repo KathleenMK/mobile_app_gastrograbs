@@ -10,7 +10,6 @@ import com.google.android.material.snackbar.Snackbar
 import org.wit.gastrograbs.R
 import org.wit.gastrograbs.activities.ui.home.GrabCollectionFragment
 import org.wit.gastrograbs.databinding.ActivityGrabBinding
-import org.wit.gastrograbs.databinding.ActivityGrabCollectionBinding
 import org.wit.gastrograbs.databinding.ActivityLoginBinding
 import org.wit.gastrograbs.main.MainApp
 import org.wit.gastrograbs.models.GrabberModel
