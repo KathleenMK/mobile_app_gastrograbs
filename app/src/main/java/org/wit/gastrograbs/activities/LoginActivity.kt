@@ -8,6 +8,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import org.wit.gastrograbs.R
+import org.wit.gastrograbs.activities.ui.home.GrabCollectionFragment
 import org.wit.gastrograbs.databinding.ActivityGrabBinding
 import org.wit.gastrograbs.databinding.ActivityGrabCollectionBinding
 import org.wit.gastrograbs.databinding.ActivityLoginBinding
@@ -48,7 +49,7 @@ class LoginActivity : AppCompatActivity() {
                     .show()
             }
             else if(app.grabbers.authenticate(grabber.email,grabber.password))
-            {   val launcherIntent = Intent(this, GrabCollectionActivity::class.java)
+            {   val launcherIntent = Intent(this, GastroGrabs::class.java)
                 refreshIntentLauncher.launch(launcherIntent)}
             else
             {

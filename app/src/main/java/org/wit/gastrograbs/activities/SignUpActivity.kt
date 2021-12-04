@@ -7,6 +7,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.snackbar.Snackbar
 import org.wit.gastrograbs.R
+import org.wit.gastrograbs.activities.ui.home.GrabCollectionFragment
 import org.wit.gastrograbs.databinding.ActivityLoginBinding
 import org.wit.gastrograbs.databinding.ActivitySignUpBinding
 import org.wit.gastrograbs.main.MainApp
@@ -53,7 +54,7 @@ class SignUpActivity : AppCompatActivity() {
             }
             else {
                app.grabbers.signup(grabber.copy())
-                val launcherIntent = Intent(this, GrabCollectionActivity::class.java)
+                val launcherIntent = Intent(this, GastroGrabs::class.java)
                 refreshIntentLauncher.launch(launcherIntent)
             }
         }

@@ -17,6 +17,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GastroGrabs">
         <activity
+            android:name=".activities.GastroGrabs"
+            android:exported="true"
+            android:label="@string/title_activity_gastro_grabs"
+            android:theme="@style/Theme.GastroGrabs.NoActionBar">
+        </activity>
+        <activity
             android:name=".activities.SignUpActivity"
             android:exported="false" />
         <activity

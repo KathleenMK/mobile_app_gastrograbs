@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import org.wit.gastrograbs.R
+import org.wit.gastrograbs.activities.ui.home.GrabCollectionFragment
 import org.wit.gastrograbs.adapters.CommentAdapter
 import org.wit.gastrograbs.adapters.CommentDeleteAdapter
 import org.wit.gastrograbs.adapters.CommentListener
@@ -130,8 +131,9 @@ class GrabActivity : AppCompatActivity(), CommentListener {
             R.id.item_cancel -> { finish() }
 
             R.id.item_delete -> { app.grabs.delete(grab)
-            val launcherIntent = Intent(this, GrabCollectionActivity::class.java)
-            refreshIntentLauncher.launch(launcherIntent)}
+            //val launcherIntent = Intent(this, GrabCollectionActivity::class.java)
+                val launcherIntent = Intent(this, GastroGrabs::class.java)
+                refreshIntentLauncher.launch(launcherIntent)}
         }
         return super.onOptionsItemSelected(item)
     }
