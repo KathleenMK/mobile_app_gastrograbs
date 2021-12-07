@@ -9,13 +9,22 @@
         android:id="@+id/nav_home"
         android:name="org.wit.gastrograbs.activities.ui.home.GrabCollectionFragment"
         android:label="@string/app_name"
-        tools:layout="@layout/fragment_grab_collection" />
+        tools:layout="@layout/fragment_grab_collection" >
+        <action
+            android:id="@+id/action_nav_home_to_nav_gallery"
+            app:destination="@id/nav_gallery" />
+        <action
+            android:id="@+id/action_nav_home_to_grabViewFragment"
+            app:destination="@id/grabViewFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
+        </fragment>
 
-<!--    <fragment-->
-<!--        android:id="@+id/nav_gallery"-->
-<!--        android:name="org.wit.gastrograbs.activities.ui.gallery.GalleryFragment"-->
-<!--        android:label="@string/menu_gallery"-->
-<!--        tools:layout="@layout/fragment_gallery" />-->
+    <fragment
+        android:id="@+id/nav_gallery"
+        android:name="org.wit.gastrograbs.activities.ui.gallery.GalleryFragment"
+        android:label="@string/menu_gallery"
+        tools:layout="@layout/fragment_gallery" />
 
 <!--    <fragment-->
 <!--        android:id="@+id/nav_slideshow"-->
@@ -34,4 +43,13 @@
         android:label="@string/menu_signout"
         tools:layout="@layout/activity_grab"
         />
+    <fragment
+        android:id="@+id/grabViewFragment"
+        android:name="org.wit.gastrograbs.activities.ui.grabview.GrabViewFragment"
+        android:label="@string/menu_viewGrab"
+        tools:layout="@layout/fragment_grab_view" >
+        <argument
+            android:name="grabspecific"
+            app:argType="org.wit.gastrograbs.models.GrabModel" />
+    </fragment>
 </navigation>

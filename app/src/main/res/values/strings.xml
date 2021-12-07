@@ -4,6 +4,7 @@
     <string name="hint_grabTitle">Grab title</string>
     <string name="hint_grabDescription">Grab description</string>
     <string name="hint_grabCategory">Grab Category</string>
+    <string name="menu_viewGrab">View Grab</string>
     <string name="menu_addGrab">Add Grab</string>
     <string name="menu_editGrab">Edit</string>
     <string name="menu_cancelGrab">Cancel</string>

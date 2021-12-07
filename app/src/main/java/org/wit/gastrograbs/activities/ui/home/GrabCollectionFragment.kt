@@ -10,6 +10,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.wit.gastrograbs.R
 import org.wit.gastrograbs.activities.GrabViewActivity
@@ -68,9 +69,12 @@ class GrabCollectionFragment : Fragment(), GrabListener {
     }
 
     override fun onGrabClick(grab: GrabModel) {
-        val intent = Intent(activity, GrabViewActivity::class.java)
-        startActivity(intent.putExtra("grab_view",grab))
-    // above lines from : https://stackoverflow.com/questions/20835933/intent-from-fragment-to-activity 04Dec21
-    // added putExtra in the above to replicate previous activity
+//        val intent = Intent(activity, GrabViewActivity::class.java)
+//        startActivity(intent.putExtra("grab_view",grab))
+        // above lines from : https://stackoverflow.com/questions/20835933/intent-from-fragment-to-activity 04Dec21
+        // added putExtra in the above to replicate previous activity
+        val action = GrabCollectionFragmentDirections.actionNavHomeToGrabViewFragment(grab)
+        findNavController().navigate(action)
+
     }
 }

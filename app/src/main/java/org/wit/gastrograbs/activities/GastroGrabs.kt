@@ -39,7 +39,7 @@ class GastroGrabs : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, //R.id.nav_gallery, R.id.nav_slideshow   //why are other options not needed
+                R.id.nav_home, //R.id.nav_gallery, R.id.nav_slideshow   //only options here will display the hamburger menu, otherwise a back
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
