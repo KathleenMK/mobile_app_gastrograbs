@@ -4,20 +4,24 @@ import android.content.Intent
 import android.net.Uri
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import org.wit.gastrograbs.R
+import org.wit.gastrograbs.activities.GrabActivity
+import org.wit.gastrograbs.activities.MapsActivity
 import org.wit.gastrograbs.adapters.CommentAdapter
 import org.wit.gastrograbs.databinding.FragmentGrabViewBinding
 import org.wit.gastrograbs.main.MainApp
+import org.wit.gastrograbs.models.Location
 import timber.log.Timber
 
 class GrabViewFragment : Fragment() {
@@ -37,7 +41,6 @@ class GrabViewFragment : Fragment() {
 //    }
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {    //added new onCreate fun
         super.onCreate(savedInstanceState)
         app = activity?.application as MainApp
@@ -52,9 +55,36 @@ class GrabViewFragment : Fragment() {
         grabViewModel =
             ViewModelProvider(this).get(GrabViewViewModel::class.java)
         _binding = FragmentGrabViewBinding.inflate(inflater, container, false)
-        val root= binding.root
+        val root = binding.root
         //activity?.title = args.grabspecific.title //no difference
         //grabViewModel.observableGrab.observe(viewLifecycleOwner, Observer { render() })
+
+        binding.btnAddComment.setOnClickListener{
+            var newComment = binding.newComment.text.toString()
+            var grab = args.grabspecific
+            if (newComment.isEmpty()) {
+                Snackbar.make(it,R.string.empty_comment, Snackbar.LENGTH_LONG)
+                    .show()
+            } else {
+                app.grabs.addComment(grab,newComment)
+                Snackbar.make(it,R.string.added_comment, Snackbar.LENGTH_LONG)
+                    .show()
+                render()
+                binding.newComment.setText("")
+            }
+        }
+
+        binding.btnViewMap.setOnClickListener {
+            var location = Location(52.15859, -7.14440, 16f)
+            var grab = args.grabspecific
+            if (grab.zoom != 0f){
+                location.lat = grab.lat
+                location.lng = grab.lng
+                location.zoom = grab.zoom
+            }
+            val intent = Intent(activity, MapsActivity::class.java)
+            startActivity(intent.putExtra( "location", location))}
+
         render()
         return root
     }
@@ -69,11 +99,11 @@ class GrabViewFragment : Fragment() {
 //        binding.grabvm = grabViewModel
         var foundGrab = args.grabspecific
         binding.grabTitle.text = foundGrab.title
-        if(foundGrab.description.isNotEmpty()) {
-            binding.grabDescription.visibility=View.VISIBLE
+        if (foundGrab.description.isNotEmpty()) {
+            binding.grabDescription.visibility = View.VISIBLE
             binding.grabDescription.setText(foundGrab.description)
         }
-        if(foundGrab.description.isNotEmpty()) {
+        if (foundGrab.description.isNotEmpty()) {
             binding.grabCategory.visibility = View.VISIBLE
             binding.grabCategory.setText(foundGrab.category)
         }
@@ -83,7 +113,7 @@ class GrabViewFragment : Fragment() {
                 .load(foundGrab.image)
                 .into(binding.grabImage)
         }
-        if (foundGrab.zoom != 0f){
+        if (foundGrab.zoom != 0f) {
             binding.btnViewMap.visibility = View.VISIBLE
         }
         if (foundGrab.comments.isNotEmpty()) {
@@ -97,5 +127,27 @@ class GrabViewFragment : Fragment() {
 
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_view, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+
+            R.id.item_edit -> {
+                val intent = Intent(activity, GrabActivity::class.java)
+                startActivity(intent.putExtra("grab_edit", args.grabspecific))}
+                // above lines from : https://stackoverflow.com/questions/20835933/intent-from-fragment-to-activity 04Dec21
+                // added putExtra in the above to replicate previous activity
+            }
+            return super.onOptionsItemSelected(item)
+        }
+
+    override fun onResume() {
+        super.onResume()
+        // something like: detailViewModel.getDonation(args.donationid)
+    render()
+    }
 
 }
