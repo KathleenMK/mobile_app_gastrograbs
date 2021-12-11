@@ -60,12 +60,6 @@
             android:exported="true"
             android:label="@string/title_activity_maps" />
         <activity
-            android:name=".activities.GrabViewActivity"
-            android:exported="true" />
-        <activity
-            android:name=".activities.GrabCollectionActivity"
-            android:exported="true" />
-        <activity
             android:name=".activities.GrabActivity"
             android:exported="true"> <!-- is this required -->
         </activity>

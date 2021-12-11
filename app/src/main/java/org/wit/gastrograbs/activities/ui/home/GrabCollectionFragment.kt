@@ -5,15 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.wit.gastrograbs.R
-import org.wit.gastrograbs.activities.GrabViewActivity
 import org.wit.gastrograbs.adapters.GrabAdapter
 import org.wit.gastrograbs.adapters.GrabListener
 import org.wit.gastrograbs.databinding.FragmentGrabCollectionBinding

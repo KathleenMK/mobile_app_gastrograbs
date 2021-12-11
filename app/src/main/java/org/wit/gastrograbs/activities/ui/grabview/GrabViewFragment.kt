@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +19,7 @@ import com.squareup.picasso.Picasso
 import org.wit.gastrograbs.R
 import org.wit.gastrograbs.activities.GrabActivity
 import org.wit.gastrograbs.activities.MapsActivity
+import org.wit.gastrograbs.activities.ui.home.GrabCollectionFragmentDirections
 import org.wit.gastrograbs.adapters.CommentAdapter
 import org.wit.gastrograbs.databinding.FragmentGrabViewBinding
 import org.wit.gastrograbs.main.MainApp
@@ -136,8 +138,13 @@ class GrabViewFragment : Fragment() {
         when (item.itemId) {
 
             R.id.item_edit -> {
-                val intent = Intent(activity, GrabActivity::class.java)
-                startActivity(intent.putExtra("grab_edit", args.grabspecific))}
+                val grabEdit = true
+//                val intent = Intent(activity, GrabActivity::class.java)
+//                startActivity(intent.putExtra("grab_edit", args.grabspecific))}
+                val action =
+                    GrabViewFragmentDirections.actionGrabViewFragmentToGrabFragment(args.grabspecific, grabEdit)
+                findNavController().navigate(action)}
+
                 // above lines from : https://stackoverflow.com/questions/20835933/intent-from-fragment-to-activity 04Dec21
                 // added putExtra in the above to replicate previous activity
             }
@@ -151,3 +158,4 @@ class GrabViewFragment : Fragment() {
     }
 
 }
+

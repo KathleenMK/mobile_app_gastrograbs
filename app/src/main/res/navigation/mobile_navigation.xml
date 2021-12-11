@@ -18,7 +18,10 @@
             app:destination="@id/grabViewFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim" />
-        </fragment>
+        <action
+            android:id="@+id/action_nav_home_to_grabAddFragment"
+            app:destination="@id/nav_create" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_gallery"
@@ -32,11 +35,11 @@
 <!--        android:label="@string/menu_slideshow"-->
 <!--        tools:layout="@layout/fragment_slideshow" />-->
 
-    <activity
-        android:id="@+id/nav_create"
-        android:name="org.wit.gastrograbs.activities.GrabActivity"
-        android:label="@string/menu_addGrab"
-        tools:layout="@layout/activity_grab" />
+<!--    <activity-->
+<!--        android:id="@+id/nav_create"-->
+<!--        android:name="org.wit.gastrograbs.activities.GrabActivity"-->
+<!--        android:label="@string/menu_addGrab"-->
+<!--        tools:layout="@layout/activity_grab" />-->
     <activity
         android:id="@+id/nav_signout"
         android:name="org.wit.gastrograbs.activities.LoginActivity"
@@ -51,5 +54,30 @@
         <argument
             android:name="grabspecific"
             app:argType="org.wit.gastrograbs.models.GrabModel" />
+        <action
+            android:id="@+id/action_grabViewFragment_to_grabFragment"
+            app:destination="@id/grabFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/grabFragment"
+        android:name="org.wit.gastrograbs.activities.ui.grabedit.GrabEditFragment"
+        android:label="@string/menu_editGrab"
+        tools:layout="@layout/fragment_grab_edit">
+    <argument
+        android:name="grabspecific"
+        app:argType="org.wit.gastrograbs.models.GrabModel"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim" />
+        <argument
+            android:name="grab_edit"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/action_grabFragment_to_grabViewFragment"
+            app:destination="@id/grabViewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_create"
+        android:name="org.wit.gastrograbs.activities.ui.grabadd.GrabAddFragment"
+        android:label="@string/menu_addGrab"
+        tools:layout="@layout/fragment_grab_add" />
 </navigation>
