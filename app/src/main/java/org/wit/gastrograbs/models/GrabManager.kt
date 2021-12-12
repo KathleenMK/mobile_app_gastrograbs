@@ -10,14 +10,14 @@ internal fun getId(): Long {
 
 object GrabManager: GrabStore {
 
-    val grabs = ArrayList<GrabModel>()
+    private val grabs = ArrayList<GrabModel>()
 
     override fun findAll(): List<GrabModel> {
         return grabs
     }
 
     override fun findOne(id: Long): GrabModel? {
-        TODO("Not yet implemented")
+        return grabs.find { p -> p.id == id }
     }
 
     override fun create(grab: GrabModel) {
@@ -41,11 +41,20 @@ object GrabManager: GrabStore {
     }
 
     override fun addComment(grab: GrabModel, comment: String) {
-        TODO("Not yet implemented")
+        val grabsList = findAll() as java.util.ArrayList<GrabModel>
+        var foundGrab: GrabModel? = grabsList.find { p -> p.id == grab.id }
+        if (foundGrab != null) {
+            foundGrab.comments +=  listOf(comment)
+        }
+        logAll()
     }
 
     override fun removeComment(grab: GrabModel, comment: String) {
-        TODO("Not yet implemented")
+        val grabsList = findAll() as java.util.ArrayList<GrabModel>
+        var foundGrab: GrabModel? = grabsList.find { p -> p.id == grab.id }
+        if (foundGrab != null) {
+            foundGrab.comments.remove(comment)
+        }
     }
 
     override fun delete(grab: GrabModel) {

@@ -43,7 +43,8 @@
                 android:textAllCaps="true"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="20sp"
-                android:visibility="visible" />
+                android:visibility="visible"
+                android:text="@{grabvm.observableGrab.title}"/>
 
             <TextView
                 android:id="@+id/grabDescription"
@@ -58,7 +59,7 @@
                 android:padding="8dp"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="14sp"
-                android:visibility="gone" />
+                android:text="@{grabvm.observableGrab.description}"/>
 
             <TextView
                 android:id="@+id/grabCategory"
@@ -76,7 +77,7 @@
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="16sp"
                 android:textStyle="italic|bold"
-                android:visibility="gone" />
+                android:text="@{grabvm.observableGrab.category}"/>
 
             <ImageView
                 android:id="@+id/grabImage"
@@ -85,7 +86,6 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="4dp"
                 android:contentDescription="@string/change_grab_image"
-                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -105,8 +105,7 @@
                 android:stateListAnimator="@null"
                 android:text="@string/button_map"
                 android:textColor="#263238"
-                android:textSize="10sp"
-                android:visibility="gone" />
+                android:textSize="10sp" />
 
             <TextView
                 android:id="@+id/commentHeader"
@@ -161,7 +160,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scrollbars="vertical"
-                android:visibility="gone"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
         </LinearLayout>
         <!--        </ScrollView>-->

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,7 +21,7 @@ import org.wit.gastrograbs.models.Location
 
 class GrabViewFragment : Fragment() {
 
-    lateinit var app: MainApp   //added line
+    //lateinit var app: MainApp   //added line
     private lateinit var grabViewModel: GrabViewViewModel
     private val args by navArgs<GrabViewFragmentArgs>()
     private var _binding: FragmentGrabViewBinding? = null
@@ -37,7 +38,7 @@ class GrabViewFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {    //added new onCreate fun
         super.onCreate(savedInstanceState)
-        app = activity?.application as MainApp
+        //app = activity?.application as MainApp
         setHasOptionsMenu(true)
         //navController = Navigation.findNavController(activity!!, R.id.nav_host_fragment)
     }
@@ -51,7 +52,7 @@ class GrabViewFragment : Fragment() {
         _binding = FragmentGrabViewBinding.inflate(inflater, container, false)
         val root = binding.root
         //activity?.title = args.grabspecific.title //no difference
-        //grabViewModel.observableGrab.observe(viewLifecycleOwner, Observer { render() })
+        grabViewModel.observableGrab.observe(viewLifecycleOwner, Observer { render() })
 
         binding.btnAddComment.setOnClickListener{
             var newComment = binding.newComment.text.toString()
@@ -60,7 +61,7 @@ class GrabViewFragment : Fragment() {
                 Snackbar.make(it,R.string.empty_comment, Snackbar.LENGTH_LONG)
                     .show()
             } else {
-                app.grabs.addComment(grab,newComment)
+                grabViewModel.addComment(grab,newComment)
                 Snackbar.make(it,R.string.added_comment, Snackbar.LENGTH_LONG)
                     .show()
                 render()
@@ -90,32 +91,32 @@ class GrabViewFragment : Fragment() {
 //    }
 
     private fun render() {
-//        binding.grabvm = grabViewModel
-        var foundGrab = args.grabspecific
-        binding.grabTitle.text = foundGrab.title
-        if (foundGrab.description.isNotEmpty()) {
-            binding.grabDescription.visibility = View.VISIBLE
-            binding.grabDescription.setText(foundGrab.description)
-        }
-        if (foundGrab.description.isNotEmpty()) {
-            binding.grabCategory.visibility = View.VISIBLE
-            binding.grabCategory.setText(foundGrab.category)
-        }
-        if (foundGrab.image != Uri.EMPTY) {
-            binding.grabImage.visibility = View.VISIBLE
+       binding.grabvm = grabViewModel
+//        var foundGrab = args.grabspecific
+//        binding.grabTitle.text = foundGrab.title
+//        if (foundGrab.description.isNotEmpty()) {
+//            binding.grabDescription.visibility = View.VISIBLE
+//            binding.grabDescription.setText(foundGrab.description)
+//        }
+//        if (foundGrab.description.isNotEmpty()) {
+//            binding.grabCategory.visibility = View.VISIBLE
+//            binding.grabCategory.setText(foundGrab.category)
+//        }
+        if (args.grabspecific.image != Uri.EMPTY) {
+//            binding.grabImage.visibility = View.VISIBLE
             Picasso.get()
-                .load(foundGrab.image)
+                .load(args.grabspecific.image)
                 .into(binding.grabImage)
         }
-        if (foundGrab.zoom != 0f) {
-            binding.btnViewMap.visibility = View.VISIBLE
-        }
-        if (foundGrab.comments.isNotEmpty()) {
-            binding.recyclerViewComment.visibility = View.VISIBLE
+//        if (foundGrab.zoom != 0f) {
+//            binding.btnViewMap.visibility = View.VISIBLE
+//        }
+//        if (foundGrab.comments.isNotEmpty()) {
+//            binding.recyclerViewComment.visibility = View.VISIBLE
             binding.recyclerViewComment.layoutManager = LinearLayoutManager(activity)
             binding.recyclerViewComment.adapter =
-                CommentAdapter(foundGrab.comments.asReversed())
-        }
+                CommentAdapter(args.grabspecific.comments.asReversed())
+//        }
         //binding.grabImage.text = args.grabspecific.description
 
 
@@ -145,7 +146,7 @@ class GrabViewFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        // something like: detailViewModel.getDonation(args.donationid)
+        grabViewModel.getGrab(args.grabspecific)
     render()
     }
 
