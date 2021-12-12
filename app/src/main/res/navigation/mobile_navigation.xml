@@ -44,7 +44,7 @@
         android:id="@+id/nav_signout"
         android:name="org.wit.gastrograbs.activities.LoginActivity"
         android:label="@string/menu_signout"
-        tools:layout="@layout/activity_grab"
+        tools:layout="@layout/activity_gastro_grabs"
         />
     <fragment
         android:id="@+id/grabViewFragment"

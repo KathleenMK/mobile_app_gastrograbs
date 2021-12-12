@@ -1,15 +1,12 @@
 package org.wit.gastrograbs.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import org.wit.gastrograbs.R
-import org.wit.gastrograbs.activities.ui.home.GrabCollectionFragment
-import org.wit.gastrograbs.databinding.ActivityGrabBinding
 import org.wit.gastrograbs.databinding.ActivityLoginBinding
 import org.wit.gastrograbs.main.MainApp
 import org.wit.gastrograbs.models.GrabberModel

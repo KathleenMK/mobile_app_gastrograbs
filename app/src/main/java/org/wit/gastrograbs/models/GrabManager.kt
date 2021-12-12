@@ -8,7 +8,7 @@ internal fun getId(): Long {
     return lastId++
 }
 
-class GrabMemStore: GrabStore {
+object GrabManager: GrabStore {
 
     val grabs = ArrayList<GrabModel>()
 

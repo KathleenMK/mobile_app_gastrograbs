@@ -60,4 +60,7 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
 
+    <string name="grabsNotFound">No Grabs...\nGo on add one!</string>
+    <string name="addGrabError">Error : Couldn\'t Add this Grab...</string>
+
 </resources>

@@ -16,7 +16,7 @@ class MainApp : Application() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
         //grabs = GrabMemStore()
-        grabs = GrabJSONStore(applicationContext)
+        //grabs = GrabJSONStore(applicationContext)
         grabbers = GrabberJSONStore(applicationContext)
         i("GastroGrabs started")
         /*
