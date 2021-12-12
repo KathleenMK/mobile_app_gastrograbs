@@ -11,6 +11,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,22 +37,22 @@ class GrabEditFragment : Fragment(), CommentListener {
 //        fun newInstance() = GrabEditFragment()
 //    }
 
-    lateinit var app: MainApp   //added line
+    //lateinit var app: MainApp   //added line
     private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var editViewModel: GrabEditViewModel
-    var grab = GrabModel()
+    //var grab = GrabModel()
     private val args by navArgs<GrabEditFragmentArgs>()
     private var _binding: FragmentGrabEditBinding? = null
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    var edit = false
+    //var edit = false
 
     override fun onCreate(savedInstanceState: Bundle?) {    //added new onCreate fun
         super.onCreate(savedInstanceState)
-        app = activity?.application as MainApp
+        //app = activity?.application as MainApp
         setHasOptionsMenu(true)
         //navController = Navigation.findNavController(activity!!, R.id.nav_host_fragment)
     }
@@ -64,33 +65,32 @@ class GrabEditFragment : Fragment(), CommentListener {
             ViewModelProvider(this).get(GrabEditViewModel::class.java)
         _binding = FragmentGrabEditBinding.inflate(inflater, container, false)
         val root = binding.root
+        editViewModel.observableGrab.observe(viewLifecycleOwner, Observer { render() })
 
-    if (args.grabEdit)
-    {edit = args.grabEdit
-        grab = args.grabspecific
-        render()}
+//    if (args.grabEdit)
+//    {edit = args.grabEdit
+//        grab = args.grabspecific
+//        render()}
 
         binding.btnAdd.setOnClickListener() {
-            grab.title = binding.grabTitle.text.toString()
-            grab.description = binding.grabDescription.text.toString()
+            args.grabspecific.title = binding.grabTitle.text.toString()
+            args.grabspecific.description = binding.grabDescription.text.toString()
 
             if(binding.categorySpinner.selectedItemPosition != 0){
-                grab.category = binding.categorySpinner.selectedItem.toString()
+                args.grabspecific.category = binding.categorySpinner.selectedItem.toString()
             }
             else{
-                grab.category = grab.category
+                args.grabspecific.category = args.grabspecific.category
             }
-            if (grab.title.isEmpty()) {
+            if (args.grabspecific.title.isEmpty()) {
                 Snackbar.make(it,R.string.enter_grab_title, Snackbar.LENGTH_LONG)
                     .show()
             } else {
-                if (edit) {
-                    app.grabs.update(grab.copy())
+
+                    editViewModel.updateGrab(args.grabspecific.copy())
                     //i("these are the grab comments in GrabActivity")
                     //i(grab.comments.toString())
-                } else {
-                    app.grabs.create(grab.copy())
-                }
+
 
             findNavController().popBackStack()  //https://stackoverflow.com/questions/63760586/kotlin-handling-back-button-click-in-navigation-drawer-android
 //                val action =
@@ -107,10 +107,10 @@ class GrabEditFragment : Fragment(), CommentListener {
         binding.addLocation.setOnClickListener {
             //var grab = args.grabspecific
             var location = Location(52.15859, -7.14440, 16f)
-            if (grab.zoom != 0f){
-                location.lat = grab.lat
-                location.lng = grab.lng
-                location.zoom = grab.zoom
+            if (args.grabspecific.zoom != 0f){
+                location.lat = args.grabspecific.lat
+                location.lng = args.grabspecific.lng
+                location.zoom = args.grabspecific.zoom
             }
             val intent = Intent(activity, MapsActivity::class.java)
             startActivity(intent.putExtra("location", location))
@@ -190,7 +190,7 @@ class GrabEditFragment : Fragment(), CommentListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
 
-            R.id.item_delete -> { app.grabs.delete(args.grabspecific)
+            R.id.item_delete -> { editViewModel.deleteGrab(args.grabspecific)
                 //val launcherIntent = Intent(this, GrabCollectionActivity::class.java)
                 val intent = Intent(activity, GastroGrabs::class.java)
                 startActivity(intent)}
@@ -259,7 +259,7 @@ private fun registerImagePickerCallback() {
 override fun onCommentClick(comment: String) {
     //var grab = args.grabspecific
     Timber.i("in new listener")
-    app.grabs.removeComment(grab,comment)
+    editViewModel.removeComment(args.grabspecific,comment)
     showGrab()
 }
 

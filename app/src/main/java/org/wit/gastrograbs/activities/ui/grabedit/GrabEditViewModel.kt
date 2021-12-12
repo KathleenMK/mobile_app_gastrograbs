@@ -3,10 +3,35 @@ package org.wit.gastrograbs.activities.ui.grabedit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import org.wit.gastrograbs.models.GrabManager
+import org.wit.gastrograbs.models.GrabModel
 
 class GrabEditViewModel : ViewModel() {
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is the GRAB Fragment"
+//    private val _text = MutableLiveData<String>().apply {
+//        value = "This is the GRAB Fragment"
+//    }
+//    val text: LiveData<String> = _text
+
+    private val grab = MutableLiveData<GrabModel>()
+
+    val observableGrab: LiveData<GrabModel>
+        get() = grab
+
+
+    fun updateGrab(grab: GrabModel){
+        GrabManager.update(grab)
     }
-    val text: LiveData<String> = _text
+
+    fun removeComment(grab: GrabModel, comment: String) {
+        //status.value = try {
+        GrabManager.removeComment(grab, comment)
+        //     true
+        // } catch (e: IllegalArgumentException) {
+        //     false
+        // }
+    }
+
+    fun deleteGrab(grab: GrabModel){
+        GrabManager.delete(grab)
+    }
 }
