@@ -40,12 +40,12 @@
 <!--        android:name="org.wit.gastrograbs.activities.GrabActivity"-->
 <!--        android:label="@string/menu_addGrab"-->
 <!--        tools:layout="@layout/activity_grab" />-->
-    <activity
-        android:id="@+id/nav_signout"
-        android:name="org.wit.gastrograbs.activities.LoginActivity"
-        android:label="@string/menu_signout"
-        tools:layout="@layout/activity_gastro_grabs"
-        />
+<!--    <activity-->
+<!--        android:id="@+id/nav_signout"-->
+<!--        android:name="org.wit.gastrograbs.activities.LoginActivity"-->
+<!--        android:label="@string/menu_signout"-->
+<!--        tools:layout="@layout/activity_gastro_grabs"-->
+<!--        />-->
     <fragment
         android:id="@+id/grabViewFragment"
         android:name="org.wit.gastrograbs.ui.grabview.GrabViewFragment"
