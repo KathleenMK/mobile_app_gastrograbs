@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import org.wit.gastrograbs.R
-import org.wit.gastrograbs.activities.GastroGrabs
+import org.wit.gastrograbs.ui.home.GastroGrabs
 import org.wit.gastrograbs.databinding.ActivityGrabberLoginBinding
 import timber.log.Timber
 
@@ -66,10 +66,16 @@ class GrabberLogin : AppCompatActivity() {
     }
 
     private fun checkStatus(error:Boolean) {
-        if (error)
-            Toast.makeText(this,
+        if (error) {
+            loginBinding.fieldEmail.setText("")
+            loginBinding.fieldPassword.setText("")
+            Toast.makeText(
+                this,
                 getString(R.string.auth_failed),
-                Toast.LENGTH_LONG).show()
+                Toast.LENGTH_LONG
+            ).show()
+        }
+
     }
 
     private fun validateForm(): Boolean {

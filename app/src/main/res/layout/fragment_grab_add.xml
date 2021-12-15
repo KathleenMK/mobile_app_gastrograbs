@@ -7,13 +7,13 @@
 <!--    <data>-->
 <!--        <variable-->
 <!--            name="grabvm3"-->
-<!--            type="org.wit.gastrograbs.activities.ui.grabadd.GrabAddViewModel" />-->
+<!--            type="org.wit.gastrograbs.ui.grabadd.GrabAddViewModel" />-->
 <!--    </data>-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activities.ui.grabadd.GrabAddFragment">
+        tools:context=".ui.grabadd.GrabAddFragment">
 
         <RelativeLayout
             android:layout_width="match_parent"

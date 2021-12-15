@@ -1,11 +1,10 @@
-package org.wit.gastrograbs.activities.ui.grabview
+package org.wit.gastrograbs.ui.grabview
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import org.wit.gastrograbs.models.GrabManager
 import org.wit.gastrograbs.models.GrabModel
-import org.wit.gastrograbs.models.GrabStore
 
 class GrabViewViewModel : ViewModel() {
     private val grab = MutableLiveData<GrabModel>()

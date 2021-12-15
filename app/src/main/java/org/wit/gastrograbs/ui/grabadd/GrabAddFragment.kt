@@ -1,4 +1,4 @@
-package org.wit.gastrograbs.activities.ui.grabadd
+package org.wit.gastrograbs.ui.grabadd
 
 import android.content.Intent
 import android.net.Uri
@@ -22,11 +22,9 @@ import org.wit.gastrograbs.R
 import org.wit.gastrograbs.activities.MapsActivity
 import org.wit.gastrograbs.databinding.FragmentGrabAddBinding
 import org.wit.gastrograbs.helpers.showImagePicker
-import org.wit.gastrograbs.main.MainApp
 import org.wit.gastrograbs.models.GrabModel
 import org.wit.gastrograbs.models.Location
 import timber.log.Timber
-import kotlin.properties.Delegates
 
 class GrabAddFragment : Fragment() {
 

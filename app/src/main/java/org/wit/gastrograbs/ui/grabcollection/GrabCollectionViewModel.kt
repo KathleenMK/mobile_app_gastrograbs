@@ -1,11 +1,9 @@
-package org.wit.gastrograbs.activities.ui.home
+package org.wit.gastrograbs.ui.grabcollection
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import org.wit.gastrograbs.models.GrabJSONStore
 import org.wit.gastrograbs.models.GrabManager
-import org.wit.gastrograbs.models.GrabStore
 import org.wit.gastrograbs.models.GrabModel
 
 class GrabCollectionViewModel : ViewModel() {

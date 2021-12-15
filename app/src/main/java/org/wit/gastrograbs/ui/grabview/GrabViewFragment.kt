@@ -1,4 +1,4 @@
-package org.wit.gastrograbs.activities.ui.grabview
+package org.wit.gastrograbs.ui.grabview
 
 import android.content.Intent
 import android.net.Uri
@@ -16,7 +16,6 @@ import org.wit.gastrograbs.R
 import org.wit.gastrograbs.activities.MapsActivity
 import org.wit.gastrograbs.adapters.CommentAdapter
 import org.wit.gastrograbs.databinding.FragmentGrabViewBinding
-import org.wit.gastrograbs.main.MainApp
 import org.wit.gastrograbs.models.Location
 
 class GrabViewFragment : Fragment() {

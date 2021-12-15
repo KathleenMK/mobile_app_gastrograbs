@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="org.wit.gastrograbs.activities.ui.home.GrabCollectionFragment"
+        android:name="org.wit.gastrograbs.ui.grabcollection.GrabCollectionFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_grab_collection" >
         <action
@@ -48,7 +48,7 @@
         />
     <fragment
         android:id="@+id/grabViewFragment"
-        android:name="org.wit.gastrograbs.activities.ui.grabview.GrabViewFragment"
+        android:name="org.wit.gastrograbs.ui.grabview.GrabViewFragment"
         android:label="@string/menu_viewGrab"
         tools:layout="@layout/fragment_grab_view" >
         <argument
@@ -60,7 +60,7 @@
     </fragment>
     <fragment
         android:id="@+id/grabFragment"
-        android:name="org.wit.gastrograbs.activities.ui.grabedit.GrabEditFragment"
+        android:name="org.wit.gastrograbs.ui.grabedit.GrabEditFragment"
         android:label="@string/menu_editGrab"
         tools:layout="@layout/fragment_grab_edit">
     <argument
@@ -77,7 +77,7 @@
     </fragment>
     <fragment
         android:id="@+id/nav_create"
-        android:name="org.wit.gastrograbs.activities.ui.grabadd.GrabAddFragment"
+        android:name="org.wit.gastrograbs.ui.grabadd.GrabAddFragment"
         android:label="@string/menu_addGrab"
         tools:layout="@layout/fragment_grab_add" />
 </navigation>

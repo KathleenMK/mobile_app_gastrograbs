@@ -1,4 +1,4 @@
-package org.wit.gastrograbs.activities.ui.grabedit
+package org.wit.gastrograbs.ui.grabedit
 
 import android.content.Intent
 import android.net.Uri
@@ -18,14 +18,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import org.wit.gastrograbs.R
-import org.wit.gastrograbs.activities.GastroGrabs
+import org.wit.gastrograbs.ui.home.GastroGrabs
 import org.wit.gastrograbs.activities.MapsActivity
 import org.wit.gastrograbs.adapters.CommentDeleteAdapter
 import org.wit.gastrograbs.adapters.CommentListener
 import org.wit.gastrograbs.databinding.FragmentGrabEditBinding
 import org.wit.gastrograbs.helpers.showImagePicker
-import org.wit.gastrograbs.main.MainApp
-import org.wit.gastrograbs.models.GrabModel
 import org.wit.gastrograbs.models.Location
 import timber.log.Timber
 

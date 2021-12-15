@@ -1,4 +1,4 @@
-package org.wit.gastrograbs.activities.ui.grabadd
+package org.wit.gastrograbs.ui.grabadd
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

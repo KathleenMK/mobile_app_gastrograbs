@@ -1,4 +1,4 @@
-package org.wit.gastrograbs.activities
+package org.wit.gastrograbs.ui.home
 
 import android.content.Intent
 import android.os.Bundle

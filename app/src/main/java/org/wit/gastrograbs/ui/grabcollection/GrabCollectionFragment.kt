@@ -1,4 +1,4 @@
-package org.wit.gastrograbs.activities.ui.home
+package org.wit.gastrograbs.ui.grabcollection
 
 import android.content.Intent
 import android.os.Bundle
@@ -16,7 +16,6 @@ import org.wit.gastrograbs.adapters.GrabAdapter
 import org.wit.gastrograbs.adapters.GrabListener
 import org.wit.gastrograbs.databinding.FragmentGrabCollectionBinding
 //import org.wit.gastrograbs.databinding.FragmentHomeBinding
-import org.wit.gastrograbs.main.MainApp
 import org.wit.gastrograbs.models.GrabModel
 
 class GrabCollectionFragment : Fragment(), GrabListener {

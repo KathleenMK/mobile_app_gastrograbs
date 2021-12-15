@@ -7,13 +7,13 @@
     <data>
         <variable
             name="grabvm2"
-            type="org.wit.gastrograbs.activities.ui.grabedit.GrabEditViewModel" />
+            type="org.wit.gastrograbs.ui.grabedit.GrabEditViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activities.ui.grabedit.GrabEditFragment">
+        tools:context=".ui.grabedit.GrabEditFragment">
 
         <RelativeLayout
             android:layout_width="match_parent"
