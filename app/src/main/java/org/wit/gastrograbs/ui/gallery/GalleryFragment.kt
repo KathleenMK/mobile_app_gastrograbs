@@ -1,4 +1,4 @@
-package org.wit.gastrograbs.activities.ui.gallery
+package org.wit.gastrograbs.ui.gallery
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,8 +8,8 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import org.wit.gastrograbs.R
 import org.wit.gastrograbs.databinding.FragmentGalleryBinding
+
 //import org.wit.gastrograbs.databinding.FragmentGalleryBinding
 
 class GalleryFragment : Fragment() {

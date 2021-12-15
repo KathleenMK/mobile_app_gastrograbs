@@ -1,4 +1,4 @@
-package org.wit.gastrograbs.activities.ui.slideshow
+package org.wit.gastrograbs.ui.slideshow
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

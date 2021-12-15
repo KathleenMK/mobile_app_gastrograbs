@@ -4,11 +4,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-        <variable
-            name="grabvm3"
-            type="org.wit.gastrograbs.activities.ui.grabadd.GrabAddViewModel" />
-    </data>
+<!--    <data>-->
+<!--        <variable-->
+<!--            name="grabvm3"-->
+<!--            type="org.wit.gastrograbs.activities.ui.grabadd.GrabAddViewModel" />-->
+<!--    </data>-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
