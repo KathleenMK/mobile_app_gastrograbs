@@ -11,6 +11,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -25,7 +26,10 @@ import org.wit.gastrograbs.adapters.CommentListener
 import org.wit.gastrograbs.databinding.FragmentGrabEditBinding
 import org.wit.gastrograbs.helpers.showImagePicker
 import org.wit.gastrograbs.models.Location
+import org.wit.gastrograbs.ui.auth.LoggedInViewModel
+import org.wit.gastrograbs.ui.grabcollection.GrabCollectionViewModel
 import timber.log.Timber
+import timber.log.Timber.i
 
 class GrabEditFragment : Fragment(), CommentListener {
 
@@ -40,6 +44,8 @@ class GrabEditFragment : Fragment(), CommentListener {
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var editViewModel: GrabEditViewModel
+    private val grabCollectionViewModel: GrabCollectionViewModel by activityViewModels()
+    private val loggedInViewModel : LoggedInViewModel by activityViewModels()
     //var grab = GrabModel()
     private val args by navArgs<GrabEditFragmentArgs>()
     private var _binding: FragmentGrabEditBinding? = null
@@ -59,10 +65,11 @@ class GrabEditFragment : Fragment(), CommentListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        editViewModel =
-            ViewModelProvider(this).get(GrabEditViewModel::class.java)
+
         _binding = FragmentGrabEditBinding.inflate(inflater, container, false)
         val root = binding.root
+        editViewModel =
+            ViewModelProvider(this).get(GrabEditViewModel::class.java)
         editViewModel.observableGrab.observe(viewLifecycleOwner, Observer { render() })
 
 //    if (args.grabEdit)
@@ -84,8 +91,11 @@ class GrabEditFragment : Fragment(), CommentListener {
                 Snackbar.make(it,R.string.enter_grab_title, Snackbar.LENGTH_LONG)
                     .show()
             } else {
-
-                    editViewModel.updateGrab(args.grabspecific.copy())
+                    i(loggedInViewModel.liveFirebaseUser.value?.uid!!)
+                    i(args.grabspecific.uid!!)
+                    //i(editViewModel.observableGrab!!.value!!.title)
+                    editViewModel.updateGrab(loggedInViewModel.liveFirebaseUser.value?.uid!!,args.grabspecific.uid!!,args.grabspecific)
+                    //Should I be passing something like the following in the above update method: binding.grabvm2?.observableGrab!!.value!!)
                     //i("these are the grab comments in GrabActivity")
                     //i(grab.comments.toString())
 
@@ -188,7 +198,8 @@ class GrabEditFragment : Fragment(), CommentListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
 
-            R.id.item_delete -> { editViewModel.deleteGrab(args.grabspecific)
+            R.id.item_delete -> { editViewModel.deleteGrab(loggedInViewModel.liveFirebaseUser.value?.uid!!,args.grabspecific.uid!!)
+                //Should I be passing something like the following in the above update method: binding.grabvm2?.observableGrab!!.value!!)
                 //val launcherIntent = Intent(this, GrabCollectionActivity::class.java)
                 val intent = Intent(activity, GastroGrabs::class.java)
                 startActivity(intent)}

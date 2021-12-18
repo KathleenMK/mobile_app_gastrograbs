@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -17,11 +18,14 @@ import org.wit.gastrograbs.adapters.GrabListener
 import org.wit.gastrograbs.databinding.FragmentGrabCollectionBinding
 //import org.wit.gastrograbs.databinding.FragmentHomeBinding
 import org.wit.gastrograbs.models.GrabModel
+import org.wit.gastrograbs.ui.auth.LoggedInViewModel
 
 class GrabCollectionFragment : Fragment(), GrabListener {
 
     //lateinit var app: MainApp   //added line
-    private lateinit var grabCollectionViewModel: GrabCollectionViewModel
+    private lateinit var grabCollectionViewModel: GrabCollectionViewModel //this line vs the below???
+    //private val grabCollectionViewModel: GrabCollectionViewModel by activityViewModels()
+    private val loggedInViewModel : LoggedInViewModel by activityViewModels()
     private var _binding: FragmentGrabCollectionBinding? = null
 
     // This property is only valid between onCreateView and
@@ -50,11 +54,13 @@ class GrabCollectionFragment : Fragment(), GrabListener {
         activity?.title = getString(R.string.app_name)  //added this line
 
         //val textView: TextView = binding.textHome
+
+        binding.recyclerView.layoutManager = LinearLayoutManager(activity)
         grabCollectionViewModel.observableGrabsList.observe(viewLifecycleOwner, Observer {
             grabs -> grabs?.let {render(grabs)}
         })
 
-        binding.recyclerView.layoutManager = LinearLayoutManager(activity)
+        //binding.recyclerView.layoutManager = LinearLayoutManager(activity)
         //binding.recyclerView.setLayoutManager(LinearLayoutManager(activity))
         //binding.recyclerView.adapter = GrabAdapter(app.grabs.findAll(),this)
 
@@ -89,7 +95,12 @@ class GrabCollectionFragment : Fragment(), GrabListener {
 
     override fun onResume() {
         super.onResume()
-        grabCollectionViewModel.load()
+        loggedInViewModel.liveFirebaseUser.observe(viewLifecycleOwner, Observer { firebaseUser ->
+            if (firebaseUser != null) {
+                grabCollectionViewModel.liveFirebaseUser.value = firebaseUser
+                grabCollectionViewModel.load()
+            }
+        })
     }
 
 

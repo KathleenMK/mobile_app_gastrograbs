@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -17,6 +18,7 @@ import org.wit.gastrograbs.activities.MapsActivity
 import org.wit.gastrograbs.adapters.CommentAdapter
 import org.wit.gastrograbs.databinding.FragmentGrabViewBinding
 import org.wit.gastrograbs.models.Location
+import org.wit.gastrograbs.ui.auth.LoggedInViewModel
 
 class GrabViewFragment : Fragment() {
 
@@ -24,6 +26,7 @@ class GrabViewFragment : Fragment() {
     private lateinit var grabViewModel: GrabViewViewModel
     private val args by navArgs<GrabViewFragmentArgs>()
     private var _binding: FragmentGrabViewBinding? = null
+    private val loggedInViewModel : LoggedInViewModel by activityViewModels()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -145,7 +148,7 @@ class GrabViewFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        grabViewModel.getGrab(args.grabspecific)
+        grabViewModel.getGrab(loggedInViewModel.liveFirebaseUser.value?.uid!!,args.grabspecific.uid!!)  //why !!
     render()
     }
 
