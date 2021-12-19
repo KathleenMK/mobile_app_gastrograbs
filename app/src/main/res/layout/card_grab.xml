@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="grab"
+            type="org.wit.gastrograbs.models.GrabModel" />
+    </data>
+
+<androidx.cardview.widget.CardView
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -17,6 +26,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
+            android:text="@{grab.title}"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="23sp"
             android:textStyle="bold"
             tools:text="A Title" />
@@ -26,6 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/grabTitle"
+            android:text="@{grab.description}"
             tools:text="Description"
             android:maxLines="2"/>
 
@@ -37,7 +49,9 @@
             android:textStyle="italic|bold"
             android:layout_alignParentRight="true"
             android:outlineSpotShadowColor="@color/colorPrimaryDark"
+            android:text="@{grab.category}"
             tools:text="Category" />
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
+</layout>

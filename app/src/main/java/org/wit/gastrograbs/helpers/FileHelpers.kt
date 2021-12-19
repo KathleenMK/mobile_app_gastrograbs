@@ -6,7 +6,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import org.wit.gastrograbs.models.GrabModel
-import org.wit.gastrograbs.models.UriParser
+//import org.wit.gastrograbs.models.UriParser
 import timber.log.Timber.e
 import java.io.*
 import java.lang.reflect.Type

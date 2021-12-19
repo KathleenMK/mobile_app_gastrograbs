@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="org.wit.gastrograbs.ui.grabcollection.GrabCollectionFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_grab_collection" >
+        <action
+            android:id="@+id/action_nav_home_to_nav_gallery"
+            app:destination="@id/nav_gallery" />
+        <action
+            android:id="@+id/action_nav_home_to_grabViewFragment"
+            app:destination="@id/grabViewFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
+        <action
+            android:id="@+id/action_nav_home_to_grabAddFragment"
+            app:destination="@id/nav_create" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_gallery"
+        android:name="org.wit.gastrograbs.ui.gallery.GalleryFragment"
+        android:label="@string/menu_gallery"
+        tools:layout="@layout/fragment_gallery" />
+
+<!--    <fragment-->
+<!--        android:id="@+id/nav_slideshow"-->
+<!--        android:name="org.wit.gastrograbs.ui.slideshow.SlideshowFragment"-->
+<!--        android:label="@string/menu_slideshow"-->
+<!--        tools:layout="@layout/fragment_slideshow" />-->
+
+<!--    <activity-->
+<!--        android:id="@+id/nav_create"-->
+<!--        android:name="org.wit.gastrograbs.activities.GrabActivity"-->
+<!--        android:label="@string/menu_addGrab"-->
+<!--        tools:layout="@layout/activity_grab" />-->
+<!--    <activity-->
+<!--        android:id="@+id/nav_signout"-->
+<!--        android:name="org.wit.gastrograbs.activities.LoginActivity"-->
+<!--        android:label="@string/menu_signout"-->
+<!--        tools:layout="@layout/activity_gastro_grabs"-->
+<!--        />-->
+    <fragment
+        android:id="@+id/grabViewFragment"
+        android:name="org.wit.gastrograbs.ui.grabview.GrabViewFragment"
+        android:label="@string/menu_viewGrab"
+        tools:layout="@layout/fragment_grab_view" >
+        <argument
+            android:name="grabspecific"
+            app:argType="org.wit.gastrograbs.models.GrabModel" />
+        <action
+            android:id="@+id/action_grabViewFragment_to_grabFragment"
+            app:destination="@id/grabFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/grabFragment"
+        android:name="org.wit.gastrograbs.ui.grabedit.GrabEditFragment"
+        android:label="@string/menu_editGrab"
+        tools:layout="@layout/fragment_grab_edit">
+    <argument
+        android:name="grabspecific"
+        app:argType="org.wit.gastrograbs.models.GrabModel"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim" />
+        <argument
+            android:name="grab_edit"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/action_grabFragment_to_grabViewFragment"
+            app:destination="@id/grabViewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_create"
+        android:name="org.wit.gastrograbs.ui.grabadd.GrabAddFragment"
+        android:label="@string/menu_addGrab"
+        tools:layout="@layout/fragment_grab_add" />
+</navigation>
