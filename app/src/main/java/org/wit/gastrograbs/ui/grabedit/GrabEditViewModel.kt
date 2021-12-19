@@ -9,10 +9,6 @@ import org.wit.gastrograbs.models.GrabModel
 import timber.log.Timber
 
 class GrabEditViewModel : ViewModel() {
-//    private val _text = MutableLiveData<String>().apply {
-//        value = "This is the GRAB Fragment"
-//    }
-//    val text: LiveData<String> = _text
 
     private val grab = MutableLiveData<GrabModel>()
 
@@ -25,15 +21,6 @@ class GrabEditViewModel : ViewModel() {
         //GrabManager.update(grab)
         Timber.i("in updateGrab GrabEditViewMOdel")
         FirebaseDBManager.update(userid, id, grab)
-    }
-
-    fun removeComment(grab: GrabModel, comment: String) {
-        //status.value = try {
-       //****************** GrabManager.removeComment(grab, comment)
-        //     true
-        // } catch (e: IllegalArgumentException) {
-        //     false
-        // }
     }
 
     fun deleteGrab(userid: String, id: String) {                          //(grab: GrabModel){

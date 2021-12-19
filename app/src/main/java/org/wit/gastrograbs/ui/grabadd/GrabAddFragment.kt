@@ -61,13 +61,13 @@ class GrabAddFragment : Fragment() {
 // FOUR SAMPLE GRABS
 //        val firebaseUser = loggedInViewModel.liveFirebaseUser
 //        var grab1 = (GrabModel(title="Reeses Overload",description="Chocolatey deliciousness, peanuts and pretzels", category="treat",
-//            //arrayListOf("This is the most beautiful Reeses product around!", "In Lidl this week...", "Can someone send me some", "Gorgeous"),
+//            comments = arrayListOf("This is the most beautiful Reeses product around!", "In Lidl this week...", "Can someone send me some", "Gorgeous"),
 //                                lat=52.16397003708149,lng=-7.162707075476646,zoom=16.0f, email = loggedInViewModel.liveFirebaseUser.value?.email!!))
 //        FirebaseDBManager.create(firebaseUser,grab1)
 //        var grab2 =(GrabModel(title= "Coffee House Lane Pods", description = "So smooth...", category ="everyday",  email = loggedInViewModel.liveFirebaseUser.value?.email!!))
 //        FirebaseDBManager.create(firebaseUser,grab2)
 //        var grab3 = (GrabModel(title="Seagull Cruffins",description="If you like croissants and muffins and flavoured custard...",category="weekend",
-//            //arrayListOf("Just gorgeous"),
+//            comments = arrayListOf("Just gorgeous"),
 //            lat=52.16130378544212, lng=-7.151395529508591, zoom=16.0f,  email = loggedInViewModel.liveFirebaseUser.value?.email!!))
 //        FirebaseDBManager.create(firebaseUser,grab3)
 //        var grab4 = (GrabModel(title="Valentia Island Vermouth",description="Really unusual but sweet and great with sparkling wine...",category="treat"))

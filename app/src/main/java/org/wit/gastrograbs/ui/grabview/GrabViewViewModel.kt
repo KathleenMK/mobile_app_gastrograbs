@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import org.wit.gastrograbs.firebase.FirebaseDBManager
 //import org.wit.gastrograbs.models.GrabManager
 import org.wit.gastrograbs.models.GrabModel
+import timber.log.Timber
 
 class GrabViewViewModel : ViewModel() {
     private val grab = MutableLiveData<GrabModel>()
@@ -18,15 +19,10 @@ class GrabViewViewModel : ViewModel() {
         FirebaseDBManager.findById(userid, id, grab)
     }
 
-    fun addComment(grab: GrabModel, comment: String) {
-        //status.value = try {
-         //   GrabManager.addComment(grab,comment)
-       //     true
-       // } catch (e: IllegalArgumentException) {
-       //     false
-       // }
+    fun updateGrab(userid:String, id: String, grab: GrabModel){
+        //GrabManager.update(grab)
+        Timber.i("in updateGrab GrabViewViewMOdel")
+        FirebaseDBManager.update(userid, id, grab)
     }
-
-
 
 }

@@ -19,6 +19,7 @@ import org.wit.gastrograbs.adapters.CommentAdapter
 import org.wit.gastrograbs.databinding.FragmentGrabViewBinding
 import org.wit.gastrograbs.models.Location
 import org.wit.gastrograbs.ui.auth.LoggedInViewModel
+import timber.log.Timber
 
 class GrabViewFragment : Fragment() {
 
@@ -58,12 +59,14 @@ class GrabViewFragment : Fragment() {
 
         binding.btnAddComment.setOnClickListener{
             var newComment = binding.newComment.text.toString()
-            var grab = args.grabspecific
+            //var grab = args.grabspecific
             if (newComment.isEmpty()) {
                 Snackbar.make(it,R.string.empty_comment, Snackbar.LENGTH_LONG)
                     .show()
             } else {
-                grabViewModel.addComment(grab,newComment)
+                //grabViewModel.addComment(grab,newComment)
+                args.grabspecific.comments += listOf(newComment)
+                grabViewModel.updateGrab(loggedInViewModel.liveFirebaseUser.value?.uid!!,args.grabspecific.uid!!,args.grabspecific)
                 Snackbar.make(it,R.string.added_comment, Snackbar.LENGTH_LONG)
                     .show()
                 render()

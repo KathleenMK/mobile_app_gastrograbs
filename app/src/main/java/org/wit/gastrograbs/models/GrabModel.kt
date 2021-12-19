@@ -24,7 +24,11 @@ data class GrabModel(var uid: String? = "",
             "title" to title,
             "description" to description,
             "category" to category,
-            "email" to email
+            "email" to email,
+            "comments" to comments,
+            "lat" to lat,
+            "lng" to lng,
+            "zoom" to zoom
         )
     }
 }

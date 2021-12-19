@@ -24,8 +24,4 @@ class GrabAddViewModel : ViewModel() {
             false
         }
     }
-//    private val _text = MutableLiveData<String>().apply {
-//        value = "This is the GRAB ADD Fragment"
-//    }
-//    val text: LiveData<String> = _text
 }

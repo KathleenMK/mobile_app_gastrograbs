@@ -268,7 +268,9 @@ private fun registerImagePickerCallback() {
 override fun onCommentClick(comment: String) {
     //var grab = args.grabspecific
     Timber.i("in new listener")
-    editViewModel.removeComment(args.grabspecific,comment)
+    //editViewModel.removeComment(args.grabspecific,comment)
+    args.grabspecific.comments.remove(comment)
+    editViewModel.updateGrab(loggedInViewModel.liveFirebaseUser.value?.uid!!,args.grabspecific.uid!!,args.grabspecific)
     showGrab()
 }
 
