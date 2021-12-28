@@ -5,6 +5,7 @@ import android.net.Uri
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.view.*
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -50,10 +51,11 @@ class GrabViewFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        grabViewModel =
-            ViewModelProvider(this).get(GrabViewViewModel::class.java)
+
         _binding = FragmentGrabViewBinding.inflate(inflater, container, false)
         val root = binding.root
+        grabViewModel =
+            ViewModelProvider(this).get(GrabViewViewModel::class.java)
         //activity?.title = args.grabspecific.title //no difference
         grabViewModel.observableGrab.observe(viewLifecycleOwner, Observer { render() })
 
@@ -107,10 +109,10 @@ class GrabViewFragment : Fragment() {
 //            binding.grabCategory.visibility = View.VISIBLE
 //            binding.grabCategory.setText(foundGrab.category)
 //        }
-        if (args.grabspecific.image != Uri.EMPTY) {
+        if (args.grabspecific.image != ""){ //Uri.EMPTY) {
 //            binding.grabImage.visibility = View.VISIBLE
             Picasso.get()
-                .load(args.grabspecific.image)
+                .load(args.grabspecific.image.toUri())
                 .into(binding.grabImage)
         }
 //        if (foundGrab.zoom != 0f) {

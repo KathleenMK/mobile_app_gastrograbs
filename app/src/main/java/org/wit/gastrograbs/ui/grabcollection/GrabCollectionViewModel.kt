@@ -13,6 +13,7 @@ import java.lang.Exception
 class GrabCollectionViewModel : ViewModel() {
 
     private val grabs = MutableLiveData<List<GrabModel>>()
+    //var readOnly = MutableLiveData(false)
 
     val observableGrabsList: LiveData<List<GrabModel>>
         get() = grabs
@@ -20,12 +21,13 @@ class GrabCollectionViewModel : ViewModel() {
     var liveFirebaseUser = MutableLiveData<FirebaseUser>()
 
     init {
-        load()
+        loadAll()
     }
 
     fun load() {
         try {
             //grabs.value = GrabManager.findAll()
+            //readOnly.value = false
             FirebaseDBManager.findAll(
                 liveFirebaseUser.value?.uid!!,
                 grabs
@@ -33,6 +35,17 @@ class GrabCollectionViewModel : ViewModel() {
         }
         catch (e: Exception) {
             Timber.i("In GrabCollectionViewModel LOAD : $e.message")
+        }
+    }
+
+    fun loadAll() {
+        try {
+            //readOnly.value = true
+            FirebaseDBManager.findAll(grabs)
+            Timber.i("Grab Collection LoadAll Success : ${grabs.value.toString()}")
+        }
+        catch (e: Exception) {
+            Timber.i("Grab Collection LoadAll Error : $e.message")
         }
     }
 }

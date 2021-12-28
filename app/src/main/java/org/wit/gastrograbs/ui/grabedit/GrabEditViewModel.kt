@@ -23,6 +23,12 @@ class GrabEditViewModel : ViewModel() {
         FirebaseDBManager.update(userid, id, grab)
     }
 
+    fun updateImage(userid:String, id: String, grab: GrabModel, imageUri: String){
+        //GrabManager.update(grab)
+        Timber.i("in updateGrab GrabEditViewMOdel")
+        FirebaseDBManager.updateImage(userid, id, grab, imageUri)
+    }
+
     fun deleteGrab(userid: String, id: String) {                          //(grab: GrabModel){
         //GrabManager.delete(grab)
         FirebaseDBManager.delete(userid,id)

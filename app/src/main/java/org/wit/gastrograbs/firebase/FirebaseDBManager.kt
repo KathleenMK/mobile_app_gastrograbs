@@ -12,7 +12,25 @@ object FirebaseDBManager : GrabStore {
     var database: DatabaseReference = FirebaseDatabase.getInstance("https://gastrograbs-app-default-rtdb.europe-west1.firebasedatabase.app").reference
             // above from https://stackoverflow.com/questions/68196128/firebase-wants-me-to-change-my-database-url-due-to-region 16Dec21
     override fun findAll(grabsList: MutableLiveData<List<GrabModel>>) {
-        TODO("Not yet implemented")
+                database.child("grabs")
+                    .addValueEventListener(object : ValueEventListener {
+                        override fun onCancelled(error: DatabaseError) {
+                            Timber.i("Firebase error : ${error.message}")
+                        }
+
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            val localList = ArrayList<GrabModel>()
+                            val children = snapshot.children
+                            children.forEach {
+                                val grab = it.getValue(GrabModel::class.java)
+                                localList.add(grab!!)
+                            }
+                            database.child("grabs")
+                                .removeEventListener(this)
+
+                            grabsList.value = localList
+                        }
+                    })
     }
 
     override fun findAll(userid: String, grabsList: MutableLiveData<List<GrabModel>>) {
@@ -78,6 +96,17 @@ object FirebaseDBManager : GrabStore {
     }
 
     override fun update(userid: String, grabid: String, grab: GrabModel) {
+
+        val grabValues = grab.toMap()
+
+        val childUpdate : MutableMap<String, Any?> = HashMap()
+        childUpdate["grabs/$grabid"] = grabValues
+        childUpdate["user-grabs/$userid/$grabid"] = grabValues
+
+        database.updateChildren(childUpdate)
+    }
+
+    fun updateImage(userid: String, grabid: String, grab: GrabModel, imageUri: String) {
 
         val grabValues = grab.toMap()
 

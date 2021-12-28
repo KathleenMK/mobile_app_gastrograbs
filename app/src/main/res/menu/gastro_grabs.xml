@@ -19,4 +19,9 @@
         android:visibility="gone"
         android:visible="false"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/toggleGrabs"
+        android:title=""
+        app:actionLayout="@layout/show_toggle_layout"
+        app:showAsAction="always" />
 </menu>

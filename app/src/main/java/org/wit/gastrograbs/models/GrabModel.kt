@@ -10,7 +10,7 @@ data class GrabModel(var uid: String? = "",
                      var title: String = "",
                      var description: String = "",
                      var category: String = ""   ,
-                     var image: Uri = Uri.EMPTY,
+                     var image: String = ""   , //Uri = Uri.EMPTY,
                      var comments: ArrayList<String> = arrayListOf(),
                      var lat : Double = 0.0,
                      var lng: Double = 0.0,
@@ -28,7 +28,8 @@ data class GrabModel(var uid: String? = "",
             "comments" to comments,
             "lat" to lat,
             "lng" to lng,
-            "zoom" to zoom
+            "zoom" to zoom,
+            "image" to image    //seems to need a string value
         )
     }
 }

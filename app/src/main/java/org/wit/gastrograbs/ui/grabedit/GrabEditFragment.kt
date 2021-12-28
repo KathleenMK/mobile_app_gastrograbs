@@ -10,6 +10,7 @@ import android.widget.Spinner
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -95,6 +96,7 @@ class GrabEditFragment : Fragment(), CommentListener {
                     i(args.grabspecific.uid!!)
                     //i(editViewModel.observableGrab!!.value!!.title)
                     editViewModel.updateGrab(loggedInViewModel.liveFirebaseUser.value?.uid!!,args.grabspecific.uid!!,args.grabspecific)
+                    //editViewModel.updateImage(loggedInViewModel.liveFirebaseUser.value?.uid!!,args.grabspecific.uid!!,args.grabspecific, args.grabspecific.image)
                     //Should I be passing something like the following in the above update method: binding.grabvm2?.observableGrab!!.value!!)
                     //i("these are the grab comments in GrabActivity")
                     //i(grab.comments.toString())
@@ -166,11 +168,11 @@ class GrabEditFragment : Fragment(), CommentListener {
             binding.grabCategory.setText(foundGrab.category)
             binding.btnAdd.setText(R.string.save_grab)
             //binding.toolbarAdd.setTitle(R.string.title_update)
-
-            Picasso.get()
+            if (foundGrab.image != "") {
+                Picasso.get()
                 .load(foundGrab.image)
-                .into(binding.grabImage)
-            if (foundGrab.image != Uri.EMPTY) {
+                .into(binding.grabImage)}
+            if (foundGrab.image != "") {    //Uri.EMPTY) {
                 binding.grabImage.visibility=View.VISIBLE
                 binding.chooseImage.setText(R.string.change_grab_image)
             }
@@ -253,9 +255,9 @@ private fun registerImagePickerCallback() {
                         var grab = args.grabspecific
                         Timber.i("Got Result ${result.data!!.data}")
                         binding.grabImage.visibility=View.VISIBLE
-                        grab.image = result.data!!.data!!
+                        grab.image = result.data!!.data!!.toString()
                         Picasso.get()
-                            .load(grab.image)
+                            .load(grab.image.toUri())
                             .into(binding.grabImage)
                         binding.chooseImage.setText(R.string.change_grab_image)
                     }
@@ -295,7 +297,7 @@ private fun showGrab(){ // find updated grab from json after update
         Picasso.get()
             .load(foundGrab.image)
             .into(binding.grabImage)
-        if (foundGrab.image != Uri.EMPTY) {
+        if (foundGrab.image != "") {    //Uri.EMPTY) {
             binding.grabImage.visibility=View.VISIBLE
             binding.chooseImage.setText(R.string.change_grab_image)
         }

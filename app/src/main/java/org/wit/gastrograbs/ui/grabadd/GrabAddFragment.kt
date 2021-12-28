@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -43,7 +44,7 @@ class GrabAddFragment : Fragment() {
     private lateinit var viewModel: GrabAddViewModel
     //var grab = GrabModel()
     private var _binding: FragmentGrabAddBinding? = null
-    private var grabImage: Uri = Uri.EMPTY
+    private var grabImage: String = ""  //Uri = Uri.EMPTY
     private var grabLat = 0.0 //by Delegates.notNull<Double>()  //tried to :Double, the previous was suggested
     private var grabLng = 0.0  //by Delegates.notNull<Double>()  //'lateinit' modifier is not allowed on properties of primitive types
     private var grabZoom = 0f //by Delegates.notNull<Float>()
@@ -218,9 +219,9 @@ class GrabAddFragment : Fragment() {
                             //var grab = args.grabspecific
                             Timber.i("Got Result ${result.data!!.data}")
                             binding.grabImage.visibility = View.VISIBLE
-                            grabImage = result.data!!.data!!
+                            grabImage = result.data!!.data!!.toString()
                             Picasso.get()
-                                .load(grabImage)
+                                .load(grabImage.toUri())
                                 .into(binding.grabImage)
                             binding.chooseImage.setText(R.string.change_grab_image)
                         }

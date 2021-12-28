@@ -2,10 +2,9 @@ package org.wit.gastrograbs.ui.grabcollection
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.activity.result.ActivityResultLauncher
+import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -98,9 +97,25 @@ class GrabCollectionFragment : Fragment(), GrabListener {
         loggedInViewModel.liveFirebaseUser.observe(viewLifecycleOwner, Observer { firebaseUser ->
             if (firebaseUser != null) {
                 grabCollectionViewModel.liveFirebaseUser.value = firebaseUser
-                grabCollectionViewModel.load()
+                grabCollectionViewModel.loadAll()
             }
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.gastro_grabs, menu)
+
+        val item = menu.findItem(R.id.toggleGrabs) as MenuItem
+        item.setActionView(R.layout.show_toggle_layout)
+        val toggleDonations: SwitchCompat = item.actionView.findViewById(R.id.toggleButton)
+        toggleDonations.isChecked = false
+
+        toggleDonations.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) grabCollectionViewModel.load()
+            else grabCollectionViewModel.loadAll()
+        }
+
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
 
