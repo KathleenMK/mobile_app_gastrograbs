@@ -16,15 +16,19 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import org.wit.gastrograbs.R
 import org.wit.gastrograbs.ui.home.GastroGrabs
 import org.wit.gastrograbs.activities.MapsActivity
-import org.wit.gastrograbs.adapters.CommentDeleteAdapter
-import org.wit.gastrograbs.adapters.CommentListener
+import org.wit.gastrograbs.adapters.CommentAdapter
+//import org.wit.gastrograbs.adapters.CommentDeleteAdapter
+//import org.wit.gastrograbs.adapters.CommentListener
 import org.wit.gastrograbs.databinding.FragmentGrabEditBinding
+import org.wit.gastrograbs.helpers.SwipeToDeleteCallback
 import org.wit.gastrograbs.helpers.showImagePicker
 import org.wit.gastrograbs.models.Location
 import org.wit.gastrograbs.ui.auth.LoggedInViewModel
@@ -32,7 +36,7 @@ import org.wit.gastrograbs.ui.grabcollection.GrabCollectionViewModel
 import timber.log.Timber
 import timber.log.Timber.i
 
-class GrabEditFragment : Fragment(), CommentListener {
+class GrabEditFragment : Fragment() {
 
 
     //ADDED IN DEFAULT
@@ -147,6 +151,31 @@ class GrabEditFragment : Fragment(), CommentListener {
         registerMapCallback()
         registerRefreshCallback()
 
+        //override fun onCommentClick(comment: String) {
+//    //var grab = args.grabspecific
+//    Timber.i("in new listener")
+//    //editViewModel.removeComment(args.grabspecific,comment)
+//    args.grabspecific.comments.remove(comment)
+//    editViewModel.updateGrab(loggedInViewModel.liveFirebaseUser.value?.uid!!,args.grabspecific.uid!!,args.grabspecific)
+//    showGrab()
+//}
+
+        val swipeDeleteHandler = object : SwipeToDeleteCallback(requireContext()) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                //showLoader(loader,"Deleting Donation")
+               val adapter = binding.recyclerViewComment.adapter as CommentAdapter
+               // editViewModel.delete(viewHolder.itemView.tag as String)
+                //hideLoader(loader)
+               adapter.removeAt(viewHolder.adapterPosition)
+                //imber.i(viewHolder.itemView.tag)
+              // args.grabspecific.comments.remove(viewHolder.itemView.tag as String)
+   editViewModel.updateGrab(loggedInViewModel.liveFirebaseUser.value?.uid!!,args.grabspecific.uid!!,args.grabspecific)
+                showGrab()
+            }
+        }
+        val itemTouchDeleteHelper = ItemTouchHelper(swipeDeleteHandler)
+        itemTouchDeleteHelper.attachToRecyclerView(binding.recyclerViewComment)
+
 
         return root
     }
@@ -184,7 +213,7 @@ class GrabEditFragment : Fragment(), CommentListener {
             }
             //val layoutManager = LinearLayoutManager(this)
             binding.recyclerViewComment.layoutManager = LinearLayoutManager(activity)
-            binding.recyclerViewComment.adapter = CommentDeleteAdapter(foundGrab.comments.asReversed(),this)
+            binding.recyclerViewComment.adapter = CommentAdapter(foundGrab.comments)
 
 
 
@@ -267,14 +296,14 @@ private fun registerImagePickerCallback() {
         }
 }
 
-override fun onCommentClick(comment: String) {
-    //var grab = args.grabspecific
-    Timber.i("in new listener")
-    //editViewModel.removeComment(args.grabspecific,comment)
-    args.grabspecific.comments.remove(comment)
-    editViewModel.updateGrab(loggedInViewModel.liveFirebaseUser.value?.uid!!,args.grabspecific.uid!!,args.grabspecific)
-    showGrab()
-}
+//override fun onCommentClick(comment: String) {
+//    //var grab = args.grabspecific
+//    Timber.i("in new listener")
+//    //editViewModel.removeComment(args.grabspecific,comment)
+//    args.grabspecific.comments.remove(comment)
+//    editViewModel.updateGrab(loggedInViewModel.liveFirebaseUser.value?.uid!!,args.grabspecific.uid!!,args.grabspecific)
+//    showGrab()
+//}
 
 private fun registerRefreshCallback() {
     refreshIntentLauncher =
@@ -311,7 +340,7 @@ private fun showGrab(){ // find updated grab from json after update
 //        binding.recyclerViewComment.layoutManager = layoutManager
 //        binding.recyclerViewComment.adapter = CommentDeleteAdapter(foundGrab.comments.asReversed(),this)
         binding.recyclerViewComment.layoutManager = LinearLayoutManager(activity)
-        binding.recyclerViewComment.adapter = CommentDeleteAdapter(foundGrab.comments.asReversed(),this)
+        binding.recyclerViewComment.adapter = CommentAdapter(foundGrab.comments)
 
 
 

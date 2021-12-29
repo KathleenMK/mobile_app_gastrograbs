@@ -122,7 +122,7 @@ class GrabViewFragment : Fragment() {
 //            binding.recyclerViewComment.visibility = View.VISIBLE
             binding.recyclerViewComment.layoutManager = LinearLayoutManager(activity)
             binding.recyclerViewComment.adapter =
-                CommentAdapter(args.grabspecific.comments.asReversed())
+                CommentAdapter(args.grabspecific.comments)  //.asReversed()
 //        }
         //binding.grabImage.text = args.grabspecific.description
 

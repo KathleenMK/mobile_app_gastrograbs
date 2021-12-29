@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import org.wit.gastrograbs.databinding.CardCommentBinding
 
-class CommentAdapter constructor(private var comments: List<String>) :
+class CommentAdapter constructor(private var comments: ArrayList<String>) :
     RecyclerView.Adapter<CommentAdapter.MainHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
@@ -18,6 +18,11 @@ class CommentAdapter constructor(private var comments: List<String>) :
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
         val comment = comments[holder.adapterPosition]
         holder.bind(comment)
+    }
+
+    fun removeAt(position: Int) {
+        comments.removeAt(position) //only works with ArrayList
+        notifyItemRemoved(position)
     }
 
     override fun getItemCount(): Int = comments.size
