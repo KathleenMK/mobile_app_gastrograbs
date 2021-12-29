@@ -40,6 +40,8 @@
     <string name="signUp_header">Enter Email and Password to Sign Up</string>
     <string name="or">or</string>
     <string name="added_by">Added By: </string>
+    <string name="all_grabs">All</string>
+    <string name="my_grabs">Just Mine</string>
     <string-array name="category_array">
         <item>Select Grab Category</item>
         <item>Sweet</item>

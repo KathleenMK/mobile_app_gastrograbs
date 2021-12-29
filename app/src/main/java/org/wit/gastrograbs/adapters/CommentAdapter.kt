@@ -21,7 +21,7 @@ class CommentAdapter constructor(private var comments: ArrayList<String>) :
     }
 
     fun removeAt(position: Int) {
-        comments.removeAt(position) //only works with ArrayList
+        comments.removeAt(position) //only works with ArrayList, so updated comments
         notifyItemRemoved(position)
     }
 

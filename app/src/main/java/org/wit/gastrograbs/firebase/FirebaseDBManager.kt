@@ -111,7 +111,8 @@ object FirebaseDBManager : GrabStore {
         Timber.i(userid)
         val childUpdate : MutableMap<String, Any?> = HashMap()
         childUpdate["grabs/$grabid"] = grabValues
-        childUpdate["user-grabs/$userid/$grabid"] = grabValues  //updated FB user rules to write ".write": "auth.uid != null", replacing "$uid === auth.uid" to allow comments from other users
+        childUpdate["user-grabs/$userid/$grabid"] = grabValues
+        //updated FB user rules to write ".write": "auth.uid != null", replacing "$uid === auth.uid" to allow comments from other users
         database.updateChildren(childUpdate)
     }
 

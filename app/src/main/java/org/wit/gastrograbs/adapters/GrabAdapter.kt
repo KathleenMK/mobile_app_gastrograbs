@@ -30,12 +30,8 @@ class GrabAdapter constructor(private var grabs: List<GrabModel>,
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(grab: GrabModel, listener: GrabListener) {
-            //binding.grabTitle.text = grab.title
-            //binding.grabDescription.text = grab.description
-            //binding.grabCategory.text = grab.category
             binding.grab = grab
             binding.root.setOnClickListener{listener.onGrabClick(grab)}
-            //Include this call to force the bindings to happen immediately
-            binding.executePendingBindings()}
+            binding.executePendingBindings()}   //Include this call to force the bindings to happen immediately
     }
 }

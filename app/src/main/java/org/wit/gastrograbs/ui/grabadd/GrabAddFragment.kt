@@ -1,7 +1,6 @@
 package org.wit.gastrograbs.ui.grabadd
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -37,26 +36,22 @@ class GrabAddFragment : Fragment() {
 //        fun newInstance() = GrabEditFragment()
 //    }
 
-    //lateinit var app: MainApp   //added line
     private lateinit var refreshIntentLauncher: ActivityResultLauncher<Intent>
     private lateinit var imageIntentLauncher: ActivityResultLauncher<Intent>
     private lateinit var mapIntentLauncher: ActivityResultLauncher<Intent>
     private lateinit var viewModel: GrabAddViewModel
-    //var grab = GrabModel()
     private var _binding: FragmentGrabAddBinding? = null
-    private var grabImage: String = ""  //Uri = Uri.EMPTY
-    private var grabLat = 0.0 //by Delegates.notNull<Double>()  //tried to :Double, the previous was suggested
-    private var grabLng = 0.0  //by Delegates.notNull<Double>()  //'lateinit' modifier is not allowed on properties of primitive types
-    private var grabZoom = 0f //by Delegates.notNull<Float>()
+    private var grabImage: String = ""
+    private var grabLat = 0.0
+    private var grabLng = 0.0
+    private var grabZoom = 0f
     private val loggedInViewModel : LoggedInViewModel by activityViewModels()
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+    // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {    //added new onCreate fun
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //app = activity?.application as MainApp
         setHasOptionsMenu(true)
 
 // FOUR SAMPLE GRABS
@@ -105,9 +100,7 @@ class GrabAddFragment : Fragment() {
             if (binding.categorySpinner.selectedItemPosition != 0) {
                 category = binding.categorySpinner.selectedItem.toString()
             }
-//            else {
-//                val category = grab.category
-//            }
+
             if (title.isEmpty()) {
                 Snackbar.make(it, R.string.enter_grab_title, Snackbar.LENGTH_LONG)
                     .show()
@@ -117,9 +110,8 @@ class GrabAddFragment : Fragment() {
                                                     lat = grabLat, lng = grabLng,
                                                     zoom = grabZoom, email = loggedInViewModel.liveFirebaseUser.value?.email!!,
                                                     userid = loggedInViewModel.liveFirebaseUser.value?.uid!!))
+                findNavController().popBackStack()  //https://stackoverflow.com/questions/63760586/kotlin-handling-back-button-click-in-navigation-drawer-android
             }
-
-            findNavController().popBackStack()  //https://stackoverflow.com/questions/63760586/kotlin-handling-back-button-click-in-navigation-drawer-android
 
 
         }
@@ -157,10 +149,6 @@ class GrabAddFragment : Fragment() {
             }
         }
 
-
-
-
-
         return root
     }
 
@@ -168,9 +156,7 @@ class GrabAddFragment : Fragment() {
         when (status) {
             true -> {
                 view?.let {
-                    //Uncomment this if you want to immediately return to Report
-                    //findNavController().popBackStack()
-                }
+                     }
             }
             false -> Toast.makeText(context,getString(R.string.addGrabError),Toast.LENGTH_LONG).show()
         }

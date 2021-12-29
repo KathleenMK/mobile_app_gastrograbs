@@ -69,7 +69,7 @@ class FirebaseAuthManager (application: Application) {
     private fun configureGoogleSignIn() {
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(application!!.getString(R.string.default_web_client_id))
+            .requestIdToken(application!!.getString(R.string.default_web_client_id))    //default_web_client_id as error known issue
             .requestEmail()
             .build()
 

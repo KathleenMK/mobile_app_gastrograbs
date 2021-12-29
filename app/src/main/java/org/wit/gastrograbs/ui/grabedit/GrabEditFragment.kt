@@ -151,26 +151,14 @@ class GrabEditFragment : Fragment() {
         registerMapCallback()
         registerRefreshCallback()
 
-        //override fun onCommentClick(comment: String) {
-//    //var grab = args.grabspecific
-//    Timber.i("in new listener")
-//    //editViewModel.removeComment(args.grabspecific,comment)
-//    args.grabspecific.comments.remove(comment)
-//    editViewModel.updateGrab(loggedInViewModel.liveFirebaseUser.value?.uid!!,args.grabspecific.uid!!,args.grabspecific)
-//    showGrab()
-//}
-
         val swipeDeleteHandler = object : SwipeToDeleteCallback(requireContext()) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                //showLoader(loader,"Deleting Donation")
+                //showLoader(loader,"Deleting...")
                val adapter = binding.recyclerViewComment.adapter as CommentAdapter
-               // editViewModel.delete(viewHolder.itemView.tag as String)
                 //hideLoader(loader)
                adapter.removeAt(viewHolder.adapterPosition)
-                //imber.i(viewHolder.itemView.tag)
-              // args.grabspecific.comments.remove(viewHolder.itemView.tag as String)
-   editViewModel.updateGrab(loggedInViewModel.liveFirebaseUser.value?.uid!!,args.grabspecific.uid!!,args.grabspecific)
-                showGrab()
+               editViewModel.updateGrab(loggedInViewModel.liveFirebaseUser.value?.uid!!,args.grabspecific.uid!!,args.grabspecific)
+               render()
             }
         }
         val itemTouchDeleteHelper = ItemTouchHelper(swipeDeleteHandler)
@@ -260,9 +248,9 @@ private fun registerMapCallback() {
                 AppCompatActivity.RESULT_OK -> {
                     if (result.data != null) {
                         var grab = args.grabspecific
-                        Timber.i("Got Location ${result.data.toString()}")
+                        i("Got Location ${result.data.toString()}")
                         val location = result.data!!.extras?.getParcelable<Location>("location")!!
-                        Timber.i("Location == $location")
+                        i("Location == $location")
                         grab.lat = location.lat
                         grab.lng = location.lng
                         grab.zoom = location.zoom
@@ -282,7 +270,7 @@ private fun registerImagePickerCallback() {
                 AppCompatActivity.RESULT_OK -> {
                     if (result.data != null) {
                         var grab = args.grabspecific
-                        Timber.i("Got Result ${result.data!!.data}")
+                        i("Got Result ${result.data!!.data}")
                         binding.grabImage.visibility=View.VISIBLE
                         grab.image = result.data!!.data!!.toString()
                         Picasso.get()
@@ -296,56 +284,11 @@ private fun registerImagePickerCallback() {
         }
 }
 
-//override fun onCommentClick(comment: String) {
-//    //var grab = args.grabspecific
-//    Timber.i("in new listener")
-//    //editViewModel.removeComment(args.grabspecific,comment)
-//    args.grabspecific.comments.remove(comment)
-//    editViewModel.updateGrab(loggedInViewModel.liveFirebaseUser.value?.uid!!,args.grabspecific.uid!!,args.grabspecific)
-//    showGrab()
-//}
-
 private fun registerRefreshCallback() {
     refreshIntentLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-        { //showGrab()
+        {
         }
 }
-
-private fun showGrab(){ // find updated grab from json after update
-    var foundGrab = args.grabspecific
-    Timber.i("show grab is +${foundGrab.toString()}")
-    if (foundGrab != null) {
-        binding.grabTitle.setText(foundGrab.title)
-        binding.grabDescription.setText(foundGrab.description)
-        binding.grabCategory.visibility= View.VISIBLE
-        binding.grabCategory.setText(foundGrab.category)
-        binding.btnAdd.setText(R.string.save_grab)
-        //binding.toolbarAdd.setTitle(R.string.title_update)
-
-        Picasso.get()
-            .load(foundGrab.image)
-            .into(binding.grabImage)
-        if (foundGrab.image != "") {    //Uri.EMPTY) {
-            binding.grabImage.visibility=View.VISIBLE
-            binding.chooseImage.setText(R.string.change_grab_image)
-        }
-        if (foundGrab.comments.size > 0) {
-            binding.commentHeader.visibility=View.VISIBLE
-        }
-        if (foundGrab.zoom != 0f){
-            binding.addLocation.setText(R.string.change_grab_location)
-        }
-//        val layoutManager = LinearLayoutManager(this)
-//        binding.recyclerViewComment.layoutManager = layoutManager
-//        binding.recyclerViewComment.adapter = CommentDeleteAdapter(foundGrab.comments.asReversed(),this)
-        binding.recyclerViewComment.layoutManager = LinearLayoutManager(activity)
-        binding.recyclerViewComment.adapter = CommentAdapter(foundGrab.comments)
-
-
-
-    }
-}
-
 
 }

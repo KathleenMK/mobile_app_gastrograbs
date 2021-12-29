@@ -102,29 +102,27 @@ class GrabViewFragment : Fragment() {
        binding.grabvm = grabViewModel
 //        var foundGrab = args.grabspecific
 //        binding.grabTitle.text = foundGrab.title
-//        if (foundGrab.description.isNotEmpty()) {
-//            binding.grabDescription.visibility = View.VISIBLE
-//            binding.grabDescription.setText(foundGrab.description)
-//        }
-//        if (foundGrab.description.isNotEmpty()) {
-//            binding.grabCategory.visibility = View.VISIBLE
-//            binding.grabCategory.setText(foundGrab.category)
-//        }
+        if (args.grabspecific.description.isNotEmpty()) {
+            binding.grabDescription.visibility = View.VISIBLE
+        }
+        if (args.grabspecific.category.isNotEmpty()) {
+            binding.grabCategory.visibility = View.VISIBLE
+       }
         if (args.grabspecific.image != ""){ //Uri.EMPTY) {
-//            binding.grabImage.visibility = View.VISIBLE
+            binding.grabImage.visibility = View.VISIBLE
             Picasso.get()
                 .load(args.grabspecific.image.toUri())
                 .into(binding.grabImage)
         }
-//        if (foundGrab.zoom != 0f) {
-//            binding.btnViewMap.visibility = View.VISIBLE
-//        }
-//        if (foundGrab.comments.isNotEmpty()) {
-//            binding.recyclerViewComment.visibility = View.VISIBLE
+        if (args.grabspecific.zoom != 0f) {
+            binding.btnViewMap.visibility = View.VISIBLE
+        }
+        if (args.grabspecific.comments.isNotEmpty()) {
+            binding.recyclerViewComment.visibility = View.VISIBLE
             binding.recyclerViewComment.layoutManager = LinearLayoutManager(activity)
             binding.recyclerViewComment.adapter =
                 CommentAdapter(args.grabspecific.comments)  //.asReversed()
-//        }
+       }
         //binding.grabImage.text = args.grabspecific.description
 
 
