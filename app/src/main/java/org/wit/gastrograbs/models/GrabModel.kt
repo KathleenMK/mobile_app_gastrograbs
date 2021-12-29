@@ -15,8 +15,10 @@ data class GrabModel(var uid: String? = "",
                      var lat : Double = 0.0,
                      var lng: Double = 0.0,
                      var zoom: Float = 0f,
-                     var email: String? = "test@test.com",
-                     var userid: String? = "") : Parcelable
+                     var email: String = "test@test.com",
+                     var userid: String = "",
+                     var ratings: ArrayList<Double> = arrayListOf(),
+                     var avrating: String = ""  ) : Parcelable
 {
     @Exclude
     fun toMap(): Map<String, Any?> {
@@ -31,7 +33,9 @@ data class GrabModel(var uid: String? = "",
             "lng" to lng,
             "zoom" to zoom,
             "image" to image,    //seems to need a string value
-            "userid" to userid
+            "userid" to userid,
+            "ratings" to ratings,
+            "avrating" to avrating
         )
     }
 }

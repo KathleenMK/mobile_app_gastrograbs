@@ -99,16 +99,16 @@ class GrabCollectionFragment : Fragment(), GrabListener {
         val item = menu.findItem(R.id.toggleGrabs) as MenuItem
         item.setActionView(R.layout.show_toggle_layout)
         val toggleGrabs: SwitchCompat = item.actionView.findViewById(R.id.toggleButton)
-        toggleGrabs.isChecked = false
+        toggleGrabs.isChecked = true
 
         toggleGrabs.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
-                toggleGrabs.setText(R.string.my_grabs)
-                grabCollectionViewModel.load()
-            }
-            else {
                 toggleGrabs.setText(R.string.all_grabs)
                 grabCollectionViewModel.loadAll()
+            }
+            else {
+                toggleGrabs.setText(R.string.my_grabs)
+                grabCollectionViewModel.load()
             }
         }
 

@@ -69,11 +69,10 @@ class GrabAddFragment : Fragment() {
 //            lat=52.16130378544212, lng=-7.151395529508591, zoom=16.0f,
 //            email = loggedInViewModel.liveFirebaseUser.value?.email!!, userid = loggedInViewModel.liveFirebaseUser.value?.uid!!))
 //        FirebaseDBManager.create(firebaseUser,grab3)
-//        var grab4 = (GrabModel(title="Valentia Island Vermouth",description="Really unusual but sweet and great with sparkling wine...",category="treat"))
-//        (GrabModel(title="Cinnamon buns",description="Another of Seagull's finest",category="Sweet", lat = 52.16130378544212, lng = -7.151395529508591,
-//            zoom = 16.0f,
+//        var grab4 = (GrabModel(title="Valentia Island Vermouth",description="Really unusual but sweet and great with sparkling wine...",category="treat",
 //            email = loggedInViewModel.liveFirebaseUser.value?.email!!, userid = loggedInViewModel.liveFirebaseUser.value?.uid!!))
 //        FirebaseDBManager.create(firebaseUser,grab4)
+
     }
 
     override fun onCreateView(

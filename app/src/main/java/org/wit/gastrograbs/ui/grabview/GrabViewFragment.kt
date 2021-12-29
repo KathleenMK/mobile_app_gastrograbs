@@ -21,6 +21,7 @@ import org.wit.gastrograbs.databinding.FragmentGrabViewBinding
 import org.wit.gastrograbs.models.Location
 import org.wit.gastrograbs.ui.auth.LoggedInViewModel
 import timber.log.Timber
+import kotlin.math.roundToInt
 
 class GrabViewFragment : Fragment() {
 
@@ -77,6 +78,25 @@ class GrabViewFragment : Fragment() {
             }
         }
 
+        binding.btnAddRating.setOnClickListener{
+            var newRating = binding.ratingBar.getRating().toDouble()
+            //var grab = args.grabspecific
+            if (false) {
+                Snackbar.make(it,R.string.empty_comment, Snackbar.LENGTH_LONG)
+                    .show()
+            } else {
+                //grabViewModel.addComment(grab,newComment)
+                args.grabspecific.ratings += listOf(newRating)
+                args.grabspecific.avrating = (args.grabspecific.ratings.sum()/args.grabspecific.ratings.size).roundToInt().toString()
+                grabViewModel.updateGrab(args.grabspecific.userid!!,args.grabspecific.uid!!,args.grabspecific) //comments can be added by any user, so update only user grabs for creator email
+                Snackbar.make(it,R.string.added_rating, Snackbar.LENGTH_LONG)
+                    .show()
+                Timber.i(loggedInViewModel.liveFirebaseUser.value?.uid)
+                binding.ratingBar.rating = 0F
+                render()
+            }
+        }
+
         binding.btnViewMap.setOnClickListener {
             var location = Location(52.15859, -7.14440, 16f)
             var grab = args.grabspecific
@@ -99,9 +119,24 @@ class GrabViewFragment : Fragment() {
 //    }
 
     private fun render() {
+        grabViewModel.getGrab(args.grabspecific.uid!!)  //need to refresh ratings
        binding.grabvm = grabViewModel
+
+        binding.grabAddedBy.setText("Added By: " + args.grabspecific.email) //can't seem to add string resource
 //        var foundGrab = args.grabspecific
 //        binding.grabTitle.text = foundGrab.title
+        if(args.grabspecific.ratings.isNotEmpty()){
+            if(args.grabspecific.ratings.size == 1){
+                binding.grabRatingDetail.setText(" from 1 rating...")
+            }
+            else{
+            binding.grabRatingDetail.setText(" from "+args.grabspecific.ratings.size.toString() + " ratings...")}
+        }
+        else{
+            binding.grabRatingDetail.setText(" no ratings yet ...")
+
+        }
+
         if (args.grabspecific.description.isNotEmpty()) {
             binding.grabDescription.visibility = View.VISIBLE
         }
@@ -123,6 +158,8 @@ class GrabViewFragment : Fragment() {
             binding.recyclerViewComment.adapter =
                 CommentAdapter(args.grabspecific.comments)  //.asReversed()
        }
+
+
         //binding.grabImage.text = args.grabspecific.description
 
 

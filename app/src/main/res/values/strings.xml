@@ -24,6 +24,7 @@
     <string name="hint_delete">Click to Delete</string>
     <string name="empty_comment">Empty Comment not added</string>
     <string name="added_comment">Comment has been added</string>
+    <string name="added_rating">Rating has been added</string>
     <string name="deleted_comment">Comment has been deleted</string>
     <string name="delete_comment">Click to delete</string>
     <string name="button_map">View Location</string>
@@ -37,6 +38,7 @@
     <string name="menu_signout">SignOut</string>
     <string name="signup_fail">Email is already signed up!</string>
     <string name="button_signup">SIGNUP</string>
+    <string name="button_rating">submit</string>
     <string name="signUp_header">Enter Email and Password to Sign Up</string>
     <string name="or">or</string>
     <string name="added_by">Added By: </string>
