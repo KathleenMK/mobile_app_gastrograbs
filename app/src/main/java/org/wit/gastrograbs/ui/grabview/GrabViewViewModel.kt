@@ -14,9 +14,9 @@ class GrabViewViewModel : ViewModel() {
     val observableGrab: LiveData<GrabModel>
     get() = grab
 
-    fun getGrab(userid:String, id: String){
+    fun getGrab(id: String){
         //grab.value = GrabManager.findOne(grabspecific.id)
-        FirebaseDBManager.findById(userid, id, grab)
+        FirebaseDBManager.findById(id, grab)
     }
 
     fun updateGrab(userid:String, id: String, grab: GrabModel){

@@ -63,17 +63,21 @@ class GrabAddFragment : Fragment() {
 //        val firebaseUser = loggedInViewModel.liveFirebaseUser
 //        var grab1 = (GrabModel(title="Reeses Overload",description="Chocolatey deliciousness, peanuts and pretzels", category="treat",
 //            comments = arrayListOf("This is the most beautiful Reeses product around!", "In Lidl this week...", "Can someone send me some", "Gorgeous"),
-//                                lat=52.16397003708149,lng=-7.162707075476646,zoom=16.0f, email = loggedInViewModel.liveFirebaseUser.value?.email!!))
+//                                lat=52.16397003708149,lng=-7.162707075476646,zoom=16.0f,
+//                                email = loggedInViewModel.liveFirebaseUser.value?.email!!, userid = loggedInViewModel.liveFirebaseUser.value?.uid!!))
 //        FirebaseDBManager.create(firebaseUser,grab1)
-//        var grab2 =(GrabModel(title= "Coffee House Lane Pods", description = "So smooth...", category ="everyday",  email = loggedInViewModel.liveFirebaseUser.value?.email!!))
+//        var grab2 =(GrabModel(title= "Coffee House Lane Pods", description = "So smooth...", category ="everyday",
+//                                email = loggedInViewModel.liveFirebaseUser.value?.email!!, userid = loggedInViewModel.liveFirebaseUser.value?.uid!!))
 //        FirebaseDBManager.create(firebaseUser,grab2)
 //        var grab3 = (GrabModel(title="Seagull Cruffins",description="If you like croissants and muffins and flavoured custard...",category="weekend",
 //            comments = arrayListOf("Just gorgeous"),
-//            lat=52.16130378544212, lng=-7.151395529508591, zoom=16.0f,  email = loggedInViewModel.liveFirebaseUser.value?.email!!))
+//            lat=52.16130378544212, lng=-7.151395529508591, zoom=16.0f,
+//            email = loggedInViewModel.liveFirebaseUser.value?.email!!, userid = loggedInViewModel.liveFirebaseUser.value?.uid!!))
 //        FirebaseDBManager.create(firebaseUser,grab3)
 //        var grab4 = (GrabModel(title="Valentia Island Vermouth",description="Really unusual but sweet and great with sparkling wine...",category="treat"))
 //        (GrabModel(title="Cinnamon buns",description="Another of Seagull's finest",category="Sweet", lat = 52.16130378544212, lng = -7.151395529508591,
-//            zoom = 16.0f,  email = loggedInViewModel.liveFirebaseUser.value?.email!!))
+//            zoom = 16.0f,
+//            email = loggedInViewModel.liveFirebaseUser.value?.email!!, userid = loggedInViewModel.liveFirebaseUser.value?.uid!!))
 //        FirebaseDBManager.create(firebaseUser,grab4)
     }
 
@@ -111,7 +115,8 @@ class GrabAddFragment : Fragment() {
                viewModel.addGrab(loggedInViewModel.liveFirebaseUser, GrabModel(title = title, description = description,
                                                     category = category, image = grabImage,
                                                     lat = grabLat, lng = grabLng,
-                                                    zoom = grabZoom, email = loggedInViewModel.liveFirebaseUser.value?.email!!))
+                                                    zoom = grabZoom, email = loggedInViewModel.liveFirebaseUser.value?.email!!,
+                                                    userid = loggedInViewModel.liveFirebaseUser.value?.uid!!))
             }
 
             findNavController().popBackStack()  //https://stackoverflow.com/questions/63760586/kotlin-handling-back-button-click-in-navigation-drawer-android

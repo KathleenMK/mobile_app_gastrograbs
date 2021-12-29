@@ -56,16 +56,26 @@ object FirebaseDBManager : GrabStore {
             })
     }
 
-    override fun findById(userid: String, grabid: String, grab: MutableLiveData<GrabModel>) {
+    override fun findById(grabid: String, grab: MutableLiveData<GrabModel>) {
 
-        database.child("user-grabs").child(userid)
-            .child(grabid).get().addOnSuccessListener {
+        database.child("grabs").child(grabid).get().addOnSuccessListener {
                 grab.value = it.getValue(GrabModel::class.java)
                 Timber.i("firebase Got value ${it.value}")
             }.addOnFailureListener{
                 Timber.e("firebase Error getting data $it")
             }
     }
+
+//    override fun findById(userid: String, grabid: String, grab: MutableLiveData<GrabModel>) {
+//
+//        database.child("user-grabs").child(userid)
+//            .child(grabid).get().addOnSuccessListener {
+//                grab.value = it.getValue(GrabModel::class.java)
+//                Timber.i("firebase Got value ${it.value}")
+//            }.addOnFailureListener{
+//                Timber.e("firebase Error getting data $it")
+//            }
+//    }
 
     override fun create(firebaseUser: MutableLiveData<FirebaseUser>, grab: GrabModel) {
         Timber.i("Firebase DB Reference : $database")
@@ -98,11 +108,10 @@ object FirebaseDBManager : GrabStore {
     override fun update(userid: String, grabid: String, grab: GrabModel) {
 
         val grabValues = grab.toMap()
-
+        Timber.i(userid)
         val childUpdate : MutableMap<String, Any?> = HashMap()
         childUpdate["grabs/$grabid"] = grabValues
-        childUpdate["user-grabs/$userid/$grabid"] = grabValues
-
+        childUpdate["user-grabs/$userid/$grabid"] = grabValues  //updated FB user rules to write ".write": "auth.uid != null", replacing "$uid === auth.uid" to allow comments from other users
         database.updateChildren(childUpdate)
     }
 

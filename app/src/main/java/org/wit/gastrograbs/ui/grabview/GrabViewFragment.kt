@@ -68,9 +68,10 @@ class GrabViewFragment : Fragment() {
             } else {
                 //grabViewModel.addComment(grab,newComment)
                 args.grabspecific.comments += listOf(newComment)
-                grabViewModel.updateGrab(loggedInViewModel.liveFirebaseUser.value?.uid!!,args.grabspecific.uid!!,args.grabspecific)
+                grabViewModel.updateGrab(args.grabspecific.userid!!,args.grabspecific.uid!!,args.grabspecific) //comments can be added by any user, so update only user grabs for creator email
                 Snackbar.make(it,R.string.added_comment, Snackbar.LENGTH_LONG)
                     .show()
+                Timber.i(loggedInViewModel.liveFirebaseUser.value?.uid)
                 render()
                 binding.newComment.setText("")
             }
@@ -130,8 +131,10 @@ class GrabViewFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_view, menu)
-        super.onCreateOptionsMenu(menu, inflater)
+        if(loggedInViewModel.liveFirebaseUser.value?.email == args.grabspecific.email) {    //only allowing edits for creator of grab
+            inflater.inflate(R.menu.menu_view, menu)
+            super.onCreateOptionsMenu(menu, inflater)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -153,7 +156,7 @@ class GrabViewFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        grabViewModel.getGrab(loggedInViewModel.liveFirebaseUser.value?.uid!!,args.grabspecific.uid!!)  //why !!
+        grabViewModel.getGrab(args.grabspecific.uid!!)  //why !!
     render()
     }
 
