@@ -36,7 +36,7 @@ class GrabAddFragment : Fragment() {
 //        fun newInstance() = GrabEditFragment()
 //    }
 
-    private lateinit var refreshIntentLauncher: ActivityResultLauncher<Intent>
+    private lateinit var refreshIntentLauncher: ActivityResultLauncher<Intent>  //attributes
     private lateinit var imageIntentLauncher: ActivityResultLauncher<Intent>
     private lateinit var mapIntentLauncher: ActivityResultLauncher<Intent>
     private lateinit var viewModel: GrabAddViewModel
@@ -50,7 +50,7 @@ class GrabAddFragment : Fragment() {
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {    //methods
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
 

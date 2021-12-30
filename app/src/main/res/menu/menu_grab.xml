@@ -8,12 +8,4 @@
         android:title="@string/menu_deleteGrab"
         app:showAsAction="always"/>
 
-    <item
-        android:id="@+id/item_cancel"
-        android:icon="@android:drawable/ic_menu_close_clear_cancel"
-        android:title="@string/menu_cancelGrab"
-        app:showAsAction="always"/>
-
-
-
-</menu>
+   </menu>

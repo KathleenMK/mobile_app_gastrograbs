@@ -11,8 +11,9 @@ import timber.log.Timber
 class GrabViewViewModel : ViewModel() {
     private val grab = MutableLiveData<GrabModel>()
 
-    val observableGrab: LiveData<GrabModel>
-    get() = grab
+    var observableGrab: LiveData<GrabModel>
+        get() = grab
+        set(value) {grab.value = value.value}
 
     fun getGrab(id: String){
         //grab.value = GrabManager.findOne(grabspecific.id)

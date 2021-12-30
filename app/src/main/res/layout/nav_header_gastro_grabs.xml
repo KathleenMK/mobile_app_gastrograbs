@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/nav_header_desc"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        app:srcCompat="@android:drawable/button_onoff_indicator_on" />
+        app:srcCompat="@drawable/ic_launcher_gg_foreground" />
 
     <TextView
         android:id="@+id/nav_header_name"
@@ -31,6 +31,5 @@
     <TextView
         android:id="@+id/nav_header_email"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/nav_header_subtitle" />
+        android:layout_height="wrap_content" />
 </LinearLayout>
