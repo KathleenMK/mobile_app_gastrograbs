@@ -14,16 +14,18 @@ class GrabEditViewModel : ViewModel() {
 
     var observableGrab: LiveData<GrabModel>
         get() = grab
-        set(value) {grab.value = value.value}
+        set(value) {
+            grab.value = value.value
+        }
 
 
-    fun updateGrab(userid:String, id: String, grab: GrabModel){
+    fun updateGrab(userid: String, id: String, grab: GrabModel) {
         //GrabManager.update(grab)
         Timber.i("in updateGrab GrabEditViewMOdel")
         FirebaseDBManager.update(userid, id, grab)
     }
 
-    fun updateImage(userid:String, id: String, grab: GrabModel, imageUri: String){
+    fun updateImage(userid: String, id: String, grab: GrabModel, imageUri: String) {
         //GrabManager.update(grab)
         Timber.i("in updateGrab GrabEditViewMOdel")
         FirebaseDBManager.updateImage(userid, id, grab, imageUri)
@@ -31,6 +33,6 @@ class GrabEditViewModel : ViewModel() {
 
     fun deleteGrab(userid: String, id: String) {                          //(grab: GrabModel){
         //GrabManager.delete(grab)
-        FirebaseDBManager.delete(userid,id)
+        FirebaseDBManager.delete(userid, id)
     }
 }

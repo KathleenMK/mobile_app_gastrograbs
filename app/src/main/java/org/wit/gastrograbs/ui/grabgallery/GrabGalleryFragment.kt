@@ -1,9 +1,8 @@
-package org.wit.gastrograbs.ui.gallery
+package org.wit.gastrograbs.ui.grabgallery
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import android.widget.CheckBox
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
@@ -12,27 +11,21 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import org.wit.gastrograbs.R
-import org.wit.gastrograbs.adapters.GrabAdapter
 import org.wit.gastrograbs.adapters.GrabImageAdapter
 import org.wit.gastrograbs.adapters.GrabImageListener
-import org.wit.gastrograbs.adapters.GrabListener
-import org.wit.gastrograbs.databinding.FragmentGalleryBinding
-import org.wit.gastrograbs.databinding.FragmentGrabCollectionBinding
+import org.wit.gastrograbs.databinding.FragmentGrabGalleryBinding
 //import org.wit.gastrograbs.databinding.FragmentHomeBinding
 import org.wit.gastrograbs.models.GrabModel
 import org.wit.gastrograbs.ui.auth.LoggedInViewModel
-import org.wit.gastrograbs.ui.grabcollection.GrabCollectionFragmentDirections
-import org.wit.gastrograbs.ui.grabcollection.GrabCollectionViewModel
 
-class GalleryFragment : Fragment(), GrabImageListener {
+class GrabGalleryFragment : Fragment(), GrabImageListener {
 
-    private lateinit var galleryViewModel: GalleryViewModel //this line vs the below???
+    private lateinit var galleryViewModel: GrabGalleryViewModel //this line vs the below???
 
     //private val grabCollectionViewModel: GrabCollectionViewModel by activityViewModels()
     private val loggedInViewModel: LoggedInViewModel by activityViewModels()
-    private var _binding: FragmentGalleryBinding? = null
+    private var _binding: FragmentGrabGalleryBinding? = null
 
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
@@ -49,9 +42,9 @@ class GalleryFragment : Fragment(), GrabImageListener {
         savedInstanceState: Bundle?
     ): View? {
         galleryViewModel =
-            ViewModelProvider(this).get(GalleryViewModel::class.java)
+            ViewModelProvider(this).get(GrabGalleryViewModel::class.java)
 
-        _binding = FragmentGalleryBinding.inflate(inflater, container, false)
+        _binding = FragmentGrabGalleryBinding.inflate(inflater, container, false)
         val root: View = binding.root
         //activity?.title = getString(R.string.app_name)  //added this line
 
@@ -73,7 +66,7 @@ class GalleryFragment : Fragment(), GrabImageListener {
 //        startActivity(intent.putExtra("grab_view",grab))
         // above lines from : https://stackoverflow.com/questions/20835933/intent-from-fragment-to-activity 04Dec21
         // added putExtra in the above to replicate previous activity
-        val action = GalleryFragmentDirections.actionNavGalleryToGrabViewFragment(grab)
+        val action = GrabGalleryFragmentDirections.actionNavGalleryToGrabViewFragment(grab)
         findNavController().navigate(action)
 
     }

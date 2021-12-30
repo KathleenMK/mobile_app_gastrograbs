@@ -9,8 +9,11 @@ import org.wit.gastrograbs.models.GrabModel
 interface GrabListener {
     fun onGrabClick(grab: GrabModel)
 }
-class GrabAdapter constructor(private var grabs: List<GrabModel>,
-                                private val listener: GrabListener) :
+
+class GrabAdapter constructor(
+    private var grabs: List<GrabModel>,
+    private val listener: GrabListener
+) :
     RecyclerView.Adapter<GrabAdapter.MainHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
@@ -31,7 +34,8 @@ class GrabAdapter constructor(private var grabs: List<GrabModel>,
 
         fun bind(grab: GrabModel, listener: GrabListener) {
             binding.grab = grab
-            binding.root.setOnClickListener{listener.onGrabClick(grab)}
-            binding.executePendingBindings()}   //Include this call to force the bindings to happen immediately
+            binding.root.setOnClickListener { listener.onGrabClick(grab) }
+            binding.executePendingBindings()
+        }   //Include this call to force the bindings to happen immediately
     }
 }

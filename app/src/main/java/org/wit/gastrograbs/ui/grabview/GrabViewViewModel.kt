@@ -13,14 +13,16 @@ class GrabViewViewModel : ViewModel() {
 
     var observableGrab: LiveData<GrabModel>
         get() = grab
-        set(value) {grab.value = value.value}
+        set(value) {
+            grab.value = value.value
+        }
 
-    fun getGrab(id: String){
+    fun getGrab(id: String) {
         //grab.value = GrabManager.findOne(grabspecific.id)
         FirebaseDBManager.findById(id, grab)
     }
 
-    fun updateGrab(userid:String, id: String, grab: GrabModel){
+    fun updateGrab(userid: String, id: String, grab: GrabModel) {
         //GrabManager.update(grab)
         Timber.i("in updateGrab GrabViewViewMOdel")
         FirebaseDBManager.update(userid, id, grab)

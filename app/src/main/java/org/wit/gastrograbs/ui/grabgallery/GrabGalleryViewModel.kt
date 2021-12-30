@@ -1,4 +1,5 @@
-package org.wit.gastrograbs.ui.gallery
+package org.wit.gastrograbs.ui.grabgallery
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,7 +10,7 @@ import org.wit.gastrograbs.models.GrabModel
 import timber.log.Timber
 import java.lang.Exception
 
-class GalleryViewModel : ViewModel() {
+class GrabGalleryViewModel : ViewModel() {
 
     private val grabs = MutableLiveData<List<GrabModel>>()
 
@@ -28,8 +29,7 @@ class GalleryViewModel : ViewModel() {
                 liveFirebaseUser.value?.uid!!,
                 grabs
             )
-        }
-        catch (e: Exception) {
+        } catch (e: Exception) {
             Timber.i("In GrabCollectionViewModel LOAD : $e.message")
         }
     }
@@ -38,8 +38,7 @@ class GalleryViewModel : ViewModel() {
         try {
             FirebaseDBManager.findAll(grabs)
             Timber.i("Grab Collection LoadAll Success : ${grabs.value.toString()}")
-        }
-        catch (e: Exception) {
+        } catch (e: Exception) {
             Timber.i("Grab Collection LoadAll Error : $e.message")
         }
     }

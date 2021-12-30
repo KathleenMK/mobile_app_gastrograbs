@@ -1,73 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="grab"
             type="org.wit.gastrograbs.models.GrabModel" />
     </data>
 
-<androidx.cardview.widget.CardView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="6dp"
-    android:elevation="24dp">
-
-    <RelativeLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:layout_margin="6dp"
+        android:elevation="24dp">
 
-        <TextView
-            android:id="@+id/grabTitle"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:text="@{grab.title}"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="23sp"
-            android:textStyle="bold"
-            tools:text="A Title" />
+            android:padding="16dp">
 
-        <TextView
-            android:id="@+id/grabDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/grabTitle"
-            android:text="@{grab.description}"
-            tools:text="Description"
-            android:maxLines="2"/>
+            <TextView
+                android:id="@+id/grabTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="@{grab.title}"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="23sp"
+                android:textStyle="bold"
+                tools:text="A Title" />
 
-        <TextView
-            android:id="@+id/grabCategory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/grabDescription"
-            android:textStyle="italic|bold"
-            android:layout_alignParentLeft="true"
-            android:outlineSpotShadowColor="@color/colorPrimaryDark"
-            android:text="@{grab.category}"
-            tools:text="Category" />
+            <TextView
+                android:id="@+id/grabDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/grabTitle"
+                android:maxLines="2"
+                android:text="@{grab.description}"
+                tools:text="Description" />
 
-        <TextView
-            android:id="@+id/grabAvRating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/grabDescription"
-            android:layout_alignParentRight="true"
-            android:background="@android:drawable/btn_star"
-            android:outlineSpotShadowColor="@color/colorPrimaryDark"
-            android:paddingVertical="10dp"
-            android:text="@{grab.avrating}"
-            android:textAlignment="center"
-            android:textColor="@color/tertiary"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            tools:text="0" />
+            <TextView
+                android:id="@+id/grabCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/grabDescription"
+                android:layout_alignParentLeft="true"
+                android:outlineSpotShadowColor="@color/colorPrimaryDark"
+                android:text="@{grab.category}"
+                android:textStyle="italic|bold"
+                tools:text="Category" />
+
+            <TextView
+                android:id="@+id/grabAvRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/grabDescription"
+                android:layout_alignParentRight="true"
+                android:background="@android:drawable/btn_star"
+                android:outlineSpotShadowColor="@color/colorPrimaryDark"
+                android:paddingVertical="10dp"
+                android:text="@{grab.avrating}"
+                android:textAlignment="center"
+                android:textColor="@color/tertiary"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                tools:text="0" />
 
 
-    </RelativeLayout>
-</androidx.cardview.widget.CardView>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 </layout>

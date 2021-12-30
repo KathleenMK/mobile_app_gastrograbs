@@ -20,9 +20,9 @@ import timber.log.Timber
 
 class GrabberLogin : AppCompatActivity() {
 
-    private lateinit var loginRegisterViewModel : LoginRegisterViewModel
-    private lateinit var loginBinding : ActivityGrabberLoginBinding
-    private lateinit var startForResult : ActivityResultLauncher<Intent>
+    private lateinit var loginRegisterViewModel: LoginRegisterViewModel
+    private lateinit var loginBinding: ActivityGrabberLoginBinding
+    private lateinit var startForResult: ActivityResultLauncher<Intent>
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,12 +30,16 @@ class GrabberLogin : AppCompatActivity() {
         setContentView(loginBinding.root)
 
         loginBinding.emailSignInButton.setOnClickListener {
-            signIn(loginBinding.fieldEmail.text.toString(),
-                loginBinding.fieldPassword.text.toString())
+            signIn(
+                loginBinding.fieldEmail.text.toString(),
+                loginBinding.fieldPassword.text.toString()
+            )
         }
         loginBinding.emailCreateAccountButton.setOnClickListener {
-            createAccount(loginBinding.fieldEmail.text.toString(),
-                loginBinding.fieldPassword.text.toString())
+            createAccount(
+                loginBinding.fieldEmail.text.toString(),
+                loginBinding.fieldPassword.text.toString()
+            )
         }
 
         loginBinding.googleSignInButton.setSize(SignInButton.SIZE_WIDE)
@@ -51,8 +55,10 @@ class GrabberLogin : AppCompatActivity() {
         // Check if user is signed in (non-null) and update UI accordingly.
         loginRegisterViewModel = ViewModelProvider(this).get(LoginRegisterViewModel::class.java)
         loginRegisterViewModel.liveFirebaseUser.observe(this, Observer
-        { firebaseUser -> if (firebaseUser != null)
-            startActivity(Intent(this, GastroGrabs::class.java)) })
+        { firebaseUser ->
+            if (firebaseUser != null)
+                startActivity(Intent(this, GastroGrabs::class.java))
+        })
 
         loginRegisterViewModel.firebaseAuthManager.errorStatus.observe(this, Observer
         { status -> checkStatus(status) })
@@ -63,25 +69,29 @@ class GrabberLogin : AppCompatActivity() {
     //Required to exit app from Login Screen - must investigate this further
     override fun onBackPressed() {
         super.onBackPressed()
-        Toast.makeText(this,"Click again to Close App...",Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "Click again to Close App...", Toast.LENGTH_LONG).show()
         finish()
     }
 
     private fun createAccount(email: String, password: String) {
         Timber.d("createAccount:$email")
-        if (!validateForm()) { return }
+        if (!validateForm()) {
+            return
+        }
 
-        loginRegisterViewModel.register(email,password)
+        loginRegisterViewModel.register(email, password)
     }
 
     private fun signIn(email: String, password: String) {
         Timber.d("signIn:$email")
-        if (!validateForm()) { return }
+        if (!validateForm()) {
+            return
+        }
 
-        loginRegisterViewModel.login(email,password)
+        loginRegisterViewModel.login(email, password)
     }
 
-    private fun checkStatus(error:Boolean) {
+    private fun checkStatus(error: Boolean) {
         if (error) {
             loginBinding.fieldEmail.setText("")
             loginBinding.fieldPassword.setText("")
@@ -125,7 +135,7 @@ class GrabberLogin : AppCompatActivity() {
     private fun setupGoogleSignInCallback() {
         startForResult =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                when(result.resultCode){
+                when (result.resultCode) {
                     RESULT_OK -> {
                         val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
                         try {
@@ -134,15 +144,18 @@ class GrabberLogin : AppCompatActivity() {
                             loginRegisterViewModel.authWithGoogle(account!!)
                         } catch (e: ApiException) {
                             // Google Sign In failed
-                            Timber.i( "Google sign in failed $e")
-                            Snackbar.make(loginBinding.mainLayout, "Authentication Failed.",
-                                Snackbar.LENGTH_SHORT).show()
-                                                    }
+                            Timber.i("Google sign in failed $e")
+                            Snackbar.make(
+                                loginBinding.mainLayout, "Authentication Failed.",
+                                Snackbar.LENGTH_SHORT
+                            ).show()
+                        }
                         Timber.i("GastroGrabs Google Result $result.data")
                     }
                     RESULT_CANCELED -> {
 
-                    } else -> { }
+                    }
+                    else -> {}
                 }
             }
     }

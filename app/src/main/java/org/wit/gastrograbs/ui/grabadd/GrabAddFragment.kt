@@ -45,7 +45,7 @@ class GrabAddFragment : Fragment() {
     private var grabLat = 0.0
     private var grabLng = 0.0
     private var grabZoom = 0f
-    private val loggedInViewModel : LoggedInViewModel by activityViewModels()
+    private val loggedInViewModel: LoggedInViewModel by activityViewModels()
 
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
@@ -84,8 +84,8 @@ class GrabAddFragment : Fragment() {
         _binding = FragmentGrabAddBinding.inflate(inflater, container, false)
         val root = binding.root
 
-        viewModel.observableStatus.observe(viewLifecycleOwner, Observer {
-            status -> status?.let{render(status)}
+        viewModel.observableStatus.observe(viewLifecycleOwner, Observer { status ->
+            status?.let { render(status) }
         })
 
         registerImagePickerCallback()
@@ -104,11 +104,15 @@ class GrabAddFragment : Fragment() {
                 Snackbar.make(it, R.string.enter_grab_title, Snackbar.LENGTH_LONG)
                     .show()
             } else {
-               viewModel.addGrab(loggedInViewModel.liveFirebaseUser, GrabModel(title = title, description = description,
-                                                    category = category, image = grabImage,
-                                                    lat = grabLat, lng = grabLng,
-                                                    zoom = grabZoom, email = loggedInViewModel.liveFirebaseUser.value?.email!!,
-                                                    userid = loggedInViewModel.liveFirebaseUser.value?.uid!!))
+                viewModel.addGrab(
+                    loggedInViewModel.liveFirebaseUser, GrabModel(
+                        title = title, description = description,
+                        category = category, image = grabImage,
+                        lat = grabLat, lng = grabLng,
+                        zoom = grabZoom, email = loggedInViewModel.liveFirebaseUser.value?.email!!,
+                        userid = loggedInViewModel.liveFirebaseUser.value?.uid!!
+                    )
+                )
                 findNavController().popBackStack()  //https://stackoverflow.com/questions/63760586/kotlin-handling-back-button-click-in-navigation-drawer-android
             }
 
@@ -155,9 +159,10 @@ class GrabAddFragment : Fragment() {
         when (status) {
             true -> {
                 view?.let {
-                     }
+                }
             }
-            false -> Toast.makeText(context,getString(R.string.addGrabError),Toast.LENGTH_LONG).show()
+            false -> Toast.makeText(context, getString(R.string.addGrabError), Toast.LENGTH_LONG)
+                .show()
         }
     }
 

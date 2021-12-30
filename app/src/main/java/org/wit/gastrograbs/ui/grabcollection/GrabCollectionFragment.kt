@@ -1,10 +1,7 @@
 package org.wit.gastrograbs.ui.grabcollection
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import android.widget.CheckBox
-import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -12,30 +9,28 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import org.wit.gastrograbs.R
 import org.wit.gastrograbs.adapters.GrabAdapter
 import org.wit.gastrograbs.adapters.GrabListener
 import org.wit.gastrograbs.databinding.FragmentGrabCollectionBinding
-//import org.wit.gastrograbs.databinding.FragmentHomeBinding
 import org.wit.gastrograbs.models.GrabModel
 import org.wit.gastrograbs.ui.auth.LoggedInViewModel
 
 class GrabCollectionFragment : Fragment(), GrabListener {
 
     private lateinit var grabCollectionViewModel: GrabCollectionViewModel //this line vs the below???
+
     //private val grabCollectionViewModel: GrabCollectionViewModel by activityViewModels()
-    private val loggedInViewModel : LoggedInViewModel by activityViewModels()
+    private val loggedInViewModel: LoggedInViewModel by activityViewModels()
     private var _binding: FragmentGrabCollectionBinding? = null
 
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
-    private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {    //added new onCreate fun
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-         }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,9 +44,9 @@ class GrabCollectionFragment : Fragment(), GrabListener {
         val root: View = binding.root
         //activity?.title = getString(R.string.app_name)  //added this line
 
-        binding.recyclerView.layoutManager = GridLayoutManager(activity,2)
-        grabCollectionViewModel.observableGrabsList.observe(viewLifecycleOwner, Observer {
-            grabs -> grabs?.let {render(grabs)}
+        binding.recyclerView.layoutManager = GridLayoutManager(activity, 2)
+        grabCollectionViewModel.observableGrabsList.observe(viewLifecycleOwner, Observer { grabs ->
+            grabs?.let { render(grabs) }
         })
 
         return root
@@ -73,7 +68,7 @@ class GrabCollectionFragment : Fragment(), GrabListener {
     }
 
     private fun render(grabs: List<GrabModel>) {
-        binding.recyclerView.adapter = GrabAdapter(grabs,this)
+        binding.recyclerView.adapter = GrabAdapter(grabs, this)
         if (grabs.isEmpty()) {
             binding.recyclerView.visibility = View.GONE
             binding.grabsNotFound.visibility = View.VISIBLE
@@ -105,8 +100,7 @@ class GrabCollectionFragment : Fragment(), GrabListener {
             if (isChecked) {
                 toggleGrabs.setText(R.string.all_grabs)
                 grabCollectionViewModel.loadAll()
-            }
-            else {
+            } else {
                 toggleGrabs.setText(R.string.my_grabs)
                 grabCollectionViewModel.load()
             }

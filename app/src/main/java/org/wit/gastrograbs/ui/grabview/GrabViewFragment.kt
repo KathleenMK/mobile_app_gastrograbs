@@ -29,7 +29,7 @@ class GrabViewFragment : Fragment() {
     private lateinit var grabViewModel: GrabViewViewModel
     private val args by navArgs<GrabViewFragmentArgs>()
     private var _binding: FragmentGrabViewBinding? = null
-    private val loggedInViewModel : LoggedInViewModel by activityViewModels()
+    private val loggedInViewModel: LoggedInViewModel by activityViewModels()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -60,17 +60,21 @@ class GrabViewFragment : Fragment() {
         //activity?.title = args.grabspecific.title //no difference
         grabViewModel.observableGrab.observe(viewLifecycleOwner, Observer { render() })
 
-        binding.btnAddComment.setOnClickListener{
+        binding.btnAddComment.setOnClickListener {
             var newComment = binding.newComment.text.toString()
             //var grab = args.grabspecific
             if (newComment.isEmpty()) {
-                Snackbar.make(it,R.string.empty_comment, Snackbar.LENGTH_LONG)
+                Snackbar.make(it, R.string.empty_comment, Snackbar.LENGTH_LONG)
                     .show()
             } else {
                 //grabViewModel.addComment(grab,newComment)
                 args.grabspecific.comments += listOf(newComment)
-                grabViewModel.updateGrab(args.grabspecific.userid!!,args.grabspecific.uid!!,args.grabspecific) //comments can be added by any user, so update only user grabs for creator email
-                Snackbar.make(it,R.string.added_comment, Snackbar.LENGTH_LONG)
+                grabViewModel.updateGrab(
+                    args.grabspecific.userid!!,
+                    args.grabspecific.uid!!,
+                    args.grabspecific
+                ) //comments can be added by any user, so update only user grabs for creator email
+                Snackbar.make(it, R.string.added_comment, Snackbar.LENGTH_LONG)
                     .show()
                 Timber.i(loggedInViewModel.liveFirebaseUser.value?.uid)
                 render()
@@ -78,18 +82,24 @@ class GrabViewFragment : Fragment() {
             }
         }
 
-        binding.btnAddRating.setOnClickListener{
+        binding.btnAddRating.setOnClickListener {
             var newRating = binding.ratingBar.getRating().toDouble()
             //var grab = args.grabspecific
             if (false) {
-                Snackbar.make(it,R.string.empty_comment, Snackbar.LENGTH_LONG)
+                Snackbar.make(it, R.string.empty_comment, Snackbar.LENGTH_LONG)
                     .show()
             } else {
                 //grabViewModel.addComment(grab,newComment)
                 args.grabspecific.ratings += listOf(newRating)
-                args.grabspecific.avrating = (args.grabspecific.ratings.sum()/args.grabspecific.ratings.size).roundToInt().toString()
-                grabViewModel.updateGrab(args.grabspecific.userid!!,args.grabspecific.uid!!,args.grabspecific) //comments can be added by any user, so update only user grabs for creator email
-                Snackbar.make(it,R.string.added_rating, Snackbar.LENGTH_LONG)
+                args.grabspecific.avrating =
+                    (args.grabspecific.ratings.sum() / args.grabspecific.ratings.size).roundToInt()
+                        .toString()
+                grabViewModel.updateGrab(
+                    args.grabspecific.userid!!,
+                    args.grabspecific.uid!!,
+                    args.grabspecific
+                ) //comments can be added by any user, so update only user grabs for creator email
+                Snackbar.make(it, R.string.added_rating, Snackbar.LENGTH_LONG)
                     .show()
                 Timber.i(loggedInViewModel.liveFirebaseUser.value?.uid)
                 binding.ratingBar.rating = 0F
@@ -100,13 +110,14 @@ class GrabViewFragment : Fragment() {
         binding.btnViewMap.setOnClickListener {
             var location = Location(52.15859, -7.14440, 16f)
             var grab = args.grabspecific
-            if (grab.zoom != 0f){
+            if (grab.zoom != 0f) {
                 location.lat = grab.lat
                 location.lng = grab.lng
                 location.zoom = grab.zoom
             }
             val intent = Intent(activity, MapsActivity::class.java)
-            startActivity(intent.putExtra( "location", location))}
+            startActivity(intent.putExtra("location", location))
+        }
 
         render()
         return root
@@ -120,19 +131,18 @@ class GrabViewFragment : Fragment() {
 
     private fun render() {
         grabViewModel.getGrab(args.grabspecific.uid!!)  //need to refresh ratings
-       binding.grabvm = grabViewModel
+        binding.grab = grabViewModel
 
         binding.grabAddedBy.setText("Added By: " + args.grabspecific.email) //can't seem to add string resource
 //        var foundGrab = args.grabspecific
 //        binding.grabTitle.text = foundGrab.title
-        if(args.grabspecific.ratings.isNotEmpty()){
-            if(args.grabspecific.ratings.size == 1){
+        if (args.grabspecific.ratings.isNotEmpty()) {
+            if (args.grabspecific.ratings.size == 1) {
                 binding.grabRatingDetail.setText(" from 1 rating...")
+            } else {
+                binding.grabRatingDetail.setText(" from " + args.grabspecific.ratings.size.toString() + " ratings...")
             }
-            else{
-            binding.grabRatingDetail.setText(" from "+args.grabspecific.ratings.size.toString() + " ratings...")}
-        }
-        else{
+        } else {
             binding.grabRatingDetail.setText(" no ratings yet ...")
 
         }
@@ -142,8 +152,8 @@ class GrabViewFragment : Fragment() {
         }
         if (args.grabspecific.category.isNotEmpty()) {
             binding.grabCategory.visibility = View.VISIBLE
-       }
-        if (args.grabspecific.image != ""){ //Uri.EMPTY) {
+        }
+        if (args.grabspecific.image != "") { //Uri.EMPTY) {
             binding.grabImage.visibility = View.VISIBLE
             Picasso.get()
                 .load(args.grabspecific.image.toUri())
@@ -157,7 +167,7 @@ class GrabViewFragment : Fragment() {
             binding.recyclerViewComment.layoutManager = LinearLayoutManager(activity)
             binding.recyclerViewComment.adapter =
                 CommentAdapter(args.grabspecific.comments)  //.asReversed()
-       }
+        }
 
 
         //binding.grabImage.text = args.grabspecific.description
@@ -166,7 +176,7 @@ class GrabViewFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if(loggedInViewModel.liveFirebaseUser.value?.email == args.grabspecific.email) {    //only allowing edits for creator of grab
+        if (loggedInViewModel.liveFirebaseUser.value?.email == args.grabspecific.email) {    //only allowing edits for creator of grab
             inflater.inflate(R.menu.menu_view, menu)
             super.onCreateOptionsMenu(menu, inflater)
         }
@@ -180,19 +190,23 @@ class GrabViewFragment : Fragment() {
 //                val intent = Intent(activity, GrabActivity::class.java)
 //                startActivity(intent.putExtra("grab_edit", args.grabspecific))}
                 val action =
-                    GrabViewFragmentDirections.actionGrabViewFragmentToGrabFragment(args.grabspecific, grabEdit)
-                findNavController().navigate(action)}
-
-                // above lines from : https://stackoverflow.com/questions/20835933/intent-from-fragment-to-activity 04Dec21
-                // added putExtra in the above to replicate previous activity
+                    GrabViewFragmentDirections.actionGrabViewFragmentToGrabFragment(
+                        args.grabspecific,
+                        grabEdit
+                    )
+                findNavController().navigate(action)
             }
-            return super.onOptionsItemSelected(item)
+
+            // above lines from : https://stackoverflow.com/questions/20835933/intent-from-fragment-to-activity 04Dec21
+            // added putExtra in the above to replicate previous activity
         }
+        return super.onOptionsItemSelected(item)
+    }
 
     override fun onResume() {
         super.onResume()
         grabViewModel.getGrab(args.grabspecific.uid!!)  //why !!
-    render()
+        render()
     }
 
 }

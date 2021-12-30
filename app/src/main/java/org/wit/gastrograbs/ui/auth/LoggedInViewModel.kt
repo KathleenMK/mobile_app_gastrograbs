@@ -6,11 +6,11 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseUser
 import org.wit.gastrograbs.firebase.FirebaseAuthManager
 
-class LoggedInViewModel (app: Application) : AndroidViewModel(app) {
+class LoggedInViewModel(app: Application) : AndroidViewModel(app) {
 
-    var firebaseAuthManager : FirebaseAuthManager = FirebaseAuthManager(app)
-    var liveFirebaseUser : MutableLiveData<FirebaseUser> = firebaseAuthManager.liveFirebaseUser
-    var loggedOut : MutableLiveData<Boolean> = firebaseAuthManager.loggedOut
+    var firebaseAuthManager: FirebaseAuthManager = FirebaseAuthManager(app)
+    var liveFirebaseUser: MutableLiveData<FirebaseUser> = firebaseAuthManager.liveFirebaseUser
+    var loggedOut: MutableLiveData<Boolean> = firebaseAuthManager.loggedOut
 
     fun logOut() {
         firebaseAuthManager.logOut()

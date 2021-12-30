@@ -25,12 +25,11 @@ class GrabCollectionViewModel : ViewModel() {
 
     fun load() {
         try {
-               FirebaseDBManager.findAll(
+            FirebaseDBManager.findAll(
                 liveFirebaseUser.value?.uid!!,
                 grabs
             )
-        }
-        catch (e: Exception) {
+        } catch (e: Exception) {
             Timber.i("In GrabCollectionViewModel LOAD : $e.message")
         }
     }
@@ -39,8 +38,7 @@ class GrabCollectionViewModel : ViewModel() {
         try {
             FirebaseDBManager.findAll(grabs)
             Timber.i("Grab Collection LoadAll Success : ${grabs.value.toString()}")
-        }
-        catch (e: Exception) {
+        } catch (e: Exception) {
             Timber.i("Grab Collection LoadAll Error : $e.message")
         }
     }

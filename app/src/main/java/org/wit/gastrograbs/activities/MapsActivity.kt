@@ -17,7 +17,8 @@ import org.wit.gastrograbs.R
 import org.wit.gastrograbs.databinding.ActivityMapsBinding
 import org.wit.gastrograbs.models.Location
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerDragListener, GoogleMap.OnMarkerClickListener {
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerDragListener,
+    GoogleMap.OnMarkerClickListener {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding

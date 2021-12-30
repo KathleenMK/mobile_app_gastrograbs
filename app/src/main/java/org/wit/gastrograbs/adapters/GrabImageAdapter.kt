@@ -12,8 +12,11 @@ import org.wit.gastrograbs.models.GrabModel
 interface GrabImageListener {
     fun onGrabClick(grab: GrabModel)
 }
-class GrabImageAdapter constructor(private var grabs: List<GrabModel>,
-                              private val listener: GrabImageListener) :
+
+class GrabImageAdapter constructor(
+    private var grabs: List<GrabModel>,
+    private val listener: GrabImageListener
+) :
     RecyclerView.Adapter<GrabImageAdapter.MainHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
@@ -35,11 +38,12 @@ class GrabImageAdapter constructor(private var grabs: List<GrabModel>,
         fun bind(grab: GrabModel, listener: GrabImageListener) {
             binding.grab = grab
             Picasso.get().load(grab.image.toUri())
-                .resize(250, 250)
+                .resize(300, 300)
                 .centerCrop()
                 .memoryPolicy(MemoryPolicy.NO_CACHE)
                 .into(binding.GrabIcon)
-            binding.root.setOnClickListener{listener.onGrabClick(grab)}
-            binding.executePendingBindings()}   //Include this call to force the bindings to happen immediately
+            binding.root.setOnClickListener { listener.onGrabClick(grab) }
+            binding.executePendingBindings()
+        }   //Include this call to force the bindings to happen immediately
     }
 }

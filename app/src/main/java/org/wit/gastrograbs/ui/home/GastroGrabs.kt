@@ -26,9 +26,10 @@ class GastroGrabs : AppCompatActivity() {
     private lateinit var binding: ActivityGastroGrabsBinding
 
     private lateinit var drawerLayout: DrawerLayout
+
     //private lateinit var homeBinding : HomeBinding
-    private lateinit var navHeaderBinding : NavHeaderGastroGrabsBinding
-    private lateinit var loggedInViewModel : LoggedInViewModel
+    private lateinit var navHeaderBinding: NavHeaderGastroGrabsBinding
+    private lateinit var loggedInViewModel: LoggedInViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,8 +45,11 @@ class GastroGrabs : AppCompatActivity() {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
 
-        appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.nav_home), drawerLayout)
+        appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.nav_home, R.id.nav_gallery
+            ), drawerLayout
+        )
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         val navView = binding.navView
