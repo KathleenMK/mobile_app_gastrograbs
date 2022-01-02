@@ -1,5 +1,6 @@
 package org.wit.gastrograbs.firebase
 
+import androidx.core.net.toUri
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
@@ -94,6 +95,8 @@ object FirebaseDBManager : GrabStore {
         childAdd["/user-grabs/$uid/$key"] = grabValues
 
         database.updateChildren(childAdd)
+
+        FirebaseImageManager.updateGrabImage(grab.userid,key,grab,grab.image.toUri(),true)
     }
 
     override fun delete(userid: String, grabid: String) {
@@ -118,12 +121,12 @@ object FirebaseDBManager : GrabStore {
 
     fun updateImage(userid: String, grabid: String, grab: GrabModel, imageUri: String) {
 
+        grab.image = imageUri
         val grabValues = grab.toMap()
-
         val childUpdate : MutableMap<String, Any?> = HashMap()
         childUpdate["grabs/$grabid"] = grabValues
         childUpdate["user-grabs/$userid/$grabid"] = grabValues
 
-        database.updateChildren(childUpdate)
+       database.updateChildren(childUpdate)
     }
 }

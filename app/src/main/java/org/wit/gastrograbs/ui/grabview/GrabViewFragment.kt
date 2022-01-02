@@ -134,8 +134,7 @@ class GrabViewFragment : Fragment() {
         binding.grab = grabViewModel
 
         binding.grabAddedBy.setText("Added By: " + args.grabspecific.email) //can't seem to add string resource
-//        var foundGrab = args.grabspecific
-//        binding.grabTitle.text = foundGrab.title
+
         if (args.grabspecific.ratings.isNotEmpty()) {
             if (args.grabspecific.ratings.size == 1) {
                 binding.grabRatingDetail.setText(" from 1 rating...")

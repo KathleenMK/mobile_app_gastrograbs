@@ -1,9 +1,11 @@
 package org.wit.gastrograbs.ui.grabedit
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import org.wit.gastrograbs.firebase.FirebaseDBManager
+import org.wit.gastrograbs.firebase.FirebaseImageManager
 //import org.wit.gastrograbs.models.GrabManager
 import org.wit.gastrograbs.models.GrabModel
 import timber.log.Timber
@@ -20,19 +22,17 @@ class GrabEditViewModel : ViewModel() {
 
 
     fun updateGrab(userid: String, id: String, grab: GrabModel) {
-        //GrabManager.update(grab)
         Timber.i("in updateGrab GrabEditViewMOdel")
         FirebaseDBManager.update(userid, id, grab)
     }
 
-    fun updateImage(userid: String, id: String, grab: GrabModel, imageUri: String) {
-        //GrabManager.update(grab)
+    fun updateImage(userid: String, id: String, grab: GrabModel, imageUri: Uri?) {
         Timber.i("in updateGrab GrabEditViewMOdel")
-        FirebaseDBManager.updateImage(userid, id, grab, imageUri)
+        FirebaseImageManager
+            .updateGrabImage(userid, id, grab, imageUri, false)
     }
 
-    fun deleteGrab(userid: String, id: String) {                          //(grab: GrabModel){
-        //GrabManager.delete(grab)
-        FirebaseDBManager.delete(userid, id)
+    fun deleteGrab(userid: String, id: String) {
+         FirebaseDBManager.delete(userid, id)
     }
 }

@@ -25,7 +25,9 @@ import org.wit.gastrograbs.ui.home.GastroGrabs
 import org.wit.gastrograbs.activities.MapsActivity
 import org.wit.gastrograbs.adapters.CommentAdapter
 import org.wit.gastrograbs.databinding.FragmentGrabEditBinding
+import org.wit.gastrograbs.firebase.FirebaseImageManager
 import org.wit.gastrograbs.helpers.SwipeToDeleteCallback
+import org.wit.gastrograbs.helpers.readImageUri
 import org.wit.gastrograbs.helpers.showImagePicker
 import org.wit.gastrograbs.models.Location
 import org.wit.gastrograbs.ui.auth.LoggedInViewModel
@@ -39,27 +41,22 @@ class GrabEditFragment : Fragment() {
 //        fun newInstance() = GrabEditFragment()
 //    }
 
-    //lateinit var app: MainApp   //added line
     private lateinit var refreshIntentLauncher: ActivityResultLauncher<Intent>
     private lateinit var imageIntentLauncher: ActivityResultLauncher<Intent>
     private lateinit var mapIntentLauncher: ActivityResultLauncher<Intent>
     private lateinit var editViewModel: GrabEditViewModel
     private val loggedInViewModel: LoggedInViewModel by activityViewModels()
 
-    //var grab = GrabModel()
     private val args by navArgs<GrabEditFragmentArgs>()
     private var _binding: FragmentGrabEditBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    //var edit = false
 
-    override fun onCreate(savedInstanceState: Bundle?) {    //added new onCreate fun
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //app = activity?.application as MainApp
         setHasOptionsMenu(true)
-        //navController = Navigation.findNavController(activity!!, R.id.nav_host_fragment)
     }
 
     override fun onCreateView(
@@ -88,22 +85,13 @@ class GrabEditFragment : Fragment() {
             } else {
                 i(loggedInViewModel.liveFirebaseUser.value?.uid!!)
                 i(args.grabspecific.uid!!)
-                //i(editViewModel.observableGrab!!.value!!.title)
                 editViewModel.updateGrab(
                     loggedInViewModel.liveFirebaseUser.value?.uid!!,
                     args.grabspecific.uid!!,
                     args.grabspecific
                 )
-                //editViewModel.updateImage(loggedInViewModel.liveFirebaseUser.value?.uid!!,args.grabspecific.uid!!,args.grabspecific, args.grabspecific.image)
-                //Should I be passing something like the following in the above update method: binding.grabvm2?.observableGrab!!.value!!)
-                //i("these are the grab comments in GrabActivity")
-                //i(grab.comments.toString())
-
 
                 findNavController().popBackStack()  //https://stackoverflow.com/questions/63760586/kotlin-handling-back-button-click-in-navigation-drawer-android
-//                val action =
-//                    GrabFragmentDirections.actionGrab 10Dec21FragmentToGrabViewFragment(args.grabspecific)
-//                findNavController().navigate(action)
             }
 
         }
@@ -113,7 +101,6 @@ class GrabEditFragment : Fragment() {
         }
 
         binding.addLocation.setOnClickListener {
-            //var grab = args.grabspecific
             var location = Location(52.15859, -7.14440, 16f)
             if (args.grabspecific.zoom != 0f) {
                 location.lat = args.grabspecific.lat
@@ -122,7 +109,6 @@ class GrabEditFragment : Fragment() {
             }
             val intent = Intent(activity, MapsActivity::class.java)
             startActivity(intent.putExtra("location", location))
-            //mapIntentLauncher.launch(launcherIntent)
         }
 
         val spinner: Spinner =
@@ -136,21 +122,15 @@ class GrabEditFragment : Fragment() {
             ).also { adapter ->
                 // Specify the layout to use when the list of choices appears
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                // Apply the adapter to the spinner
-                spinner.adapter = adapter
             }
         }
-
-
         registerImagePickerCallback()
         registerMapCallback()
         registerRefreshCallback()
 
         val swipeDeleteHandler = object : SwipeToDeleteCallback(requireContext()) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                //showLoader(loader,"Deleting...")
                 val adapter = binding.recyclerViewComment.adapter as CommentAdapter
-                //hideLoader(loader)
                 adapter.removeAt(viewHolder.adapterPosition)
                 editViewModel.updateGrab(
                     loggedInViewModel.liveFirebaseUser.value?.uid!!,
@@ -183,7 +163,6 @@ class GrabEditFragment : Fragment() {
             binding.grabCategory.visibility = View.VISIBLE
             binding.grabCategory.setText(foundGrab.category)
             binding.btnAdd.setText(R.string.save_grab)
-            //binding.toolbarAdd.setTitle(R.string.title_update)
             if (foundGrab.image != "") {
                 Picasso.get()
                     .load(foundGrab.image)
@@ -199,7 +178,6 @@ class GrabEditFragment : Fragment() {
             if (foundGrab.zoom != 0f) {
                 binding.addLocation.setText(R.string.change_grab_location)
             }
-            //val layoutManager = LinearLayoutManager(this)
             binding.recyclerViewComment.layoutManager = LinearLayoutManager(activity)
             binding.recyclerViewComment.adapter = CommentAdapter(foundGrab.comments)
 
@@ -221,24 +199,15 @@ class GrabEditFragment : Fragment() {
                     loggedInViewModel.liveFirebaseUser.value?.uid!!,
                     args.grabspecific.uid!!
                 )
-                //Should I be passing something like the following in the above update method: binding.grabvm2?.observableGrab!!.value!!)
-                //val launcherIntent = Intent(this, GrabCollectionActivity::class.java)
                 val intent = Intent(activity, GastroGrabs::class.java)
                 startActivity(intent)
             }
-
-//            R.id.item_edit -> {
-//                val intent = Intent(activity, GrabActivity::class.java)
-//                startActivity(intent.putExtra("grab_edit", args.grabspecific))}
-            // above lines from : https://stackoverflow.com/questions/20835933/intent-from-fragment-to-activity 04Dec21
-            // added putExtra in the above to replicate previous activity
         }
         return super.onOptionsItemSelected(item)
     }
 
     override fun onResume() {
         super.onResume()
-        // something like: detailViewModel.getDonation(args.donationid)
         render()
     }
 
@@ -277,7 +246,11 @@ class GrabEditFragment : Fragment() {
                             var grab = args.grabspecific
                             i("Got Result ${result.data!!.data}")
                             binding.grabImage.visibility = View.VISIBLE
-                            grab.image = result.data!!.data!!.toString()
+                            args.grabspecific.image = result.data!!.data!!.toString()
+                            editViewModel.updateImage(
+                                loggedInViewModel.liveFirebaseUser.value?.uid!!,
+                                args.grabspecific.uid!!,
+                                args.grabspecific, result.data!!.data )
                             Picasso.get()
                                 .load(grab.image.toUri())
                                 .into(binding.grabImage)
