@@ -1,31 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
-            name="grabvm"
+            name="grab"
             type="org.wit.gastrograbs.ui.grabview.GrabViewViewModel" />
     </data>
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.grabview.GrabViewFragment">
-
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        android:layout_height="match_parent"
+        tools:context=".ui.grabview.GrabViewFragment">
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
 
             <TextView
                 android:id="@+id/grabTitle"
@@ -39,12 +37,59 @@
                 android:maxLength="100"
                 android:maxLines="1"
                 android:padding="8dp"
+                android:text="@{grab.observableGrab.title}"
                 android:textAlignment="viewStart"
                 android:textAllCaps="true"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="20sp"
-                android:visibility="visible"
-                android:text="@{grabvm.observableGrab.title}"/>
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/grabAddedBy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:maxLength="50"
+                android:maxLines="1"
+                android:padding="2dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="13sp"
+                android:textStyle="italic"
+                tools:text="testing email" />
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="4">
+
+                <TextView
+                    android:id="@+id/grabAvRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:background="@android:drawable/btn_star"
+                    android:outlineSpotShadowColor="@color/colorPrimaryDark"
+                    android:paddingVertical="6dp"
+                    android:text="@{grab.observableGrab.avrating}"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    tools:text="0" />
+
+                <TextView
+                    android:id="@+id/grabRatingDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="2"
+                    android:outlineSpotShadowColor="@color/colorPrimaryDark"
+                    android:paddingVertical="6dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    tools:text="rating detail" />
+            </GridLayout>
 
             <TextView
                 android:id="@+id/grabDescription"
@@ -57,15 +102,16 @@
                 android:maxLength="100"
                 android:maxLines="1"
                 android:padding="8dp"
+                android:text="@{grab.observableGrab.description}"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="14sp"
-                android:text="@{grabvm.observableGrab.description}"/>
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/grabCategory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
+                android:layout_gravity="end"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
@@ -73,11 +119,11 @@
                 android:maxLength="25"
                 android:maxLines="1"
                 android:padding="8dp"
-                android:textAlignment="center"
+                android:text="@{grab.observableGrab.category}"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="16sp"
                 android:textStyle="italic|bold"
-                android:text="@{grabvm.observableGrab.category}"/>
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/grabImage"
@@ -86,10 +132,12 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="4dp"
                 android:contentDescription="@string/change_grab_image"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
 
             <Button
                 android:id="@+id/btnViewMap"
@@ -105,7 +153,36 @@
                 android:stateListAnimator="@null"
                 android:text="@string/button_map"
                 android:textColor="#263238"
-                android:textSize="10sp" />
+                android:textSize="10sp"
+                android:visibility="gone" />
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="4">
+
+                <RatingBar
+                    android:id="@+id/ratingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:numStars="5"
+                    android:stepSize=".5" />
+
+                <Button
+                    android:id="@+id/btnAddRating"
+                    android:layout_width="115dp"
+                    android:layout_height="wrap_content"
+                    android:layout_column="3"
+                    android:layout_margin="5dp"
+                    android:background="@color/colorAccent"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:stateListAnimator="@null"
+                    android:text="@string/button_rating"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="11sp" />
+            </GridLayout>
 
             <TextView
                 android:id="@+id/commentHeader"
@@ -161,10 +238,10 @@
                 android:layout_height="match_parent"
                 android:scrollbars="vertical"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
         </LinearLayout>
         <!--        </ScrollView>-->
 
-    </RelativeLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

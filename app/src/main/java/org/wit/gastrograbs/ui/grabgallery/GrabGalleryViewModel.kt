@@ -1,4 +1,4 @@
-package org.wit.gastrograbs.ui.grabcollection
+package org.wit.gastrograbs.ui.grabgallery
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,7 +10,7 @@ import org.wit.gastrograbs.models.GrabModel
 import timber.log.Timber
 import java.lang.Exception
 
-class GrabCollectionViewModel : ViewModel() {
+class GrabGalleryViewModel : ViewModel() {
 
     private val grabs = MutableLiveData<List<GrabModel>>()
 

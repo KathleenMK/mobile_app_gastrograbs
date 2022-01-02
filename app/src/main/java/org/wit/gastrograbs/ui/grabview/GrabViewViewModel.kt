@@ -11,16 +11,17 @@ import timber.log.Timber
 class GrabViewViewModel : ViewModel() {
     private val grab = MutableLiveData<GrabModel>()
 
-    val observableGrab: LiveData<GrabModel>
-    get() = grab
+    var observableGrab: LiveData<GrabModel>
+        get() = grab
+        set(value) {
+            grab.value = value.value
+        }
 
-    fun getGrab(userid:String, id: String){
-        //grab.value = GrabManager.findOne(grabspecific.id)
-        FirebaseDBManager.findById(userid, id, grab)
+    fun getGrab(id: String) {
+        FirebaseDBManager.findById(id, grab)
     }
 
-    fun updateGrab(userid:String, id: String, grab: GrabModel){
-        //GrabManager.update(grab)
+    fun updateGrab(userid: String, id: String, grab: GrabModel) {
         Timber.i("in updateGrab GrabViewViewMOdel")
         FirebaseDBManager.update(userid, id, grab)
     }

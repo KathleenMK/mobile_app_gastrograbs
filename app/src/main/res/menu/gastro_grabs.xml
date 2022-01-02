@@ -1,22 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+<!--    <item-->
+<!--        android:id="@+id/action_settings"-->
+<!--        android:orderInCategory="100"-->
+<!--        android:title="@string/action_settings"-->
+<!--        app:showAsAction="never" />-->
+
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_editGrab"
-        android:orderInCategory="100"
-        android:title="@string/menu_editGrab"
-        android:visibility="gone"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_deleteGrab"
-        android:orderInCategory="100"
-        android:title="@string/menu_deleteGrab"
-        android:visibility="gone"
-        android:visible="false"
-        app:showAsAction="never" />
+        android:id="@+id/toggleGrabs"
+        android:title=""
+        app:actionLayout="@layout/show_toggle_layout"
+        app:showAsAction="always" />
 </menu>

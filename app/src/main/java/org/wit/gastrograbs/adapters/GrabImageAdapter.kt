@@ -2,22 +2,25 @@ package org.wit.gastrograbs.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
-import org.wit.gastrograbs.databinding.CardGrabBinding
+import com.squareup.picasso.MemoryPolicy
+import com.squareup.picasso.Picasso
+import org.wit.gastrograbs.databinding.CardGrabImageBinding
 import org.wit.gastrograbs.models.GrabModel
 
-interface GrabListener {
+interface GrabImageListener {
     fun onGrabClick(grab: GrabModel)
 }
 
-class GrabAdapter constructor(
+class GrabImageAdapter constructor(
     private var grabs: List<GrabModel>,
-    private val listener: GrabListener
+    private val listener: GrabImageListener
 ) :
-    RecyclerView.Adapter<GrabAdapter.MainHolder>() {
+    RecyclerView.Adapter<GrabImageAdapter.MainHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
-        val binding = CardGrabBinding
+        val binding = CardGrabImageBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
         return MainHolder(binding)
     }
@@ -29,11 +32,16 @@ class GrabAdapter constructor(
 
     override fun getItemCount(): Int = grabs.size
 
-    class MainHolder(private val binding: CardGrabBinding) :
+    class MainHolder(private val binding: CardGrabImageBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(grab: GrabModel, listener: GrabListener) {
+        fun bind(grab: GrabModel, listener: GrabImageListener) {
             binding.grab = grab
+            Picasso.get().load(grab.image.toUri())
+                .resize(300, 300)
+                .centerCrop()
+                .memoryPolicy(MemoryPolicy.NO_CACHE)
+                .into(binding.GrabIcon)
             binding.root.setOnClickListener { listener.onGrabClick(grab) }
             binding.executePendingBindings()
         }   //Include this call to force the bindings to happen immediately

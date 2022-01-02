@@ -1,7 +1,6 @@
 package org.wit.gastrograbs.ui.grabadd
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +11,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -36,44 +36,43 @@ class GrabAddFragment : Fragment() {
 //        fun newInstance() = GrabEditFragment()
 //    }
 
-    //lateinit var app: MainApp   //added line
-    private lateinit var refreshIntentLauncher: ActivityResultLauncher<Intent>
+    private lateinit var refreshIntentLauncher: ActivityResultLauncher<Intent>  //attributes
     private lateinit var imageIntentLauncher: ActivityResultLauncher<Intent>
     private lateinit var mapIntentLauncher: ActivityResultLauncher<Intent>
     private lateinit var viewModel: GrabAddViewModel
-    //var grab = GrabModel()
     private var _binding: FragmentGrabAddBinding? = null
-    private var grabImage: Uri = Uri.EMPTY
-    private var grabLat = 0.0 //by Delegates.notNull<Double>()  //tried to :Double, the previous was suggested
-    private var grabLng = 0.0  //by Delegates.notNull<Double>()  //'lateinit' modifier is not allowed on properties of primitive types
-    private var grabZoom = 0f //by Delegates.notNull<Float>()
-    private val loggedInViewModel : LoggedInViewModel by activityViewModels()
+    private var grabImage: String = ""
+    private var grabLat = 0.0
+    private var grabLng = 0.0
+    private var grabZoom = 0f
+    private val loggedInViewModel: LoggedInViewModel by activityViewModels()
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+    // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {    //added new onCreate fun
+    override fun onCreate(savedInstanceState: Bundle?) {    //methods
         super.onCreate(savedInstanceState)
-        //app = activity?.application as MainApp
         setHasOptionsMenu(true)
 
 // FOUR SAMPLE GRABS
 //        val firebaseUser = loggedInViewModel.liveFirebaseUser
 //        var grab1 = (GrabModel(title="Reeses Overload",description="Chocolatey deliciousness, peanuts and pretzels", category="treat",
 //            comments = arrayListOf("This is the most beautiful Reeses product around!", "In Lidl this week...", "Can someone send me some", "Gorgeous"),
-//                                lat=52.16397003708149,lng=-7.162707075476646,zoom=16.0f, email = loggedInViewModel.liveFirebaseUser.value?.email!!))
+//                                lat=52.16397003708149,lng=-7.162707075476646,zoom=16.0f,
+//                                email = loggedInViewModel.liveFirebaseUser.value?.email!!, userid = loggedInViewModel.liveFirebaseUser.value?.uid!!))
 //        FirebaseDBManager.create(firebaseUser,grab1)
-//        var grab2 =(GrabModel(title= "Coffee House Lane Pods", description = "So smooth...", category ="everyday",  email = loggedInViewModel.liveFirebaseUser.value?.email!!))
+//        var grab2 =(GrabModel(title= "Coffee House Lane Pods", description = "So smooth...", category ="everyday",
+//                                email = loggedInViewModel.liveFirebaseUser.value?.email!!, userid = loggedInViewModel.liveFirebaseUser.value?.uid!!))
 //        FirebaseDBManager.create(firebaseUser,grab2)
 //        var grab3 = (GrabModel(title="Seagull Cruffins",description="If you like croissants and muffins and flavoured custard...",category="weekend",
 //            comments = arrayListOf("Just gorgeous"),
-//            lat=52.16130378544212, lng=-7.151395529508591, zoom=16.0f,  email = loggedInViewModel.liveFirebaseUser.value?.email!!))
+//            lat=52.16130378544212, lng=-7.151395529508591, zoom=16.0f,
+//            email = loggedInViewModel.liveFirebaseUser.value?.email!!, userid = loggedInViewModel.liveFirebaseUser.value?.uid!!))
 //        FirebaseDBManager.create(firebaseUser,grab3)
-//        var grab4 = (GrabModel(title="Valentia Island Vermouth",description="Really unusual but sweet and great with sparkling wine...",category="treat"))
-//        (GrabModel(title="Cinnamon buns",description="Another of Seagull's finest",category="Sweet", lat = 52.16130378544212, lng = -7.151395529508591,
-//            zoom = 16.0f,  email = loggedInViewModel.liveFirebaseUser.value?.email!!))
+//        var grab4 = (GrabModel(title="Valentia Island Vermouth",description="Really unusual but sweet and great with sparkling wine...",category="treat",
+//            email = loggedInViewModel.liveFirebaseUser.value?.email!!, userid = loggedInViewModel.liveFirebaseUser.value?.uid!!))
 //        FirebaseDBManager.create(firebaseUser,grab4)
+
     }
 
     override fun onCreateView(
@@ -85,8 +84,8 @@ class GrabAddFragment : Fragment() {
         _binding = FragmentGrabAddBinding.inflate(inflater, container, false)
         val root = binding.root
 
-        viewModel.observableStatus.observe(viewLifecycleOwner, Observer {
-            status -> status?.let{render(status)}
+        viewModel.observableStatus.observe(viewLifecycleOwner, Observer { status ->
+            status?.let { render(status) }
         })
 
         registerImagePickerCallback()
@@ -100,20 +99,22 @@ class GrabAddFragment : Fragment() {
             if (binding.categorySpinner.selectedItemPosition != 0) {
                 category = binding.categorySpinner.selectedItem.toString()
             }
-//            else {
-//                val category = grab.category
-//            }
+
             if (title.isEmpty()) {
                 Snackbar.make(it, R.string.enter_grab_title, Snackbar.LENGTH_LONG)
                     .show()
             } else {
-               viewModel.addGrab(loggedInViewModel.liveFirebaseUser, GrabModel(title = title, description = description,
-                                                    category = category, image = grabImage,
-                                                    lat = grabLat, lng = grabLng,
-                                                    zoom = grabZoom, email = loggedInViewModel.liveFirebaseUser.value?.email!!))
+                viewModel.addGrab(
+                    loggedInViewModel.liveFirebaseUser, GrabModel(
+                        title = title, description = description,
+                        category = category, image = grabImage,
+                        lat = grabLat, lng = grabLng,
+                        zoom = grabZoom, email = loggedInViewModel.liveFirebaseUser.value?.email!!,
+                        userid = loggedInViewModel.liveFirebaseUser.value?.uid!!
+                    )
+                )
+                findNavController().popBackStack()  //https://stackoverflow.com/questions/63760586/kotlin-handling-back-button-click-in-navigation-drawer-android
             }
-
-            findNavController().popBackStack()  //https://stackoverflow.com/questions/63760586/kotlin-handling-back-button-click-in-navigation-drawer-android
 
 
         }
@@ -151,10 +152,6 @@ class GrabAddFragment : Fragment() {
             }
         }
 
-
-
-
-
         return root
     }
 
@@ -162,11 +159,10 @@ class GrabAddFragment : Fragment() {
         when (status) {
             true -> {
                 view?.let {
-                    //Uncomment this if you want to immediately return to Report
-                    //findNavController().popBackStack()
                 }
             }
-            false -> Toast.makeText(context,getString(R.string.addGrabError),Toast.LENGTH_LONG).show()
+            false -> Toast.makeText(context, getString(R.string.addGrabError), Toast.LENGTH_LONG)
+                .show()
         }
     }
 
@@ -218,9 +214,9 @@ class GrabAddFragment : Fragment() {
                             //var grab = args.grabspecific
                             Timber.i("Got Result ${result.data!!.data}")
                             binding.grabImage.visibility = View.VISIBLE
-                            grabImage = result.data!!.data!!
+                            grabImage = result.data!!.data!!.toString()
                             Picasso.get()
-                                .load(grabImage)
+                                .load(grabImage.toUri())
                                 .into(binding.grabImage)
                             binding.chooseImage.setText(R.string.change_grab_image)
                         }

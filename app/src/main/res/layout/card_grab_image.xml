@@ -21,43 +21,19 @@
             android:layout_height="wrap_content"
             android:padding="16dp">
 
-            <TextView
-                android:id="@+id/grabTitle"
-                android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/GrabIcon"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:text="@{grab.title}"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="23sp"
-                android:textStyle="bold"
-                tools:text="A Title" />
-
-            <TextView
-                android:id="@+id/grabDescription"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/grabTitle"
-                android:maxLines="2"
-                android:text="@{grab.description}"
-                tools:text="Description" />
-
-            <TextView
-                android:id="@+id/grabCategory"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/grabDescription"
-                android:layout_alignParentLeft="true"
-                android:outlineSpotShadowColor="@color/colorPrimaryDark"
-                android:text="@{grab.category}"
-                android:textStyle="italic|bold"
-                tools:text="Category" />
+                android:contentDescription="@string/app_name"
+                app:srcCompat="@android:drawable/gallery_thumb" />
 
             <TextView
                 android:id="@+id/grabAvRating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/grabDescription"
                 android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
                 android:background="@android:drawable/btn_star"
                 android:outlineSpotShadowColor="@color/colorPrimaryDark"
                 android:paddingVertical="10dp"
@@ -67,7 +43,6 @@
                 android:textSize="13sp"
                 android:textStyle="bold"
                 tools:text="0" />
-
 
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

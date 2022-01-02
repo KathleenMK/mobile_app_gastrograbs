@@ -12,7 +12,7 @@ interface GrabStore {
                 grabsList:
                 MutableLiveData<List<GrabModel>>
     )
-    fun findById(userid:String, grabid: String,
+    fun findById(grabid: String,
                  grab: MutableLiveData<GrabModel>
     )
     fun create(firebaseUser: MutableLiveData<FirebaseUser>, grab: GrabModel)

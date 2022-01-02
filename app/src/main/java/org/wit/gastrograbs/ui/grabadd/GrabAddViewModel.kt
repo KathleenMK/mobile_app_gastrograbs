@@ -17,8 +17,7 @@ class GrabAddViewModel : ViewModel() {
 
     fun addGrab(firebaseUser: MutableLiveData<FirebaseUser>, grab: GrabModel) {
         status.value = try {
-            //GrabManager.create(grab)
-                FirebaseDBManager.create(firebaseUser,grab)
+            FirebaseDBManager.create(firebaseUser, grab)
             true
         } catch (e: IllegalArgumentException) {
             false
